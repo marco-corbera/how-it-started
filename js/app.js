@@ -60,6 +60,49 @@ function updateNav(chapterId) {
   navTitle.style.cursor = chapterId > 0 ? 'pointer' : 'default';
 }
 
+// ---- READING PROGRESS BAR ----
+const progressBar = document.getElementById('reading-progress');
+
+function updateProgress() {
+  if (currentChapter === 0) return;
+  const content = document.getElementById('chapter-content');
+  if (!content) return;
+  const docHeight = document.documentElement.scrollHeight - window.innerHeight;
+  const scrolled = window.scrollY;
+  const pct = docHeight > 0 ? Math.min(100, (scrolled / docHeight) * 100) : 0;
+  progressBar.style.width = pct + '%';
+}
+
+window.addEventListener('scroll', updateProgress, { passive: true });
+
+// ---- SCROLL-IN ANIMATIONS via IntersectionObserver ----
+let animObserver = null;
+
+function initScrollAnimations() {
+  if (animObserver) animObserver.disconnect();
+
+  const els = document.querySelectorAll(
+    '#chapter-content h2, #chapter-content h3, #chapter-content .concept-box, #chapter-content .fun-fact, #chapter-content .key-dates, #chapter-content blockquote, #chapter-content pre'
+  );
+
+  animObserver = new IntersectionObserver((entries) => {
+    entries.forEach(entry => {
+      if (entry.isIntersecting) {
+        entry.target.style.opacity = '1';
+        entry.target.style.transform = 'translateY(0)';
+        animObserver.unobserve(entry.target);
+      }
+    });
+  }, { threshold: 0.1, rootMargin: '0px 0px -40px 0px' });
+
+  els.forEach(el => {
+    el.style.opacity = '0';
+    el.style.transform = 'translateY(18px)';
+    el.style.transition = 'opacity 0.45s ease, transform 0.45s ease';
+    animObserver.observe(el);
+  });
+}
+
 // ---- LOAD CHAPTER ----
 async function loadChapter(chapterId) {
   if (chapterId < 1 || chapterId > CHAPTERS.length - 1) return;
@@ -75,9 +118,13 @@ async function loadChapter(chapterId) {
     document.getElementById('landing-screen').style.display = 'none';
     document.getElementById('chapter-screen').style.display = 'block';
 
+    // Show progress bar
+    progressBar.classList.add('visible');
+    progressBar.style.width = '0%';
+
     // Update progress text
     document.getElementById('chapter-progress').textContent =
-      `Chapter ${chapterId} of ${CHAPTERS.length - 1}`;
+      `${CHAPTERS[chapterId].title}  ·  ${chapterId} / ${CHAPTERS.length - 1}`;
 
     // Update prev/next buttons
     document.getElementById('prev-btn').style.visibility = chapterId > 1 ? 'visible' : 'hidden';
@@ -100,6 +147,10 @@ async function loadChapter(chapterId) {
 
     // Scroll to top
     window.scrollTo({ top: 0, behavior: 'smooth' });
+
+    // Init scroll animations after content loads
+    setTimeout(initScrollAnimations, 100);
+    updateProgress();
   });
 }
 
@@ -123,6 +174,8 @@ function backToLanding() {
     setTheme('landing');
     currentChapter = 0;
     updateNav(0);
+    progressBar.classList.remove('visible');
+    progressBar.style.width = '0%';
     document.getElementById('chapter-screen').style.display = 'none';
     document.getElementById('landing-screen').style.display = 'flex';
     window.scrollTo({ top: 0 });
@@ -151,5 +204,16 @@ document.addEventListener('DOMContentLoaded', () => {
     if (e.key === 'ArrowRight' || e.key === 'ArrowDown') nextChapter();
     if (e.key === 'ArrowLeft' || e.key === 'ArrowUp') prevChapter();
     if (e.key === 'Escape') backToLanding();
+  });
+
+  // Landing card entrance animation
+  document.querySelectorAll('.chapter-card').forEach((card, i) => {
+    card.style.opacity = '0';
+    card.style.transform = 'translateY(16px)';
+    card.style.transition = `opacity 0.4s ease ${i * 0.06}s, transform 0.4s ease ${i * 0.06}s`;
+    setTimeout(() => {
+      card.style.opacity = '1';
+      card.style.transform = 'translateY(0)';
+    }, 100 + i * 60);
   });
 });
