@@ -1,0 +1,119 @@
+/* TERMINAL THEME — Chapter 1: Before the Web (1960s–1989)
+   Green phosphor on black CRT monitor. */
+
+[data-theme="terminal"] {
+  --color-bg: #000000;
+  --color-text: #00e040;
+  --color-accent: #00ff41;
+  --font-body: 'Courier New', Courier, monospace;
+  --font-mono: 'Courier New', Courier, monospace;
+  --nav-bg: rgba(0,0,0,0.9);
+  --nav-bottom-bg: rgba(0,0,0,0.98);
+}
+
+[data-theme="terminal"] body {
+  background: #000;
+  background-image: repeating-linear-gradient(
+    0deg,
+    transparent,
+    transparent 2px,
+    rgba(0, 200, 60, 0.015) 2px,
+    rgba(0, 200, 60, 0.015) 4px
+  );
+}
+
+[data-theme="terminal"] #top-nav {
+  border-bottom: 1px solid rgba(0, 255, 65, 0.2);
+}
+
+[data-theme="terminal"] #nav-title {
+  color: #00ff41;
+}
+
+[data-theme="terminal"] .dot {
+  background: #00ff41;
+  border-radius: 0;
+  width: 10px;
+  height: 10px;
+}
+
+[data-theme="terminal"] #chapter-content h1 {
+  color: #00ff41;
+  text-shadow: 0 0 20px rgba(0,255,65,0.4);
+  font-size: clamp(24px, 3.5vw, 36px);
+}
+
+[data-theme="terminal"] #chapter-content h2 {
+  color: #00e040;
+  border-left: 3px solid #00ff41;
+  padding-left: 12px;
+}
+
+[data-theme="terminal"] #chapter-content .chapter-intro {
+  border-bottom-color: rgba(0,255,65,0.2);
+}
+
+[data-theme="terminal"] #chapter-content code {
+  background: rgba(0,255,65,0.1);
+  color: #00ff41;
+  border: 1px solid rgba(0,255,65,0.3);
+}
+
+[data-theme="terminal"] #chapter-content pre {
+  background: #000;
+  border-color: rgba(0,255,65,0.3);
+  color: #00e040;
+}
+
+[data-theme="terminal"] #chapter-content blockquote {
+  border-left-color: #00ff41;
+  color: #00cc35;
+}
+
+[data-theme="terminal"] .concept-box {
+  background: rgba(0,255,65,0.03);
+  border-color: rgba(0,255,65,0.2);
+}
+
+[data-theme="terminal"] .concept-box .concept-label {
+  color: #00ff41;
+}
+
+[data-theme="terminal"] #prev-btn,
+[data-theme="terminal"] #next-btn {
+  color: #00ff41;
+  border-color: rgba(0,255,65,0.3);
+}
+
+[data-theme="terminal"] #prev-btn:hover,
+[data-theme="terminal"] #next-btn:hover {
+  background: rgba(0,255,65,0.08);
+  border-color: #00ff41;
+}
+
+[data-theme="terminal"] #chapter-nav-controls {
+  border-top-color: rgba(0,255,65,0.15);
+  background: rgba(0,0,0,0.98);
+}
+
+[data-theme="terminal"] #start-btn {
+  background: #00ff41;
+  color: #000;
+}
+
+[data-theme="terminal"] .chapter-entry:hover {
+  background: rgba(0,255,65,0.05);
+  border-color: rgba(0,255,65,0.15);
+}
+
+/* Cursor blink on title */
+[data-theme="terminal"] #chapter-content h1::after {
+  content: '_';
+  animation: blink 1s step-end infinite;
+  color: #00ff41;
+}
+
+@keyframes blink {
+  0%, 100% { opacity: 1; }
+  50% { opacity: 0; }
+}

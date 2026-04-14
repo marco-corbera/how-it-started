@@ -1,0 +1,166 @@
+<p class="chapter-eyebrow">Chapter 01 — 1960s to 1989</p>
+<h1>Before the Web</h1>
+<p class="chapter-intro">
+  The internet is not the web. That distinction matters more than most people realize.
+  Before Tim Berners-Lee wrote a single line of HTML, there was already a global network
+  of computers talking to each other — and understanding how and why that network was built
+  is the foundation for everything else in this story.
+</p>
+
+<h2>The Problem That Started Everything</h2>
+<p>
+  It's 1962. The Cold War is at its peak. The United States military has a serious problem:
+  its communication infrastructure is centralized. One nuclear strike on the right node and
+  the entire network goes down. No communication, no coordination, no response.
+</p>
+<p>
+  The solution came from a researcher at RAND Corporation named Paul Baran. His idea was
+  radical: what if communication didn't rely on a single path? What if data could be split
+  into pieces, sent through multiple routes simultaneously, and reassembled at the destination?
+  Even if part of the network was destroyed, the message would still get through.
+</p>
+<p>
+  This is called <strong>packet switching</strong> — and it's still how every message you
+  send over the internet works today.
+</p>
+
+<div class="concept-box">
+  <div class="concept-label">Core Concept</div>
+  <h4>Packet Switching vs Circuit Switching</h4>
+  <p>
+    The old telephone system used <em>circuit switching</em>: a dedicated physical line was
+    reserved between you and the person you were calling for the entire duration of the call.
+    That line was yours, whether you were speaking or sitting in silence.
+    <br><br>
+    Packet switching works differently. Your data is broken into small chunks (packets).
+    Each packet is labeled with its origin and destination, then sent independently through
+    the network — each one potentially taking a different route. At the destination, they
+    are reassembled in order. No dedicated line. No waste. If one path breaks, the packets
+    find another.
+  </p>
+</div>
+
+<h2>ARPANET — The First Network</h2>
+<p>
+  In 1969, the U.S. Department of Defense's Advanced Research Projects Agency (ARPA) funded
+  the first real implementation of these ideas: ARPANET. The goal was to connect research
+  universities so scientists could share computing resources remotely.
+</p>
+<p>
+  On October 29, 1969, the first message was sent from UCLA to Stanford Research Institute.
+  The system crashed after two letters. The intended message was "login". What got through
+  was "lo".
+</p>
+<p>
+  Not a great start. But it worked in principle — and that was enough.
+</p>
+<p>
+  By 1971, ARPANET connected 15 nodes. By 1973, it had expanded internationally, reaching
+  London and Norway. Email was invented almost as an afterthought during this period —
+  Ray Tomlinson sent the first networked email in 1971 and chose the <code>@</code> symbol
+  to separate user names from host names. That choice is still with us.
+</p>
+
+<h2>What Is a Protocol?</h2>
+<p>
+  Computers from different manufacturers, running different operating systems, needed to
+  talk to each other. For that to work, they needed to agree on the rules of communication.
+  Those rules are called <strong>protocols</strong>.
+</p>
+<p>
+  A protocol is just an agreement. When you send a letter in the physical world, there are
+  implicit protocols: the address goes in a specific spot, the stamp goes in the corner,
+  the envelope has a standard size. Without these agreements, the postal system falls apart.
+</p>
+
+<div class="concept-box">
+  <div class="concept-label">Core Concept</div>
+  <h4>What Is a Server? What Is a Client?</h4>
+  <p>
+    A <em>server</em> is a computer (or program) that <em>waits</em> for requests and responds
+    to them. A <em>client</em> is a computer (or program) that <em>makes</em> requests.
+    <br><br>
+    Your browser is a client. It asks a server: "give me this page." The server responds:
+    "here it is." That's it. The terminology sounds intimidating but the model is dead simple.
+    <br><br>
+    Servers don't have to be special hardware. Any computer can be a server.
+    The difference is behavioral, not physical.
+  </p>
+</div>
+
+<h2>TCP/IP — The Language of the Internet</h2>
+<p>
+  In the early 1970s, ARPANET researchers Vint Cerf and Bob Kahn designed the protocols
+  that would eventually run the entire internet: <strong>TCP/IP</strong>.
+</p>
+<p>
+  <strong>IP (Internet Protocol)</strong> handles addressing. Every device on the internet
+  gets an IP address — a unique identifier. Think of it as a mailing address for your computer.
+  When a packet of data is sent, it's labeled with the sender's IP and the destination IP.
+</p>
+<p>
+  <strong>TCP (Transmission Control Protocol)</strong> handles delivery. It breaks data into
+  packets, sends them, and — crucially — confirms they all arrived and are in the right order.
+  If a packet is lost, TCP requests it again. It guarantees delivery.
+</p>
+<p>
+  Together, TCP/IP became the universal language of networked computers.
+  By 1983, ARPANET officially switched to TCP/IP. That date — January 1, 1983 — is often
+  called the "birthday of the internet."
+</p>
+
+<h2>DNS — Why You Type Names, Not Numbers</h2>
+<p>
+  Every device on the internet has an IP address: a number like <code>142.250.80.46</code>.
+  Memorizing those numbers for every website would be impossible.
+</p>
+<p>
+  The Domain Name System (DNS) was invented in 1983 to solve this. It's essentially a
+  distributed phonebook that translates human-readable names (like <code>google.com</code>)
+  into the IP addresses that computers actually use.
+</p>
+<p>
+  When you type a URL into your browser, before anything else happens, your computer asks
+  a DNS server: "what is the IP address for this name?" That lookup happens in milliseconds.
+  Only then does your browser know where to send the request.
+</p>
+
+<div class="concept-box">
+  <div class="concept-label">Mental Model</div>
+  <h4>How a Request Travels</h4>
+  <p>
+    You type <code>example.com</code> → DNS lookup converts it to an IP address →
+    your browser opens a TCP connection to that IP → sends a request following HTTP rules
+    → the server processes it and sends back a response → your browser renders it.
+    <br><br>
+    All of that happens in under a second. Every time you open a page.
+  </p>
+</div>
+
+<h2>What Existed Before the Web</h2>
+<p>
+  By the late 1980s, the internet was real and functional — but it wasn't the web.
+  What existed was a collection of services:
+</p>
+<ul>
+  <li><strong>Email</strong> — person-to-person messages</li>
+  <li><strong>FTP</strong> — file transfer between computers</li>
+  <li><strong>Usenet</strong> — public discussion boards organized by topic</li>
+  <li><strong>Telnet</strong> — remotely log into another computer's command line</li>
+  <li><strong>Gopher</strong> — a menu-based system for browsing documents</li>
+</ul>
+<p>
+  These were useful. Scientists, academics, and military users loved them.
+  But they weren't for everyone. They required technical knowledge and command-line familiarity.
+  There was no way to link between documents. No images. No design. Just text and menus.
+</p>
+<p>
+  The internet was a tool. What it needed to become was a medium.
+  That would take one person, at a physics lab in Switzerland, who had a specific problem
+  to solve.
+</p>
+
+<blockquote>
+  "The internet is not the web. The internet is the infrastructure.
+  The web is what runs on top of it."
+</blockquote>

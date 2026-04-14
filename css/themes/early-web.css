@@ -1,0 +1,151 @@
+/* EARLY WEB THEME — Chapter 2: The First Web (1989–1995)
+   Plain HTML. Times New Roman. Grey background. Blue links.
+   This is what a Mosaic or early Netscape page looked like. */
+
+[data-theme="early-web"] {
+  --color-bg: #c0c0c0;
+  --color-text: #000000;
+  --color-accent: #0000ee;
+  --font-body: 'Times New Roman', Times, serif;
+  --font-mono: 'Courier New', Courier, monospace;
+  --nav-bg: #c0c0c0;
+  --nav-bottom-bg: #c0c0c0;
+}
+
+[data-theme="early-web"] body {
+  background: #c0c0c0;
+}
+
+[data-theme="early-web"] #top-nav {
+  border-bottom: 2px solid #888;
+  border-top: 2px solid #fff;
+  background: #c0c0c0;
+}
+
+[data-theme="early-web"] #nav-title {
+  color: #000;
+  font-family: 'Times New Roman', serif;
+  font-weight: bold;
+}
+
+[data-theme="early-web"] .dot {
+  background: #000;
+  border-radius: 0;
+}
+
+[data-theme="early-web"] #chapter-content {
+  background: #c0c0c0;
+}
+
+[data-theme="early-web"] #chapter-content h1 {
+  color: #000080;
+  font-family: 'Times New Roman', serif;
+  border-bottom: 2px solid #000;
+  padding-bottom: 8px;
+}
+
+[data-theme="early-web"] #chapter-content h2 {
+  color: #000080;
+  font-family: 'Times New Roman', serif;
+  border-bottom: 1px solid #888;
+  padding-bottom: 4px;
+}
+
+[data-theme="early-web"] #chapter-content h3 {
+  font-family: 'Times New Roman', serif;
+}
+
+[data-theme="early-web"] #chapter-content p {
+  font-family: 'Times New Roman', serif;
+  font-size: 16px;
+}
+
+[data-theme="early-web"] #chapter-content a {
+  color: #0000ee;
+  text-decoration: underline;
+}
+
+[data-theme="early-web"] #chapter-content a:visited {
+  color: #551a8b;
+}
+
+[data-theme="early-web"] #chapter-content code {
+  background: #fff;
+  border: 1px solid #888;
+  color: #000;
+  font-size: 13px;
+}
+
+[data-theme="early-web"] #chapter-content pre {
+  background: #fff;
+  border: 2px inset #888;
+  color: #000;
+}
+
+[data-theme="early-web"] #chapter-content blockquote {
+  border-left-color: #000080;
+  color: #333;
+  font-style: italic;
+}
+
+[data-theme="early-web"] .concept-box {
+  background: #d4d0c8;
+  border: 2px inset #888;
+  border-radius: 0;
+}
+
+[data-theme="early-web"] .concept-box .concept-label {
+  color: #000080;
+}
+
+[data-theme="early-web"] #chapter-content .chapter-intro {
+  border-bottom: 1px solid #888;
+  color: #000;
+}
+
+[data-theme="early-web"] #prev-btn,
+[data-theme="early-web"] #next-btn {
+  color: #000;
+  border: 2px outset #888;
+  border-radius: 0;
+  background: #c0c0c0;
+  font-family: 'Times New Roman', serif;
+}
+
+[data-theme="early-web"] #prev-btn:hover,
+[data-theme="early-web"] #next-btn:hover {
+  background: #d0d0d0;
+}
+
+[data-theme="early-web"] #chapter-nav-controls {
+  background: #c0c0c0;
+  border-top: 2px solid #888;
+}
+
+[data-theme="early-web"] #chapter-progress {
+  font-family: 'Times New Roman', serif;
+}
+
+[data-theme="early-web"] .chapter-entry:hover {
+  background: rgba(0,0,0,0.05);
+}
+
+[data-theme="early-web"] #chapter-content .chapter-eyebrow {
+  color: #000080;
+}
+
+/* Fake browser chrome feel */
+[data-theme="early-web"] #chapter-screen::before {
+  content: 'Location: https://marco-corbera.github.io/how-it-started/chapter-2';
+  display: block;
+  font-family: 'Courier New', monospace;
+  font-size: 11px;
+  color: #000;
+  background: #c0c0c0;
+  border: 1px inset #888;
+  padding: 4px 10px;
+  margin: 68px 40px 0;
+  max-width: 720px;
+  margin-left: auto;
+  margin-right: auto;
+}

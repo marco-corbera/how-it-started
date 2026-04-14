@@ -1,0 +1,139 @@
+/* LATE 90s THEME — Chapter 3: Browser Wars (1993–2001)
+   Table layouts. Comic Sans vibes. Neon on dark. Hit counters.
+   You know the aesthetic. */
+
+@import url('https://fonts.googleapis.com/css2?family=Rammetto+One&display=swap');
+
+[data-theme="late-90s"] {
+  --color-bg: #000033;
+  --color-text: #ffffff;
+  --color-accent: #ffff00;
+  --font-body: 'Comic Sans MS', 'Chalkboard SE', cursive;
+  --font-mono: 'Courier New', monospace;
+  --nav-bg: #000066;
+  --nav-bottom-bg: #000033;
+}
+
+[data-theme="late-90s"] body {
+  background: #000033;
+  background-image: url("data:image/svg+xml,%3Csvg width='20' height='20' xmlns='http://www.w3.org/2000/svg'%3E%3Ccircle cx='2' cy='2' r='1' fill='rgba(255,255,255,0.05)'/%3E%3C/svg%3E");
+}
+
+[data-theme="late-90s"] #top-nav {
+  border-bottom: 3px solid #ffff00;
+  background: linear-gradient(90deg, #000066, #000033, #000066);
+}
+
+[data-theme="late-90s"] #nav-title {
+  color: #ffff00;
+  font-family: 'Comic Sans MS', cursive;
+  font-size: 16px;
+  text-shadow: 0 0 10px rgba(255,255,0,0.5);
+}
+
+[data-theme="late-90s"] .dot {
+  background: #ffff00;
+  border-radius: 0;
+  width: 12px;
+  height: 12px;
+}
+
+[data-theme="late-90s"] #chapter-content h1 {
+  font-family: 'Comic Sans MS', 'Impact', cursive;
+  color: #ffff00;
+  text-shadow: 2px 2px 0 #ff0000, 4px 4px 0 rgba(0,0,0,0.3);
+  font-size: clamp(28px, 5vw, 48px);
+  text-align: center;
+}
+
+[data-theme="late-90s"] #chapter-content h2 {
+  font-family: 'Comic Sans MS', cursive;
+  color: #00ffff;
+  text-shadow: 0 0 8px rgba(0,255,255,0.5);
+  border: none;
+  text-align: left;
+}
+
+[data-theme="late-90s"] #chapter-content h3 {
+  color: #ff69b4;
+  font-family: 'Comic Sans MS', cursive;
+}
+
+[data-theme="late-90s"] #chapter-content p {
+  font-family: 'Comic Sans MS', cursive;
+  font-size: 15px;
+  color: #e0e0ff;
+}
+
+[data-theme="late-90s"] #chapter-content .chapter-intro {
+  color: #ffffff;
+  border-bottom: 3px dashed #ffff00;
+  font-family: 'Comic Sans MS', cursive;
+}
+
+[data-theme="late-90s"] #chapter-content code {
+  background: #000;
+  color: #00ff00;
+  border: 1px solid #00ff00;
+}
+
+[data-theme="late-90s"] #chapter-content pre {
+  background: #000000;
+  border: 2px solid #00ff00;
+  color: #00ff00;
+  box-shadow: 0 0 15px rgba(0,255,0,0.2);
+}
+
+[data-theme="late-90s"] #chapter-content blockquote {
+  border-left: 4px solid #ffff00;
+  color: #ffff00;
+  background: rgba(255,255,0,0.05);
+  padding: 12px 20px;
+}
+
+[data-theme="late-90s"] .concept-box {
+  background: rgba(0,0,100,0.5);
+  border: 2px solid #ffff00;
+  border-radius: 0;
+  box-shadow: 0 0 15px rgba(255,255,0,0.15);
+}
+
+[data-theme="late-90s"] .concept-box .concept-label {
+  color: #ffff00;
+  font-family: 'Comic Sans MS', cursive;
+}
+
+[data-theme="late-90s"] #prev-btn,
+[data-theme="late-90s"] #next-btn {
+  color: #ffff00;
+  border: 2px solid #ffff00;
+  border-radius: 0;
+  background: #000033;
+  font-family: 'Comic Sans MS', cursive;
+  text-transform: uppercase;
+  letter-spacing: 0.05em;
+}
+
+[data-theme="late-90s"] #prev-btn:hover,
+[data-theme="late-90s"] #next-btn:hover {
+  background: #000066;
+  box-shadow: 0 0 10px rgba(255,255,0,0.4);
+}
+
+[data-theme="late-90s"] #chapter-nav-controls {
+  border-top: 3px solid #ffff00;
+  background: rgba(0,0,33,0.98);
+}
+
+/* Marquee-style decoration */
+[data-theme="late-90s"] #chapter-content h1::before {
+  content: '★ ';
+}
+[data-theme="late-90s"] #chapter-content h1::after {
+  content: ' ★';
+}
+
+[data-theme="late-90s"] #chapter-content .chapter-eyebrow {
+  color: #ff69b4;
+  font-family: 'Comic Sans MS', cursive;
+}

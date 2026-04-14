@@ -1,0 +1,112 @@
+/* FLASH ERA THEME — Chapter 4: The Dynamic Web (1995–2004)
+   Dark backgrounds, neon glows, sci-fi. Flash intros. "Loading...". */
+
+[data-theme="flash-era"] {
+  --color-bg: #0a0015;
+  --color-text: #e0d8ff;
+  --color-accent: #aa44ff;
+  --font-body: 'Trebuchet MS', 'Verdana', sans-serif;
+  --font-mono: 'Courier New', monospace;
+  --nav-bg: rgba(10,0,25,0.9);
+  --nav-bottom-bg: rgba(10,0,25,0.98);
+}
+
+[data-theme="flash-era"] body {
+  background: #0a0015;
+  background-image:
+    radial-gradient(ellipse at 50% 0%, rgba(140,0,255,0.15) 0%, transparent 60%),
+    radial-gradient(ellipse at 0% 100%, rgba(0,100,255,0.1) 0%, transparent 50%);
+}
+
+[data-theme="flash-era"] #top-nav {
+  border-bottom: 1px solid rgba(170,68,255,0.4);
+  background: rgba(10,0,25,0.85);
+  backdrop-filter: blur(8px);
+}
+
+[data-theme="flash-era"] #nav-title {
+  color: #aa44ff;
+  text-shadow: 0 0 10px rgba(170,68,255,0.5);
+  font-family: 'Trebuchet MS', sans-serif;
+  letter-spacing: 0.1em;
+}
+
+[data-theme="flash-era"] .dot {
+  background: #aa44ff;
+}
+
+[data-theme="flash-era"] #chapter-content h1 {
+  background: linear-gradient(135deg, #aa44ff, #4488ff, #aa44ff);
+  -webkit-background-clip: text;
+  -webkit-text-fill-color: transparent;
+  background-clip: text;
+  filter: drop-shadow(0 0 20px rgba(170,68,255,0.4));
+}
+
+[data-theme="flash-era"] #chapter-content h2 {
+  color: #aa44ff;
+  text-shadow: 0 0 12px rgba(170,68,255,0.4);
+  border-bottom: 1px solid rgba(170,68,255,0.2);
+  padding-bottom: 8px;
+}
+
+[data-theme="flash-era"] #chapter-content h3 {
+  color: #8866dd;
+}
+
+[data-theme="flash-era"] #chapter-content .chapter-intro {
+  border-bottom-color: rgba(170,68,255,0.2);
+  color: #c8b8ff;
+}
+
+[data-theme="flash-era"] #chapter-content code {
+  background: rgba(170,68,255,0.1);
+  color: #cc88ff;
+  border: 1px solid rgba(170,68,255,0.3);
+}
+
+[data-theme="flash-era"] #chapter-content pre {
+  background: rgba(0,0,0,0.6);
+  border: 1px solid rgba(170,68,255,0.3);
+  color: #cc88ff;
+  box-shadow: 0 0 20px rgba(170,68,255,0.1);
+}
+
+[data-theme="flash-era"] #chapter-content blockquote {
+  border-left: 3px solid #aa44ff;
+  background: rgba(170,68,255,0.05);
+  color: #c8b8ff;
+}
+
+[data-theme="flash-era"] .concept-box {
+  background: rgba(170,68,255,0.05);
+  border: 1px solid rgba(170,68,255,0.25);
+  box-shadow: 0 0 20px rgba(170,68,255,0.08);
+}
+
+[data-theme="flash-era"] .concept-box .concept-label {
+  color: #aa44ff;
+}
+
+[data-theme="flash-era"] #prev-btn,
+[data-theme="flash-era"] #next-btn {
+  color: #aa44ff;
+  border-color: rgba(170,68,255,0.4);
+  font-family: 'Trebuchet MS', sans-serif;
+}
+
+[data-theme="flash-era"] #prev-btn:hover,
+[data-theme="flash-era"] #next-btn:hover {
+  background: rgba(170,68,255,0.1);
+  border-color: #aa44ff;
+  box-shadow: 0 0 12px rgba(170,68,255,0.3);
+}
+
+[data-theme="flash-era"] #chapter-nav-controls {
+  border-top-color: rgba(170,68,255,0.2);
+  background: rgba(10,0,25,0.98);
+}
+
+[data-theme="flash-era"] #chapter-content .chapter-eyebrow {
+  color: #aa44ff;
+}

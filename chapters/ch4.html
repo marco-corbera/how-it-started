@@ -1,0 +1,130 @@
+<p class="chapter-eyebrow">Chapter 04 — 1995 to 2004</p>
+<h1>The Dynamic Web</h1>
+<p class="chapter-intro">
+  Static HTML pages were a start. But the real web — the one where you log in, where
+  the page knows who you are, where things happen without reloading — required the web
+  to grow a memory and learn to run code on the server. This is the era where the web
+  stopped being a document system and started becoming a platform.
+</p>
+
+<h2>The Stateless Problem</h2>
+<p>
+  HTTP was designed to be <strong>stateless</strong>. Each request is independent.
+  The server responds, closes the connection, and immediately forgets you exist.
+  The next request is a stranger.
+</p>
+<p>
+  This is elegant from a protocol standpoint — simple, reliable, scalable.
+  But it creates a fundamental problem: how do you build a shopping cart?
+  How does a website know you're logged in when you navigate between pages?
+  HTTP, by design, has no memory.
+</p>
+
+<div class="concept-box">
+  <div class="concept-label">Core Concept</div>
+  <h4>Cookies: How the Web Remembers You</h4>
+  <p>
+    Invented by Lou Montulli at Netscape in 1994. When a server responds to your browser,
+    it can include a small piece of data in the response headers: a cookie.
+    Your browser stores it. On every subsequent request to that server, the browser
+    automatically sends the cookie back.
+    <br><br>
+    So the server can say: "here's a token that identifies your session" → browser stores it
+    → browser sends it back every time → server looks it up and says "oh, it's you."
+    Stateless HTTP suddenly has memory. This is how login still works today.
+  </p>
+</div>
+
+<h2>Server-Side Scripting: The Web Learns to Think</h2>
+<p>
+  The first web pages were static: a file on a server, served as-is. The same HTML went
+  to every visitor. To change the page, you edited the file manually.
+</p>
+<p>
+  Server-side scripting changed this. Instead of serving a static file, the server
+  runs a program that <em>generates</em> the HTML dynamically — different content for
+  different users, pulling data from a database, responding to form input.
+</p>
+<p>
+  The early tools were crude: CGI scripts written in Perl, running as separate processes
+  for every request. Then came PHP (1995) — a language designed specifically for embedding
+  code inside HTML. PHP made dynamic web pages accessible to a much wider audience.
+  By 2000, it powered a massive portion of the web. It still does.
+</p>
+<pre><code>&lt;?php
+  $name = $_GET['name'];
+  echo "&lt;h1&gt;Hello, " . $name . "!&lt;/h1&gt;";
+?&gt;</code></pre>
+<p>
+  This was also the era when databases became central to the web. MySQL, launched in 1995,
+  gave PHP developers a fast, free database. The LAMP stack (Linux, Apache, MySQL, PHP)
+  became the default infrastructure for a generation of web applications.
+</p>
+
+<h2>Flash: The Web's Greatest Detour</h2>
+<p>
+  In the mid-90s, the web's interactivity was still severely limited. Enter Macromedia Flash.
+</p>
+<p>
+  Flash was a plugin that let developers create rich animations, games, and interactive
+  experiences that plain HTML simply couldn't do. For about a decade, Flash was everywhere:
+  intros that screamed "Press Enter to skip", games, music players, entire websites built
+  in Flash with custom animations and sounds.
+</p>
+<p>
+  Flash powered the first wave of web videos. It powered YouTube in its early days.
+  It was genuinely impressive for its time.
+</p>
+<p>
+  But Flash had problems. It was proprietary — controlled by Macromedia, then Adobe.
+  It was a security nightmare. It was terrible for accessibility and SEO.
+  And it required a plugin that you had to install and constantly update.
+</p>
+<p>
+  In 2010, Steve Jobs published his famous open letter "Thoughts on Flash" and refused
+  to allow it on the iPhone. HTML5 had arrived with native video, canvas, and animation support.
+  Flash was obsolete. Adobe killed it officially on December 31, 2020.
+</p>
+
+<h2>The Dot-Com Boom and Bust</h2>
+<p>
+  Between 1997 and 2000, investors poured hundreds of billions of dollars into internet
+  companies. The logic was simple: the web was going to change everything, and whoever
+  claimed territory first would win. Profitability was irrelevant. Growth was everything.
+</p>
+<p>
+  Companies with no revenue and no clear business model were valued at billions.
+  Pets.com raised $82.5 million in an IPO and went bankrupt nine months later.
+  Boo.com burned through $188 million in 18 months and collapsed.
+</p>
+<p>
+  In March 2000, the NASDAQ peaked. Then it crashed. By 2002, $5 trillion in market
+  value had been wiped out. Hundreds of dot-coms were gone.
+</p>
+<p>
+  What survived was interesting: Amazon, Google, eBay, PayPal. The companies that had
+  actual products and actual users. The bust killed the hype but not the web.
+  It just reset expectations to something grounded in reality.
+</p>
+
+<h2>The Web Learns to Update Without Reloading</h2>
+<p>
+  In 1999, Microsoft added a small API to Internet Explorer called
+  <code>XMLHttpRequest</code>. It allowed JavaScript to make HTTP requests in the
+  background — fetching data from a server without reloading the entire page.
+</p>
+<p>
+  For a few years, nobody noticed. Then in 2004, Google launched Gmail — a full email
+  client that ran in the browser and updated in real time without page reloads.
+  In 2005, Google Maps let you drag a map and see new tiles load seamlessly.
+</p>
+<p>
+  Jesse James Garrett wrote an article describing this technique and gave it a name:
+  <strong>Ajax</strong> (Asynchronous JavaScript and XML). The word spread instantly.
+  What had seemed like a browser quirk became the defining technique of the next era.
+</p>
+
+<blockquote>
+  "The web is not a collection of pages. It's a collection of applications."
+  — The mental shift that defined the transition from Web 1.0 to Web 2.0.
+</blockquote>

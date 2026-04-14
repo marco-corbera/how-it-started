@@ -1,0 +1,91 @@
+<!DOCTYPE html>
+<html lang="en" data-theme="landing">
+<head>
+  <meta charset="UTF-8">
+  <meta name="viewport" content="width=device-width, initial-scale=1.0">
+  <title>How It Started — A History of the Web</title>
+  <link rel="stylesheet" href="css/base.css">
+  <link rel="stylesheet" href="css/themes/landing.css" id="theme-css">
+  <script src="https://unpkg.com/htmx.org@1.9.12"></script>
+</head>
+<body>
+
+  <div id="era-overlay"></div>
+
+  <nav id="top-nav">
+    <div class="nav-inner">
+      <span id="nav-title">How It Started</span>
+      <div id="chapter-indicators">
+        <span class="dot active" data-chapter="0"></span>
+        <span class="dot" data-chapter="1"></span>
+        <span class="dot" data-chapter="2"></span>
+        <span class="dot" data-chapter="3"></span>
+        <span class="dot" data-chapter="4"></span>
+        <span class="dot" data-chapter="5"></span>
+        <span class="dot" data-chapter="6"></span>
+      </div>
+    </div>
+  </nav>
+
+  <main id="content">
+
+    <!-- LANDING SCREEN -->
+    <div id="landing-screen">
+      <div class="landing-inner">
+        <div class="landing-tag">A history of the web</div>
+        <h1 class="landing-title">How It<br><span>Started</span></h1>
+        <p class="landing-subtitle">
+          From a cold-war military network to the app on your screen right now.
+          Every concept explained. Every era lived in.
+        </p>
+        <div class="chapter-list">
+          <div class="chapter-entry" data-chapter="1">
+            <span class="chapter-num">01</span>
+            <span class="chapter-name">Before the Web</span>
+            <span class="chapter-years">1960s – 1989</span>
+          </div>
+          <div class="chapter-entry" data-chapter="2">
+            <span class="chapter-num">02</span>
+            <span class="chapter-name">The First Web</span>
+            <span class="chapter-years">1989 – 1995</span>
+          </div>
+          <div class="chapter-entry" data-chapter="3">
+            <span class="chapter-num">03</span>
+            <span class="chapter-name">The Browser Wars</span>
+            <span class="chapter-years">1993 – 2001</span>
+          </div>
+          <div class="chapter-entry" data-chapter="4">
+            <span class="chapter-num">04</span>
+            <span class="chapter-name">The Dynamic Web</span>
+            <span class="chapter-years">1995 – 2004</span>
+          </div>
+          <div class="chapter-entry" data-chapter="5">
+            <span class="chapter-num">05</span>
+            <span class="chapter-name">Web 2.0</span>
+            <span class="chapter-years">2004 – 2010</span>
+          </div>
+          <div class="chapter-entry" data-chapter="6">
+            <span class="chapter-num">06</span>
+            <span class="chapter-name">The Modern Web</span>
+            <span class="chapter-years">2010 – Now</span>
+          </div>
+        </div>
+        <button id="start-btn" onclick="loadChapter(1)">Start from the beginning →</button>
+      </div>
+    </div>
+
+    <!-- CHAPTER CONTENT (loaded by HTMX / JS) -->
+    <div id="chapter-screen" style="display:none;">
+      <div id="chapter-content"></div>
+      <div id="chapter-nav-controls">
+        <button id="prev-btn" onclick="prevChapter()">← Previous</button>
+        <span id="chapter-progress"></span>
+        <button id="next-btn" onclick="nextChapter()">Next →</button>
+      </div>
+    </div>
+
+  </main>
+
+  <script src="js/app.js"></script>
+</body>
+</html>

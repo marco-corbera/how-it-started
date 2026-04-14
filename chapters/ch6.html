@@ -1,0 +1,161 @@
+<p class="chapter-eyebrow">Chapter 06 — 2010 to Now</p>
+<h1>The Modern Web</h1>
+<p class="chapter-intro">
+  The web was built for documents. Then it became an application platform.
+  Then it became the operating system. Today, the line between a "website" and a
+  "native application" is mostly a question of distribution. Understanding the modern web
+  means understanding how we got here, and where the tension points still are.
+</p>
+
+<h2>HTML5: Not Just New Tags</h2>
+<p>
+  HTML5 arrived officially in 2014, though browsers had been implementing pieces of it
+  for years. The name was misleading — HTML5 wasn't just a new version of HTML.
+  It was a platform: a collection of APIs and capabilities that turned the browser
+  into a runtime environment for applications.
+</p>
+<ul>
+  <li><strong>Canvas API</strong> — draw graphics programmatically, render 2D and 3D</li>
+  <li><strong>Web Storage</strong> — localStorage and sessionStorage, persistent data without cookies</li>
+  <li><strong>WebSockets</strong> — real-time bidirectional communication</li>
+  <li><strong>Geolocation</strong> — access device location (with permission)</li>
+  <li><strong>Native video and audio</strong> — no plugin required, Flash's death sentence</li>
+  <li><strong>Web Workers</strong> — background threads in JavaScript</li>
+  <li><strong>Service Workers</strong> — the foundation of Progressive Web Apps</li>
+</ul>
+<p>
+  These weren't cosmetic changes. They were the infrastructure for an entirely different
+  kind of web application.
+</p>
+
+<h2>Mobile Changes Everything</h2>
+<p>
+  The iPhone launched in 2007. Android in 2008. By 2013, mobile traffic had overtaken
+  desktop on many major sites. The web had been designed for big monitors and mouse input.
+  Suddenly it had to work on a 3-inch screen you controlled with your thumb.
+</p>
+<p>
+  Ethan Marcotte coined the term <strong>Responsive Web Design</strong> in 2010.
+  The idea: one codebase, one design system, that adapts to any screen size.
+  CSS media queries let you write rules that applied only at certain viewport widths.
+</p>
+<pre><code>/* Desktop first */
+.container { width: 1200px; }
+
+/* Adapt to smaller screens */
+@media (max-width: 768px) {
+  .container { width: 100%; padding: 0 16px; }
+}</code></pre>
+<p>
+  Responsive design became the default approach within a few years.
+  Mobile-first — designing for small screens first, then scaling up — became the
+  dominant methodology by 2015.
+</p>
+
+<h2>The JavaScript Framework Era</h2>
+<p>
+  As web applications became more complex, the traditional model (jQuery + server-rendered HTML)
+  started showing its limits. Managing state across a large application, keeping the UI
+  in sync with data, handling complex user interactions — these were hard to do cleanly
+  with the tools of 2008.
+</p>
+<p>
+  A new class of tools emerged: JavaScript frameworks that took over rendering entirely.
+</p>
+<ul>
+  <li><strong>Backbone.js (2010)</strong> — first major MVC framework for the frontend</li>
+  <li><strong>AngularJS (2010)</strong> — Google's framework, two-way data binding</li>
+  <li><strong>React (2013)</strong> — Facebook's library, component model, virtual DOM</li>
+  <li><strong>Vue (2014)</strong> — lighter, more approachable alternative to Angular</li>
+  <li><strong>Angular 2+ (2016)</strong> — complete rewrite of AngularJS</li>
+  <li><strong>Svelte (2016)</strong> — compiles components at build time, no runtime</li>
+</ul>
+<p>
+  React's component model became the dominant mental model for UI development.
+  The idea: UI is a function of state. Change the state, the UI updates automatically.
+  This reduced an enormous class of bugs that came from manually keeping the DOM in sync.
+</p>
+
+<div class="concept-box">
+  <div class="concept-label">Core Concept</div>
+  <h4>Why Frameworks Exist</h4>
+  <p>
+    Frameworks are responses to complexity. When you have a few interactive elements
+    on a page, jQuery is fine. When you have a complex application with hundreds of
+    components, shared state, routing, and async data — you need structure.
+    <br><br>
+    The cost of frameworks is real: bundle size, build tooling, learning curve, and
+    a pace of change that makes today's best practice tomorrow's antipattern.
+    The web is still figuring out the right tradeoffs.
+  </p>
+</div>
+
+<h2>Node.js: JavaScript on the Server</h2>
+<p>
+  In 2009, Ryan Dahl released Node.js — a runtime that let JavaScript run outside the browser,
+  on the server. The motivation was clear: why learn two languages (JavaScript for frontend,
+  Python/Ruby/PHP for backend) when you could use one?
+</p>
+<p>
+  Node's non-blocking I/O model made it particularly good at handling many concurrent
+  connections — useful for real-time applications like chat, notifications, and live updates.
+</p>
+<p>
+  The npm ecosystem that grew around Node became the largest package registry in the world.
+  Today, <code>node_modules</code> folders are the subject of infinite jokes about their size.
+  But npm also democratized code sharing at a scale that wasn't possible before.
+</p>
+
+<h2>HTTPS Everywhere</h2>
+<p>
+  In the early web, HTTPS (HTTP over TLS/SSL) was used only for sensitive transactions —
+  logins, payments. Everything else was plain HTTP: unencrypted, readable by anyone
+  between you and the server.
+</p>
+<p>
+  In 2014, Google announced they'd give a ranking boost to HTTPS sites.
+  In 2015, Let's Encrypt launched — free, automated SSL certificates for anyone.
+  In 2018, Chrome started marking all HTTP sites as "Not Secure."
+</p>
+<p>
+  Today, HTTPS is the default. The web is encrypted end-to-end for the first time in its history.
+</p>
+
+<h2>Where We Are Now</h2>
+<p>
+  The web in 2024 is the most capable development platform ever built.
+  You can build photo editors, video games, collaborative documents, 3D visualizations,
+  real-time communication tools — all running in a browser tab, on any device.
+</p>
+<p>
+  But capability comes with complexity. The average webpage today sends more data
+  than the entire ARPANET did in its first year of operation. Build tools, bundlers,
+  transpilers, type systems, testing frameworks, deployment pipelines — the infrastructure
+  around building a web app has become its own specialty.
+</p>
+<p>
+  The counter-movement exists too: HTMX, Astro, 11ty, server components — approaches that
+  question whether all this JavaScript complexity was actually necessary.
+  The pendulum swings back toward simplicity. It always does.
+</p>
+
+<div class="concept-box">
+  <div class="concept-label">Full Circle</div>
+  <h4>HTMX and the Return to Hypermedia</h4>
+  <p>
+    HTMX is a library that extends HTML with attributes to make any element capable of
+    making HTTP requests and updating parts of the page. No JavaScript required for most interactions.
+    <br><br>
+    It's a philosophical statement: the web's original model — hypermedia, HTTP, stateless requests
+    — was right. We overcomplicated it. The complexity was the accident, not the requirement.
+    <br><br>
+    This site is built with HTMX. That's intentional.
+  </p>
+</div>
+
+<blockquote>
+  "The web is not finished. It was never supposed to be.
+  Tim Berners-Lee designed a system that could evolve.
+  The fact that we're still arguing about the right way to build for it
+  means it's working exactly as intended."
+</blockquote>

@@ -1,0 +1,139 @@
+<p class="chapter-eyebrow">Chapter 05 — 2004 to 2010</p>
+<h1>Web 2.0</h1>
+<p class="chapter-intro">
+  Someone had to name the shift. Tim O'Reilly did it in 2004 with the term "Web 2.0."
+  It wasn't a new version of the web's software — it was a new idea of what the web was for.
+  Not a publishing medium. A participation medium. Not something you read. Something you used.
+</p>
+
+<h2>Ajax: The Technique That Changed Everything</h2>
+<p>
+  Ajax — Asynchronous JavaScript and XML — was not a new technology. It was a pattern:
+  use JavaScript to fetch data in the background, then update just the part of the page
+  that changed. No full reload required.
+</p>
+<p>
+  Gmail launched in 2004. It felt nothing like a web page — it felt like a desktop app.
+  You could read emails, compose, search, all without a single page reload.
+  Google Maps launched in 2005 and you could drag the map and watch new tiles flow in seamlessly.
+</p>
+<p>
+  The demonstration effect was immediate. Within two years, every major web application
+  was using Ajax. The user experience of the web changed fundamentally.
+</p>
+<pre><code>// The humble XMLHttpRequest that started it all
+var xhr = new XMLHttpRequest();
+xhr.open('GET', '/api/data', true);
+xhr.onreadystatechange = function() {
+  if (xhr.readyState === 4 && xhr.status === 200) {
+    var data = JSON.parse(xhr.responseText);
+    document.getElementById('result').innerHTML = data.message;
+  }
+};
+xhr.send();</code></pre>
+
+<h2>jQuery: Fix the Web, Please</h2>
+<p>
+  In 2006, John Resig released jQuery with a simple promise: "write less, do more."
+  It solved a real problem — browsers were wildly inconsistent in how they implemented
+  JavaScript APIs. What worked in Firefox didn't work in IE. What worked in Safari
+  was different again.
+</p>
+<p>
+  jQuery abstracted over all of it. One library that handled the differences so you
+  didn't have to. It also gave JavaScript a much cleaner syntax for DOM manipulation.
+</p>
+<pre><code>// Before jQuery: painful
+document.getElementById('box').style.display = 'none';
+
+// After jQuery: readable
+$('#box').hide();</code></pre>
+<p>
+  At its peak, jQuery was used on over 75% of all websites. It's still used on roughly
+  70% of websites today. It succeeded so completely that it eventually trained a generation
+  of developers who couldn't imagine the web without it — and that dependency eventually
+  became a problem of its own.
+</p>
+
+<div class="concept-box">
+  <div class="concept-label">Historical Context</div>
+  <h4>Why jQuery Exists — and Why It Eventually Became Less Necessary</h4>
+  <p>
+    jQuery existed because browsers disagreed on how to implement the same standards.
+    As browsers matured and standardized, the problems jQuery solved became less severe.
+    By 2015, modern browsers were consistent enough that many tasks jQuery handled
+    could be done in plain JavaScript. The need for the library declined.
+    But by then, half the internet was already built on it.
+  </p>
+</div>
+
+<h2>The Rise of Social Media</h2>
+<p>
+  Web 2.0 was also the era when the web became about people connecting with people,
+  not just people browsing content.
+</p>
+<p>
+  <strong>2003:</strong> MySpace launches. Users can customize their profiles with CSS
+  (sort of), add songs, and connect with friends. It becomes the most visited site
+  in the U.S. by 2006.
+</p>
+<p>
+  <strong>2004:</strong> Facebook launches from a Harvard dorm. Clean. Simple.
+  Real names. No glittery backgrounds. By 2008 it has 100 million users.
+</p>
+<p>
+  <strong>2005:</strong> YouTube launches. User-generated video at scale.
+  Acquired by Google in 2006 for $1.65 billion — considered insane at the time.
+</p>
+<p>
+  <strong>2006:</strong> Twitter launches. 140-character posts. Real-time public conversation.
+  Nobody understood what it was for, then everyone became addicted to it.
+</p>
+<p>
+  The shift was profound: ordinary people became publishers. The web was no longer
+  written by a small technical class and read by everyone else. Everyone could write now.
+</p>
+
+<h2>JSON Quietly Replaces XML</h2>
+<p>
+  Ajax originally used XML to transfer data between browser and server.
+  XML is verbose, hierarchical, and a pain to parse in JavaScript.
+  JSON (JavaScript Object Notation) was a simpler alternative: data as JavaScript objects,
+  which the browser could read natively without parsing.
+</p>
+<pre><code>// XML (tedious)
+&lt;user&gt;
+  &lt;name&gt;Marco&lt;/name&gt;
+  &lt;role&gt;developer&lt;/role&gt;
+&lt;/user&gt;
+
+// JSON (clean)
+{ "name": "Marco", "role": "developer" }</code></pre>
+<p>
+  JSON won. By 2010, almost all web APIs used JSON. The REST architectural style —
+  a set of conventions for designing web APIs using standard HTTP methods —
+  became the default way to expose data on the web.
+</p>
+
+<h2>What Web 2.0 Got Wrong</h2>
+<p>
+  The participation web had a dark side that wasn't obvious at the time.
+  If users generate content and connections are the product, then the incentive is to
+  maximize engagement — keep people on the platform as long as possible.
+</p>
+<p>
+  Outrage keeps people engaged longer than happiness. Controversy generates more replies
+  than agreement. These dynamics weren't designed intentionally — they emerged from the
+  optimization for engagement. By the time anyone noticed the pattern, the systems
+  were embedded in the infrastructure of daily communication.
+</p>
+<p>
+  Web 2.0 also centralized a web that had been designed to be decentralized.
+  The original web had no owners. Every site was independent. Web 2.0 funneled
+  attention into a handful of platforms that controlled the distribution of everything.
+</p>
+
+<blockquote>
+  "The web was supposed to be a place where anyone could say anything to anyone.
+  Instead, it became a place where a few companies decided what everyone could say."
+</blockquote>

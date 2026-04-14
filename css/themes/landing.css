@@ -1,0 +1,17 @@
+/* LANDING THEME — dark, modern, minimal */
+[data-theme="landing"] {
+  --color-bg: #080810;
+  --color-text: #f0f0f5;
+  --color-accent: #4f8eff;
+  --font-body: 'Inter', system-ui, -apple-system, sans-serif;
+  --font-mono: 'JetBrains Mono', 'Fira Code', 'Courier New', monospace;
+  --nav-bg: transparent;
+  --nav-bottom-bg: rgba(8,8,16,0.95);
+}
+
+[data-theme="landing"] body {
+  background: var(--color-bg);
+  background-image:
+    radial-gradient(ellipse at 20% 50%, rgba(79,142,255,0.06) 0%, transparent 60%),
+    radial-gradient(ellipse at 80% 20%, rgba(120,80,255,0.04) 0%, transparent 50%);
+}

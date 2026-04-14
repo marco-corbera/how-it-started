@@ -1,0 +1,140 @@
+/* MODERN THEME — Chapter 6: The Modern Web (2010–Now)
+   Clean. Minimal. White space. System fonts. Dark mode ready.
+   Think Notion, Linear, Vercel. */
+
+[data-theme="modern"] {
+  --color-bg: #ffffff;
+  --color-text: #111111;
+  --color-accent: #0070f3;
+  --font-body: 'Inter', system-ui, -apple-system, BlinkMacSystemFont, sans-serif;
+  --font-mono: 'JetBrains Mono', 'Fira Code', 'SF Mono', monospace;
+  --nav-bg: rgba(255,255,255,0.85);
+  --nav-bottom-bg: rgba(255,255,255,0.95);
+}
+
+[data-theme="modern"] body {
+  background: #fff;
+}
+
+[data-theme="modern"] #top-nav {
+  border-bottom: 1px solid #eee;
+  backdrop-filter: blur(12px);
+  background: rgba(255,255,255,0.85);
+}
+
+[data-theme="modern"] #nav-title {
+  color: #111;
+  font-family: 'Inter', system-ui, sans-serif;
+}
+
+[data-theme="modern"] .dot {
+  background: #111;
+}
+
+[data-theme="modern"] #chapter-content h1 {
+  color: #111;
+  font-family: 'Inter', system-ui, sans-serif;
+}
+
+[data-theme="modern"] #chapter-content h2 {
+  color: #111;
+  border-bottom: 1px solid #eee;
+  padding-bottom: 8px;
+  font-family: 'Inter', system-ui, sans-serif;
+}
+
+[data-theme="modern"] #chapter-content h3 {
+  color: #333;
+  font-family: 'Inter', system-ui, sans-serif;
+}
+
+[data-theme="modern"] #chapter-content p {
+  color: #333;
+  font-family: 'Inter', system-ui, sans-serif;
+}
+
+[data-theme="modern"] #chapter-content .chapter-intro {
+  border-bottom-color: #eee;
+  color: #444;
+}
+
+[data-theme="modern"] #chapter-content code {
+  background: #f4f4f5;
+  color: #0070f3;
+  border: 1px solid #e4e4e7;
+  font-size: 13px;
+}
+
+[data-theme="modern"] #chapter-content pre {
+  background: #0a0a0a;
+  border: 1px solid #222;
+  color: #e0e0e0;
+}
+
+[data-theme="modern"] #chapter-content pre code {
+  color: #e0e0e0;
+  background: none;
+  border: none;
+}
+
+[data-theme="modern"] #chapter-content blockquote {
+  border-left: 3px solid #0070f3;
+  color: #555;
+  background: #fafafa;
+  padding: 12px 20px;
+}
+
+[data-theme="modern"] .concept-box {
+  background: #fafafa;
+  border: 1px solid #e4e4e7;
+  border-radius: 12px;
+}
+
+[data-theme="modern"] .concept-box .concept-label {
+  color: #0070f3;
+}
+
+[data-theme="modern"] .concept-box h4 {
+  color: #111;
+}
+
+[data-theme="modern"] .concept-box p {
+  color: #555;
+}
+
+[data-theme="modern"] #prev-btn,
+[data-theme="modern"] #next-btn {
+  color: #111;
+  border-color: #e4e4e7;
+  background: #fff;
+  font-family: 'Inter', system-ui, sans-serif;
+  border-radius: 8px;
+}
+
+[data-theme="modern"] #prev-btn:hover,
+[data-theme="modern"] #next-btn:hover {
+  background: #fafafa;
+  border-color: #ccc;
+}
+
+[data-theme="modern"] #chapter-nav-controls {
+  border-top: 1px solid #eee;
+  background: rgba(255,255,255,0.95);
+}
+
+[data-theme="modern"] #chapter-progress {
+  color: #999;
+}
+
+[data-theme="modern"] #chapter-content .chapter-eyebrow {
+  color: #0070f3;
+}
+
+[data-theme="modern"] .chapter-entry:hover {
+  background: rgba(0,0,0,0.02);
+  border-color: #eee;
+}
+
+[data-theme="modern"] .chapter-entry {
+  border-color: transparent;
+}
