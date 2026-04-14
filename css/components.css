@@ -942,11 +942,10 @@
    ERA SELECTOR MODAL
    ============================================= */
 .era-modal-backdrop {
-  position: fixed;
+  position: absolute;
   inset: 0;
   background: rgba(0,0,0,0.7);
   backdrop-filter: blur(8px);
-  z-index: 8000;
 }
 .era-modal {
   display: none;
@@ -960,6 +959,7 @@
 .era-modal.visible { display: flex; }
 .era-modal-card {
   position: relative;
+  z-index: 1;
   background: #0d0d0d;
   border: 1px solid rgba(255,255,255,0.1);
   border-radius: 20px;
