@@ -791,10 +791,8 @@ function showCompletionModal() {
   modal.classList.add('visible');
   const pillsEl = document.getElementById('completion-chapters-list');
   if (pillsEl) {
-    const names = [
-      'How a Page Loads', 'HTML', 'CSS', 'JavaScript', 'APIs', 'The Modern Stack'
-    ];
-    pillsEl.innerHTML = names.map(n => `<span class="completion-ch-pill">${n}</span>`).join('');
+    pillsEl.innerHTML = COURSE_MODULES.map(m =>
+      `<span class="completion-ch-pill">${m.title}</span>`).join('');
   }
   launchConfetti();
 }
@@ -1071,29 +1069,30 @@ const COURSE_MODULES = [
     objectives: [
       'The difference between static and dynamic servers',
       'What a REST API is and what HTTP verbs mean',
-      'How JSON became the universal data format of the web',
+      'Why servers use async calls — and what that means in practice',
     ],
     sections: [
       {
         type: 'text',
         heading: 'Static vs Dynamic Servers',
-        body: `A <strong>static server</strong> serves files exactly as they are on disk: HTML, CSS, JS, images. Fast, simple, no code to run. This site is static — GitHub Pages serves the files directly. A <strong>dynamic server</strong> runs code to generate responses. When you load your Twitter feed, a server runs Python or Node.js or Go, queries a database, checks your preferences, and constructs a unique HTML response for you. Every request can produce different output.`,
+        body: `A <strong>static server</strong> serves files exactly as they are on disk — HTML, CSS, JS, images. Fast, simple, no code runs. This site is static: GitHub Pages just delivers the files. A <strong>dynamic server</strong> runs code to generate each response. When you open your Twitter feed, a server runs Python or Node.js or Go, queries a database, checks your session, and constructs a unique HTML or JSON response just for you. Every request can produce completely different output.`,
       },
       {
         type: 'concept',
         label: 'Core Concept',
         heading: 'REST APIs and HTTP Verbs',
-        body: `REST (Representational State Transfer) is a set of conventions for building web APIs. The core idea: use HTTP's built-in verbs to express intent.<br><br><code>GET    /users        → list all users<br>GET    /users/42     → get user 42<br>POST   /users        → create a new user<br>PUT    /users/42     → update user 42<br>DELETE /users/42     → delete user 42</code><br><br>No new protocols needed — just the HTTP you already understand, used consistently. REST became the default way to expose data on the web because it maps naturally to things developers already know.`,
+        body: `REST (Representational State Transfer) is a set of conventions for building web APIs. The idea: use HTTP's built-in verbs to express intent clearly.<br><br><code>GET    /orders        → list all orders<br>GET    /orders/42     → get order 42<br>POST   /orders        → create a new order<br>PUT    /orders/42     → update order 42<br>DELETE /orders/42     → delete order 42</code><br><br>No new protocols. Just HTTP used consistently. REST became the default because every developer already understands HTTP, and it maps naturally onto the operations any app needs.`,
+      },
+      {
+        type: 'concept',
+        label: 'Core Concept',
+        heading: 'Why Servers Use Async Calls',
+        body: `A server handling a request often needs to do several slow things: query a database, call an external API, read a file. Each takes milliseconds — but with thousands of simultaneous users, blocking and waiting serially would kill performance.<br><br><strong>Async (asynchronous) programming</strong> lets the server say "start this database query, and while you're waiting for it to come back, go handle other requests." When the query finishes, resume where you left off.<br><br>This is why modern backends are written with async in mind (async/await in Node.js and Python, coroutines in Go). A server that handles 10,000 simultaneous users without crashing isn't running 10,000 threads — it's using async to do many things at once on far fewer resources.`,
       },
       {
         type: 'text',
         heading: 'JSON — The Web\'s Data Format',
-        body: `When an API returns data, it needs a format both sides understand. JSON (JavaScript Object Notation) won this competition completely. It looks like JavaScript objects, it's human-readable, and every programming language can parse it.<br><br><code>{<br>  "name": "Marco",<br>  "role": "developer",<br>  "skills": ["Django", "React", "PostgreSQL"]<br>}</code><br><br>Before JSON, APIs used XML — verbose, hard to read, tedious to parse in JavaScript. JSON is simpler in every dimension. By 2010, it was the default for virtually all web APIs.`,
-      },
-      {
-        type: 'fun-fact',
-        label: 'Curious fact',
-        body: `The GitHub API is one of the most used public APIs in the world and returns JSON. You can call it from any browser console right now with <code>fetch('https://api.github.com/users/torvalds').then(r=>r.json()).then(console.log)</code>. The response includes Linus Torvalds' public GitHub data. No authentication needed for public data. Open APIs built this ecosystem.`,
+        body: `When an API returns data, it needs a format both sides understand. JSON (JavaScript Object Notation) won this competition completely. It looks like JavaScript objects, it's human-readable, and every programming language can parse it natively.<br><br><code>{<br>  "name": "Marco",<br>  "role": "developer",<br>  "skills": ["Django", "React", "PostgreSQL"]<br>}</code><br><br>Before JSON, APIs used XML — verbose, deeply nested, tedious to work with in JavaScript. JSON is simpler in every dimension. By 2010 it was the default for virtually all web APIs.`,
       },
       {
         type: 'lab',
@@ -1102,67 +1101,165 @@ const COURSE_MODULES = [
         steps: [
           'Open DevTools → Console tab',
           'Paste: <code>fetch(\'https://api.github.com/users/octocat\').then(r=>r.json()).then(console.log)</code>',
-          'Press Enter — you\'ll see a Promise, then the result logs below it',
-          'Expand the logged object to explore the API response',
+          'Press Enter — you\'ll see a Promise, then the JSON result logs below it',
+          'Expand the logged object to explore: repos, followers, created_at...',
         ],
-        explain: `You just made a real HTTP GET request to GitHub's API from your browser console, received JSON back, parsed it, and logged it. This is exactly what JavaScript in a web app does when it fetches data. The Network tab will show the request — you can see the full URL, headers, and response there too.`,
+        explain: `You just made a real HTTP GET request to GitHub's API, received JSON, parsed it, and logged it — the exact same thing JavaScript in any web app does when fetching data. Notice the Network tab also shows the request: URL, status 200, response headers, full response body. That's the full request-response cycle from Module 1 happening live.`,
       },
     ],
     quiz: [
-      { q: 'What is a REST API?', opts: ['A server that only serves static files', 'A database query language for web apps', 'An API that uses HTTP verbs to express intent on resources', 'A JavaScript framework for building backends'], correct: 2 },
-      { q: 'What HTTP verb should you use to create a new resource?', opts: ['GET', 'PUT', 'POST', 'PATCH'], correct: 2 },
-      { q: 'Why did JSON replace XML as the dominant data format for web APIs?', opts: ['JSON is encrypted by default', 'JSON is faster to transmit over the network', 'JSON is simpler, human-readable, and native to JavaScript', 'JSON was mandated by the W3C standard in 2005'], correct: 2 },
+      { q: 'What is the difference between a static and a dynamic server?', opts: ['Static servers are faster; dynamic servers are slower', 'Static servers serve files as-is; dynamic servers run code to generate each response', 'Static servers only serve images; dynamic servers serve HTML', 'Static servers are free; dynamic servers cost money'], correct: 1 },
+      { q: 'Why do backend servers use async programming?', opts: ['To encrypt data before sending it', 'To handle many simultaneous requests without blocking while waiting for slow operations', 'To compress responses for faster delivery', 'To avoid writing callbacks in JavaScript'], correct: 1 },
+      { q: 'What HTTP verb should you use to create a new resource?', opts: ['GET', 'PUT', 'POST', 'DELETE'], correct: 2 },
     ],
   },
   {
     id: 6,
     eyebrow: 'Module 06',
-    title: 'The Modern Stack',
-    intro: 'The web today is not just HTML, CSS, and JavaScript. It\'s an ecosystem of frameworks, package managers, build tools, and deployment platforms layered on top of those foundations. Understanding this stack means knowing what each layer does — and being honest about when you actually need it.',
+    title: 'Databases',
+    intro: 'Every app that needs to remember something — who\'s logged in, what was ordered, what was posted — needs a database. Databases are the long-term memory of your application. Understanding the types that exist and when to use each one is one of the most useful things a non-developer can know about how software is built.',
     objectives: [
-      'What npm does and why package management exists',
-      'What a JavaScript framework is and what problem it solves',
-      'What build tools do and why they became necessary',
+      'Why files aren\'t enough and what databases solve',
+      'The difference between relational (SQL) and NoSQL databases',
+      'What database transactions are and why they matter',
     ],
     sections: [
       {
         type: 'text',
-        heading: 'npm — The Package Registry',
-        body: `Almost no web project starts from scratch. Developers reuse shared code through <strong>packages</strong>. npm (Node Package Manager) is the registry where over 2.5 million JavaScript packages live. A <code>package.json</code> file lists what your project depends on. Running <code>npm install</code> downloads them all into <code>node_modules/</code>.<br><br>The upside: instant access to solved problems (date formatting, animation, authentication). The downside: a simple project can have hundreds of transitive dependencies, each one a potential security or compatibility issue.`,
-      },
-      {
-        type: 'text',
-        heading: 'Build Tools — Why They Exist',
-        body: `Modern JavaScript needs to be transformed before it can run in a browser: TypeScript must be compiled, JSX (React's HTML-in-JS syntax) must be transpiled, imports must be bundled into single files, images optimized, CSS preprocessed. <strong>Build tools</strong> (Webpack, Vite, esbuild) automate all of this.<br><br>The tradeoff is real: more capability, more complexity. A 2020 "simple web project" might require a config file, a build step, a dev server, and a deployment pipeline before you write a single line of application code.`,
+        heading: 'Why Files Aren\'t Enough',
+        body: `You could store your app's data in plain files — text files, JSON files, CSVs. For a personal project with one user, it works. But it falls apart fast at scale. Multiple users writing simultaneously corrupts data. Searching a million records in a flat file is slow. Representing relationships ("this order belongs to this user who lives at this address") becomes deeply messy. Recovering from partial writes (the app crashed mid-save) is fragile.<br><br>Databases were built to solve exactly these problems. They handle concurrency, search, relationships, and crash recovery correctly — so you don't have to.`,
       },
       {
         type: 'concept',
         label: 'Core Concept',
-        heading: 'What a Framework Actually Does',
-        body: `Frameworks like React, Vue, and Svelte solve a real problem: as web UIs grow, managing state (the data your app holds) and keeping the UI in sync with that state becomes very complex with vanilla JavaScript.<br><br>React's model: UI is a <em>pure function</em> of state. Change the state, the framework re-renders the affected components. You don't manually manipulate the DOM — you declare what the UI should look like given certain data, and React handles the rest. Fewer bugs, clearer mental model, at the cost of a new abstraction to learn.`,
+        heading: 'Relational Databases (SQL)',
+        body: `The dominant type for 50 years. Data lives in <strong>tables</strong> (like spreadsheets: rows and columns). Tables relate to each other via keys.<br><br><code>users table:  id | name  | email<br>orders table: id | user_id | total | date</code><br><br><code>user_id</code> in orders links back to <code>id</code> in users — that's a relationship. SQL (Structured Query Language) is how you talk to the database:<br><br><code>SELECT * FROM orders WHERE user_id = 42;</code><br><br>Top choices: <strong>PostgreSQL</strong> (most powerful, open source, used in most production apps), <strong>MySQL</strong> (widely used, especially with PHP), <strong>SQLite</strong> (embedded, no server needed — used in mobile apps and local tools).`,
+      },
+      {
+        type: 'concept',
+        label: 'Core Concept',
+        heading: 'Transactions — Why Data Integrity Matters',
+        body: `A <strong>transaction</strong> is a unit of work that either completes entirely or not at all. Classic example: a bank transfer. Step 1: deduct $100 from account A. Step 2: add $100 to account B. If the server crashes between steps 1 and 2, the money vanishes. A transaction wraps both steps — if anything fails, the whole thing rolls back as if it never happened.<br><br>This is called <strong>ACID</strong> compliance (Atomicity, Consistency, Isolation, Durability). Every serious relational database is ACID compliant. It's why banks, e-commerce, and healthcare systems run on SQL databases.`,
       },
       {
         type: 'text',
-        heading: 'The Counter-Argument: HTMX',
-        body: `By 2020, a question emerged: did we actually need all this complexity? Could most web apps be built with server-rendered HTML and a small amount of JavaScript to handle interactions? <strong>HTMX</strong> is the most prominent answer. It extends HTML with attributes that let any element make HTTP requests and swap content into the page — no full JavaScript framework required.<br><br>This site is built with HTMX, on purpose, as a demonstration. The web's original model — request, receive HTML, render — was correct. We invented a problem, then built elaborate solutions for it. HTMX asks: what if we hadn't?`,
+        heading: 'NoSQL Databases — When Flexibility Wins',
+        body: `Relational databases have a fixed schema: you define columns upfront and every row must fit. NoSQL databases trade that rigidity for flexibility.<br><br><strong>Document databases</strong> (MongoDB, Firestore): store JSON-like documents. No fixed schema — each document can have different fields. Great for content, user profiles, product catalogs where data shape varies.<br><br><strong>Key-value stores</strong> (Redis): store data by key, extremely fast reads. Used for caching, session storage, rate limiting, real-time leaderboards. Redis can serve millions of reads per second from memory.<br><br><strong>When to use what:</strong> financial data, orders, user accounts → PostgreSQL. Caching, sessions, real-time counters → Redis. Flexible content, rapid iteration → MongoDB.`,
       },
       {
-        type: 'lab',
-        label: 'Try It — DevTools Lab',
-        heading: 'See What a Build Tool Does',
-        steps: [
-          'Go to any React app (like vercel.com or linear.app)',
-          'Open DevTools → Sources tab',
-          'Find the main JavaScript bundle — it will be a minified file',
-          'Compare the bundle size to what you\'d write by hand for the same feature',
-        ],
-        explain: `What you see is the output of a build process: thousands of files from hundreds of packages, minified and bundled into as few files as possible. This is the reality of the modern frontend stack. Now look at this page\'s source — it\'s a single JS file of ~600 lines. Both approaches are valid. The question is whether the complexity is justified.`,
+        type: 'fun-fact',
+        label: 'Curious fact',
+        body: `PostgreSQL was first released in 1996 and is still the most recommended database for new projects today — nearly 30 years later. The <em>Stack Overflow Developer Survey</em> has ranked it the most-used database by professional developers for several years running, overtaking MySQL. Despite dozens of newer alternatives, the fundamentals it was built on in the 1970s (relational model, ACID transactions, SQL) remain unbeaten for the vast majority of applications.`,
       },
     ],
     quiz: [
-      { q: 'What does npm install do?', opts: ['Installs Node.js on your computer', 'Downloads all dependencies listed in package.json', 'Builds and bundles your JavaScript files', 'Publishes your package to the npm registry'], correct: 1 },
-      { q: 'What core problem do JavaScript frameworks like React solve?', opts: ['Writing CSS without conflicts', 'Managing state and keeping the UI in sync with it', 'Making HTTP requests faster', 'Replacing HTML with a better syntax'], correct: 1 },
-      { q: 'What is HTMX\'s core argument?', opts: ['JavaScript frameworks should be written in TypeScript', 'The browser should replace the operating system', 'The web\'s original HTML/HTTP model was sufficient for most apps', 'Server-side rendering always outperforms client-side rendering'], correct: 2 },
+      { q: 'What problem do databases solve that plain files cannot?', opts: ['Databases are smaller in size than files', 'Databases handle concurrency, relationships, search, and crash recovery correctly at scale', 'Databases are stored in the cloud automatically', 'Databases encrypt data by default'], correct: 1 },
+      { q: 'What is a database transaction?', opts: ['A payment processed by the database', 'A type of SQL query for reading data', 'A unit of work that either completes fully or rolls back entirely — protecting data integrity', 'A connection between two database servers'], correct: 2 },
+      { q: 'When would you choose Redis over PostgreSQL?', opts: ['When you need complex relational queries across many tables', 'For caching, sessions, and real-time counters where extreme read speed matters', 'For storing financial transactions that require ACID compliance', 'When your data has a fixed, well-defined schema'], correct: 1 },
+    ],
+  },
+  {
+    id: 7,
+    eyebrow: 'Module 07',
+    title: 'Third-Party Services',
+    intro: 'Modern applications almost never build everything from scratch. Sending emails, processing payments, showing maps, authenticating users, sending SMS — these are all solved problems with entire companies dedicated to doing them reliably. Knowing which services exist and why you\'d use them instead of building in-house is essential product knowledge.',
+    objectives: [
+      'Why the "build vs buy" tradeoff almost always favors buying for commodity problems',
+      'The most important service categories: email, payments, auth, maps, and more',
+      'What a webhook is and why third-party services use them',
+    ],
+    sections: [
+      {
+        type: 'text',
+        heading: 'Why Third-Party Services Exist',
+        body: `Every application eventually needs to send email, process a payment, or show a map. You could build all of these yourself — but you'd spend months solving problems that have already been solved. The <strong>build vs buy</strong> tradeoff is almost always buy for commodity infrastructure:<br><br>• Email delivery has spam filters, reputation scores, bounce handling, DKIM/SPF authentication — an entire discipline.<br>• Payment processing requires PCI-DSS compliance, fraud detection, chargeback handling, support for 200+ payment methods.<br>• Authentication requires secure password hashing, session management, MFA, OAuth flows, and constant security patches.<br><br>Third-party services let your team focus on what makes your product unique — not on reinventing solved problems.`,
+      },
+      {
+        type: 'concept',
+        label: 'Email',
+        heading: 'Transactional Email Services',
+        body: `Email delivery is surprisingly hard. Gmail and Outlook aggressively filter email from unknown servers. Maintaining a good sending reputation, handling bounces, managing unsubscribes, and passing spam filters is a full-time job.<br><br><strong>SendGrid</strong> (now Twilio) — the most widely used. Simple API, good deliverability, generous free tier.<br><strong>Mailgun</strong> — developer-friendly, strong analytics, popular for high volume.<br><strong>Postmark</strong> — laser-focused on transactional email (receipts, password resets), excellent deliverability.<br><strong>AWS SES</strong> — cheapest at scale, but requires more setup.<br><br><em>Transactional email</em> (order confirmations, password resets) and <em>marketing email</em> (newsletters, campaigns) often use different services — mixing them risks your transactional deliverability.`,
+      },
+      {
+        type: 'concept',
+        label: 'Payments',
+        heading: 'Payment Processing',
+        body: `You almost never build your own payment processing. The reasons: PCI-DSS compliance (a full security audit standard), fraud detection systems, chargeback management, support for credit cards, wallets, bank transfers across 150+ countries.<br><br><strong>Stripe</strong> — the developer-friendly standard. Beautiful API, excellent documentation, handles cards, bank transfers, subscriptions, invoices, marketplaces. Used by Amazon, Shopify, Lyft, and thousands of startups.<br><strong>PayPal / Braintree</strong> — widely recognized by consumers, broader global reach in some markets.<br><strong>Culqi, Mercado Pago</strong> — regional leaders in Latin America.<br><br>Stripe's model: your frontend collects card data directly into Stripe's servers (never touches yours), Stripe charges the card and sends you a webhook confirming success.`,
+      },
+      {
+        type: 'concept',
+        label: 'Authentication',
+        heading: 'Auth as a Service',
+        body: `Rolling your own authentication is one of the most common sources of security vulnerabilities. Password hashing (bcrypt, not MD5), session tokens, OAuth flows for "Sign in with Google," MFA, account recovery — all must be done correctly.<br><br><strong>Auth0</strong> — enterprise-grade, supports every OAuth provider, rich rule engine for custom auth logic.<br><strong>Clerk</strong> — modern, beautiful pre-built UI components, very fast to integrate.<br><strong>Firebase Auth</strong> — Google's offering, tightly integrated with the Firebase ecosystem.<br><strong>Supabase Auth</strong> — open source alternative, self-hostable.<br><br>Most products at the early stage benefit enormously from delegating auth entirely. The time saved — and the security vulnerabilities avoided — are both substantial.`,
+      },
+      {
+        type: 'text',
+        heading: 'Maps, SMS, Storage, and More',
+        body: `<strong>Maps & Location:</strong> Google Maps Platform (most features, usage-based pricing), Mapbox (more design flexibility, also paid), OpenStreetMap + Leaflet.js (free, open source, good for custom maps).<br><br><strong>SMS & Voice:</strong> Twilio — the dominant player. Phone number provisioning, SMS, WhatsApp, voice calls, all via API.<br><br><strong>File Storage:</strong> AWS S3 — the standard for storing uploaded files, images, documents. Cloudinary adds automatic image resizing and optimization on top of storage.<br><br><strong>Analytics:</strong> Google Analytics (free, widely used), Mixpanel (event-based, better product analytics), PostHog (open source, self-hostable, full control over your data).<br><br><strong>Feature Flags:</strong> LaunchDarkly, Flagsmith — toggle features on/off in production without deploying code. Essential for gradual rollouts and A/B testing.`,
+      },
+      {
+        type: 'concept',
+        label: 'Core Concept',
+        heading: 'Webhooks — How Services Notify Your App',
+        body: `When something happens in a third-party service — a payment succeeds, an email bounces, a file finishes processing — your app needs to know. But your app can't constantly poll "did anything happen yet?"<br><br>The solution: <strong>webhooks</strong>. You tell the service "when X happens, send an HTTP POST to this URL on my server." The service calls your endpoint with the event data. Your server processes it.<br><br>Example: user pays via Stripe → Stripe sends POST to <code>yourapp.com/webhooks/stripe</code> with payment details → your server marks the order as paid. You don't poll Stripe — Stripe notifies you. This is the backbone of how the service ecosystem stays in sync.`,
+      },
+    ],
+    quiz: [
+      { q: 'Why do most companies use Stripe instead of building their own payment system?', opts: ['Stripe is the only payment processor legally permitted to operate', 'Building payments requires PCI compliance, fraud detection, and years of infrastructure most teams can\'t justify', 'Stripe payments settle faster than direct bank transfers', 'Stripe is free for all transaction volumes'], correct: 1 },
+      { q: 'What is a webhook?', opts: ['A browser API for detecting scroll events', 'A type of authentication token', 'An HTTP request sent by a third-party service to notify your app when an event occurs', 'A method for caching API responses'], correct: 2 },
+      { q: 'What is the key difference between transactional email and marketing email?', opts: ['Transactional email is free; marketing email is paid', 'Transactional email is triggered by user actions (receipts, resets); marketing email is bulk campaigns — and mixing them risks deliverability', 'Transactional email uses HTML; marketing email uses plain text', 'There is no difference — both use the same sending infrastructure'], correct: 1 },
+    ],
+  },
+  {
+    id: 8,
+    eyebrow: 'Module 08',
+    title: 'Hosting & Domains',
+    intro: 'Your code works locally. Getting it onto the internet means deciding where it runs, how people find it, and who manages it. These decisions affect cost, performance, reliability, and deployment speed — and the right answer depends entirely on what you\'re building.',
+    objectives: [
+      'How domains and DNS records work in practice',
+      'The spectrum from static hosting to managed cloud infrastructure',
+      'When to use Vercel/Netlify vs when to use AWS/GCP/Azure',
+    ],
+    sections: [
+      {
+        type: 'text',
+        heading: 'Domains — What They Are and Where to Register',
+        body: `A <strong>domain</strong> is a name you rent (not own) from a registrar, renewed annually. Popular registrars: Namecheap, Cloudflare Registrar (at-cost), GoDaddy, Google Domains (now Squarespace).<br><br>Once registered, you configure <strong>DNS records</strong> to point the domain at your hosting:<br><br><strong>A record</strong> — maps your domain to an IP address (<code>mysite.com → 192.0.2.1</code>).<br><strong>CNAME</strong> — maps a subdomain to another domain (<code>www.mysite.com → mysite.com</code>). Used heavily by Vercel and Netlify.<br><strong>MX record</strong> — routes email to your mail provider.<br><strong>TXT record</strong> — proves domain ownership (Google, Stripe, and others use this for verification).<br><br>DNS changes have a <strong>TTL (Time to Live)</strong> — a cache expiry. A TTL of 3600 means it takes up to an hour to propagate globally. Lower it before migrations; raise it when stable.`,
+      },
+      {
+        type: 'concept',
+        label: 'Tier 1 — Static Hosting',
+        heading: 'Netlify, Vercel, GitHub Pages, Cloudflare Pages',
+        body: `For sites with no server-side code — HTML/CSS/JS, docs, marketing pages, portfolios — static hosting is the simplest and cheapest option. You push code to git, they build and deploy it.<br><br><strong>Vercel</strong> — built around Next.js, but works with any framework. Global CDN, automatic HTTPS, preview deployments on every PR, serverless functions at the edge.<br><strong>Netlify</strong> — similar feature set, slightly more ecosystem-agnostic. Excellent for JAMstack sites.<br><strong>GitHub Pages</strong> — free, simple, no build pipeline. Great for docs and static demos (this course runs on it).<br><strong>Cloudflare Pages</strong> — global CDN with Cloudflare's network, very fast, generous free tier.<br><br><strong>When to use:</strong> marketing sites, documentation, portfolios, client demos, anything without a dynamic backend.`,
+      },
+      {
+        type: 'concept',
+        label: 'Tier 2 — Platform-as-a-Service',
+        heading: 'Render, Railway, Fly.io, Heroku',
+        body: `When you have server-side code — a Django API, a Node backend, a background job worker — you need something that can run it. PaaS platforms handle the server configuration for you: you give them your code (via git or Docker), they run it.<br><br><strong>Render</strong> — modern Heroku replacement. Supports Node, Python, Ruby, Go, Docker. Free tier available, managed PostgreSQL included, automatic deploys from git.<br><strong>Railway</strong> — fast setup, great DX, generous pricing, supports databases alongside services.<br><strong>Fly.io</strong> — runs Docker containers at the edge worldwide, more control than Render, slightly more setup.<br><strong>Heroku</strong> — the original PaaS, once dominant, now expensive relative to alternatives.<br><br><strong>When to use:</strong> APIs, dynamic apps, early-stage products, small to medium scale.`,
+      },
+      {
+        type: 'concept',
+        label: 'Tier 3 — Cloud Infrastructure',
+        heading: 'AWS, GCP, Azure — and When You Actually Need Them',
+        body: `The big cloud providers offer raw infrastructure: virtual machines (EC2, Compute Engine), object storage (S3, GCS), managed databases (RDS, Cloud SQL), CDN (CloudFront, Cloud CDN), and hundreds of other services.<br><br><strong>AWS</strong> — the market leader (~33% share). Widest service catalog. S3 for file storage is nearly universal even outside AWS. Complex, but every DevOps engineer knows it.<br><strong>Google Cloud (GCP)</strong> — strong on data/ML (BigQuery, Vertex AI), Kubernetes origins, competitive on pricing.<br><strong>Azure</strong> — dominant in enterprises with existing Microsoft contracts (Office 365, Active Directory integration).<br><br><strong>When you actually need them:</strong> compliance requirements (HIPAA, SOC2, PCI), regulated industries, very high scale, complex multi-service architectures, existing enterprise agreements, advanced ML/data needs.`,
+      },
+      {
+        type: 'text',
+        heading: 'CDNs — Why Your Files Come From Nearby',
+        body: `A <strong>CDN (Content Delivery Network)</strong> caches your static files (images, CSS, JS, fonts) on servers distributed worldwide — edge nodes. When a user in Lima requests an image, they get it from São Paulo, not a server in Virginia. Latency drops from 200ms to 20ms.<br><br><strong>Cloudflare</strong> — the most widely used CDN, also provides DDoS protection, DNS, and security. Free tier covers most sites.<br><strong>AWS CloudFront</strong> — tightly integrated with S3 and EC2, the standard for AWS-hosted assets.<br><strong>Fastly</strong> — used by GitHub, Twitter, and large platforms where CDN performance is critical.<br><br>All the Tier 1 hosting platforms (Vercel, Netlify, Cloudflare Pages) have a CDN built in — you get global delivery automatically with no extra configuration.`,
+      },
+      {
+        type: 'concept',
+        label: 'Decision Framework',
+        heading: 'Choosing the Right Hosting',
+        body: `<strong>Static site, no backend</strong> → Vercel, Netlify, or GitHub Pages. Free, instant, globally distributed.<br><br><strong>API + database, early stage</strong> → Render or Railway. Simple deployment, managed database included, no DevOps needed.<br><br><strong>Full-stack app, medium scale</strong> → Render or Fly.io. More control, Docker support, scales reasonably.<br><br><strong>High scale, compliance requirements, or complex architecture</strong> → AWS, GCP, or Azure. Accept the complexity in exchange for control and compliance certifications.<br><br><strong>Enterprise with existing Microsoft stack</strong> → Azure, almost always.<br><br>The most common mistake: using AWS for a project that would have been perfectly served by Render. The second most common: outgrowing a PaaS and not migrating to AWS soon enough. The goal is to match infrastructure complexity to actual product needs.`,
+      },
+    ],
+    quiz: [
+      { q: 'What is a DNS CNAME record used for?', opts: ['Mapping a domain to an IP address', 'Routing email to a mail server', 'Mapping a subdomain to another domain name', 'Verifying domain ownership for third-party services'], correct: 2 },
+      { q: 'When should you choose Vercel or Netlify over AWS?', opts: ['When you need HIPAA compliance', 'For static sites and frontend apps — they\'re simpler, faster to set up, and often free', 'When your app handles over 1 million users', 'When you need a managed relational database'], correct: 1 },
+      { q: 'What does a CDN do for your site\'s performance?', opts: ['Reduces the size of your JavaScript files', 'Caches your static files on servers worldwide so users get them from a nearby location', 'Automatically optimizes your SQL queries', 'Compresses HTML responses before sending them'], correct: 1 },
     ],
   },
 ];
@@ -1184,9 +1281,14 @@ function startCourse(era) {
     progressBar.classList.add('visible');
     progressBar.style.width = '0%';
 
-    // Load era audio
+    // Load era audio (audio track for this era stays throughout course)
     const audioChapter = ERA_AUDIO[era] || 1;
     loadAudio(audioChapter);
+    // Update audio title for course mode
+    const ch = CHAPTERS[audioChapter];
+    const trackTitle = `Learn the Web  ·  ${ch ? ch.title : ''}  ·  How It Started`;
+    const marquee = document.getElementById('audio-track-title');
+    if (marquee) marquee.textContent = trackTitle;
 
     // Update nav for course mode
     updateCourseNav(1);
