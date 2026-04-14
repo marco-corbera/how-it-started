@@ -29,7 +29,10 @@
         <span class="dot" data-chapter="5" title="Web 2.0"></span>
         <span class="dot" data-chapter="6" title="The Modern Web"></span>
       </div>
-      <button id="lang-toggle" onclick="toggleLang()">ES</button>
+      <div class="nav-right-group">
+        <button id="theme-toggle-btn" onclick="openEraSelector()" title="Change visual theme" style="display:none;" class="nav-icon-btn">🎨</button>
+        <button id="lang-toggle" onclick="toggleLang()">ES</button>
+      </div>
     </div>
   </nav>
 
@@ -197,7 +200,7 @@
 
         <div class="landing-or-divider" data-i18n="or-divider">or</div>
 
-        <button id="learn-btn" onclick="openEraSelector()" data-i18n="learn-btn">
+        <button id="learn-btn" onclick="startCourse('modern')" data-i18n="learn-btn">
           Learn How the Web Works →
         </button>
 
@@ -296,9 +299,9 @@
   <div id="era-selector-modal" class="era-modal">
     <div class="era-modal-backdrop" onclick="closeEraSelector()"></div>
     <div class="era-modal-card">
-      <div class="era-modal-kicker">◈ Learn How the Web Works</div>
-      <h2 class="era-modal-title" data-i18n="era-title">Choose your study era</h2>
-      <p class="era-modal-subtitle" data-i18n="era-subtitle">Same course. Six different aesthetics. Pick the vibe you want to learn in.</p>
+      <div class="era-modal-kicker">◈ Visual Theme</div>
+      <h2 class="era-modal-title">Change the look</h2>
+      <p class="era-modal-subtitle">Same course, six different aesthetics. Pick the era vibe you want to learn in — you can change it any time.</p>
       <div class="era-choice-grid">
         <button class="era-choice" data-era="terminal" onclick="startCourse('terminal')">
           <span class="era-choice-preview">C:\&gt; learn_<br>connecting...</span>

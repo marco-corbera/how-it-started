@@ -534,6 +534,10 @@ function backToLanding() {
     winampSetPlaying(false);
     document.getElementById('audio-player').classList.remove('visible');
 
+    // Hide theme switcher
+    const themeBtn = document.getElementById('theme-toggle-btn');
+    if (themeBtn) themeBtn.style.display = 'none';
+
     setTheme('landing');
     currentChapter = 0;
     updateNav(0);
@@ -1267,13 +1271,20 @@ const COURSE_MODULES = [
 // ---- ERA → AUDIO CHAPTER ----
 
 function startCourse(era) {
+  const alreadyInCourse = courseMode;
   closeEraSelector();
-  courseMode = true;
-  courseEra  = era;
-  currentModule = 1;
+  courseEra = era;
 
   eraTransition(() => {
     setTheme(era);
+
+    if (alreadyInCourse) {
+      // Just a theme switch — don't restart the module
+      return;
+    }
+
+    courseMode    = true;
+    currentModule = 1;
 
     document.getElementById('landing-screen').style.display = 'none';
     document.getElementById('chapter-screen').style.display = 'block';
@@ -1281,16 +1292,18 @@ function startCourse(era) {
     progressBar.classList.add('visible');
     progressBar.style.width = '0%';
 
-    // Load era audio (audio track for this era stays throughout course)
+    // Load era audio
     const audioChapter = ERA_AUDIO[era] || 1;
     loadAudio(audioChapter);
-    // Update audio title for course mode
     const ch = CHAPTERS[audioChapter];
     const trackTitle = `Learn the Web  ·  ${ch ? ch.title : ''}  ·  How It Started`;
     const marquee = document.getElementById('audio-track-title');
     if (marquee) marquee.textContent = trackTitle;
 
-    // Update nav for course mode
+    // Show theme switcher in nav
+    const themeBtn = document.getElementById('theme-toggle-btn');
+    if (themeBtn) themeBtn.style.display = 'inline-flex';
+
     updateCourseNav(1);
     renderCourseModule(1);
 
