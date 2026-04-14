@@ -1,130 +1,168 @@
-<p class="chapter-eyebrow">Chapter 04 — 1995 to 2004</p>
+<p class="chapter-eyebrow">Chapter 04 &mdash; 1995 to 2004</p>
 <h1>The Dynamic Web</h1>
 <p class="chapter-intro">
-  Static HTML pages were a start. But the real web — the one where you log in, where
-  the page knows who you are, where things happen without reloading — required the web
-  to grow a memory and learn to run code on the server. This is the era where the web
-  stopped being a document system and started becoming a platform.
+  Static HTML pages were a start. But the real web — where you log in, where the page
+  knows who you are, where things happen without reloading — required the web to grow
+  a memory and learn to run code. This is the era where the web stopped being a
+  document system and became a platform.
 </p>
 
 <h2>The Stateless Problem</h2>
 <p>
   HTTP was designed to be <strong>stateless</strong>. Each request is independent.
   The server responds, closes the connection, and immediately forgets you exist.
-  The next request is a stranger.
+  The next request comes in as if from a stranger.
 </p>
 <p>
   This is elegant from a protocol standpoint — simple, reliable, scalable.
-  But it creates a fundamental problem: how do you build a shopping cart?
-  How does a website know you're logged in when you navigate between pages?
-  HTTP, by design, has no memory.
+  But it creates a practical problem: how does a website know you're logged in?
+  How does a shopping cart persist between pages?
 </p>
 
 <div class="concept-box">
   <div class="concept-label">Core Concept</div>
   <h4>Cookies: How the Web Remembers You</h4>
   <p>
-    Invented by Lou Montulli at Netscape in 1994. When a server responds to your browser,
-    it can include a small piece of data in the response headers: a cookie.
-    Your browser stores it. On every subsequent request to that server, the browser
-    automatically sends the cookie back.
+    Invented by Lou Montulli at Netscape in 1994. When a server responds, it can include
+    a small piece of data in the headers: a cookie. Your browser stores it.
+    On every subsequent request to that server, the browser sends it back automatically.
     <br><br>
-    So the server can say: "here's a token that identifies your session" → browser stores it
-    → browser sends it back every time → server looks it up and says "oh, it's you."
-    Stateless HTTP suddenly has memory. This is how login still works today.
+    The server says: "here's a token identifying your session" → browser stores it →
+    browser sends it back every request → server looks it up: "oh, it's Marco."
+    Stateless HTTP suddenly has memory. This is still how login works today.
   </p>
 </div>
 
-<h2>Server-Side Scripting: The Web Learns to Think</h2>
+<h2>Server-Side Scripting: Pages That Think</h2>
 <p>
-  The first web pages were static: a file on a server, served as-is. The same HTML went
-  to every visitor. To change the page, you edited the file manually.
+  The first web pages were static: a file on disk, served as-is. The same HTML went
+  to every visitor. To change it, you edited the file by hand.
 </p>
 <p>
   Server-side scripting changed this. Instead of serving a static file, the server
-  runs a program that <em>generates</em> the HTML dynamically — different content for
-  different users, pulling data from a database, responding to form input.
+  runs a program that <em>generates</em> the HTML dynamically — different content
+  per user, data pulled from a database, responses to form input.
 </p>
 <p>
-  The early tools were crude: CGI scripts written in Perl, running as separate processes
-  for every request. Then came PHP (1995) — a language designed specifically for embedding
-  code inside HTML. PHP made dynamic web pages accessible to a much wider audience.
+  Early tools were crude: CGI scripts in Perl, spawning a new process per request.
+  Then came PHP (1995) — designed specifically for embedding code inside HTML.
+  PHP made dynamic pages accessible to a much wider audience.
   By 2000, it powered a massive portion of the web. It still does.
 </p>
-<pre><code>&lt;?php
-  $name = $_GET['name'];
-  echo "&lt;h1&gt;Hello, " . $name . "!&lt;/h1&gt;";
-?&gt;</code></pre>
-<p>
-  This was also the era when databases became central to the web. MySQL, launched in 1995,
-  gave PHP developers a fast, free database. The LAMP stack (Linux, Apache, MySQL, PHP)
-  became the default infrastructure for a generation of web applications.
-</p>
+
+<div class="fun-fact">
+  <span class="fun-fact-label">Curious fact</span>
+  <p>PHP was originally created by Rasmus Lerdorf in 1994 to track visits to his
+  online resume. He called it "Personal Home Page Tools." It was never intended
+  to become a programming language. It just grew into one because people kept
+  adding features. PHP now powers about 77% of all websites with a known server-side language,
+  including WordPress, which runs ~43% of the entire web.</p>
+</div>
 
 <h2>Flash: The Web's Greatest Detour</h2>
 <p>
-  In the mid-90s, the web's interactivity was still severely limited. Enter Macromedia Flash.
+  Macromedia Flash let developers create rich animations, games, and interactive
+  experiences that HTML simply couldn't do. For about a decade, Flash was everywhere:
+  animated intros, browser games, music players, entire websites built with custom
+  motion and sound.
 </p>
 <p>
-  Flash was a plugin that let developers create rich animations, games, and interactive
-  experiences that plain HTML simply couldn't do. For about a decade, Flash was everywhere:
-  intros that screamed "Press Enter to skip", games, music players, entire websites built
-  in Flash with custom animations and sounds.
+  Flash powered the first wave of web video. It powered early YouTube.
+  It gave us Homestar Runner, Newgrounds, and an entire generation of internet culture.
+  It was the closest thing the web had to a real multimedia runtime.
 </p>
 <p>
-  Flash powered the first wave of web videos. It powered YouTube in its early days.
-  It was genuinely impressive for its time.
+  But Flash was proprietary (Macromedia, then Adobe), a security disaster,
+  terrible for accessibility and SEO, and required a plugin you had to manually install
+  and constantly update. In 2010, Steve Jobs published "Thoughts on Flash" and refused
+  to allow it on the iPhone. HTML5 arrived with native video, canvas, and animation.
+  Flash's death was inevitable from that moment. Adobe killed it December 31, 2020.
+</p>
+
+<div class="fun-fact">
+  <span class="fun-fact-label">Curious fact</span>
+  <p>The Flash game "The Impossible Quiz" (2007) was played by an estimated
+  100 million people. Thousands of beloved Flash games and animations —
+  15+ years of internet culture — went dark on December 31, 2020 when Flash died.
+  The Flashpoint project has archived over 70,000 Flash games and 8,000 animations
+  to preserve them. An entire era of internet art rescued by volunteers.</p>
+</div>
+
+<h2>The Forum Era Matures</h2>
+<p>
+  The late 90s had phpBB. The early 2000s saw the golden age of internet forums.
+  vBulletin (2000), Invision Power Board (2002), and dozens of others competed.
+  Every niche community had its own domain and its own forum software.
 </p>
 <p>
-  But Flash had problems. It was proprietary — controlled by Macromedia, then Adobe.
-  It was a security nightmare. It was terrible for accessibility and SEO.
-  And it required a plugin that you had to install and constantly update.
+  Forum culture in this era became genuinely complex social systems:
 </p>
-<p>
-  In 2010, Steve Jobs published his famous open letter "Thoughts on Flash" and refused
-  to allow it on the iPhone. HTML5 had arrived with native video, canvas, and animation support.
-  Flash was obsolete. Adobe killed it officially on December 31, 2020.
-</p>
+<ul>
+  <li><strong>NeoGAF</strong> — the gaming forum where industry professionals posted alongside fans. Breaking news from game developers. Leaked info. Scandals. Unbans and permabans as public theater.</li>
+  <li><strong>Something Awful</strong> — launched 1999, paid registration to post. Quality control through friction. The forum that produced much of early internet culture including early memes, YouTube Poop, and many creators who'd go mainstream.</li>
+  <li><strong>Slashdot</strong> — tech news aggregator with comments. Invented the concept of comment moderation systems. "Slashdotted" (when your server dies because Slashdot linked to you) entered the vocabulary.</li>
+  <li><strong>4chan</strong> — launched 2003, anonymous. No accounts, no history, ephemeral threads. Complete chaos. And somehow, incredibly influential.</li>
+</ul>
 
 <h2>The Dot-Com Boom and Bust</h2>
 <p>
-  Between 1997 and 2000, investors poured hundreds of billions of dollars into internet
-  companies. The logic was simple: the web was going to change everything, and whoever
-  claimed territory first would win. Profitability was irrelevant. Growth was everything.
+  Between 1997 and 2000, investors poured hundreds of billions into internet companies.
+  The logic: the web would change everything, first-movers win, profitability irrelevant.
 </p>
 <p>
-  Companies with no revenue and no clear business model were valued at billions.
   Pets.com raised $82.5 million in an IPO and went bankrupt nine months later.
-  Boo.com burned through $188 million in 18 months and collapsed.
+  Boo.com burned $188 million in 18 months and collapsed.
+  The sock puppet became a mascot of speculative excess.
 </p>
 <p>
-  In March 2000, the NASDAQ peaked. Then it crashed. By 2002, $5 trillion in market
-  value had been wiped out. Hundreds of dot-coms were gone.
+  In March 2000, NASDAQ peaked at 5,048. Then it crashed.
+  By October 2002, it had fallen to 1,114. Five trillion dollars in market value — gone.
+  Hundreds of dot-coms folded. Thousands of engineers were suddenly unemployed.
 </p>
 <p>
-  What survived was interesting: Amazon, Google, eBay, PayPal. The companies that had
-  actual products and actual users. The bust killed the hype but not the web.
-  It just reset expectations to something grounded in reality.
+  What survived: Amazon, Google, eBay, PayPal — companies with actual products and users.
+  The bust killed the hype. It didn't kill the web.
 </p>
 
-<h2>The Web Learns to Update Without Reloading</h2>
+<h2>XMLHttpRequest: The Quiet Revolution</h2>
 <p>
-  In 1999, Microsoft added a small API to Internet Explorer called
-  <code>XMLHttpRequest</code>. It allowed JavaScript to make HTTP requests in the
-  background — fetching data from a server without reloading the entire page.
+  In 1999, Microsoft added <code>XMLHttpRequest</code> to Internet Explorer 5 —
+  a small API that let JavaScript fetch data in the background without reloading the page.
+  For years, almost nobody noticed. Then Google launched Gmail in 2004.
+  Then Google Maps in 2005. Pages that felt like desktop apps.
+  Jesse James Garrett named the technique <strong>Ajax</strong> in 2005.
+  The word spread. The next era had arrived.
 </p>
-<p>
-  For a few years, nobody noticed. Then in 2004, Google launched Gmail — a full email
-  client that ran in the browser and updated in real time without page reloads.
-  In 2005, Google Maps let you drag a map and see new tiles load seamlessly.
-</p>
-<p>
-  Jesse James Garrett wrote an article describing this technique and gave it a name:
-  <strong>Ajax</strong> (Asynchronous JavaScript and XML). The word spread instantly.
-  What had seemed like a browser quirk became the defining technique of the next era.
-</p>
+
+<div class="key-dates">
+  <div class="key-dates-title">Key Dates</div>
+  <div class="date-item">
+    <span class="date-stamp">1994</span>
+    <p class="date-event"><strong>Cookies invented</strong> by Lou Montulli at Netscape. The web gets a memory. Also: the first online pizza order (Pizza Hut). The commercial web is real.</p>
+  </div>
+  <div class="date-item">
+    <span class="date-stamp">Aug 9, 1995</span>
+    <p class="date-event"><strong>Netscape IPO</strong> — a company with no profits valued at $2.9B. The dot-com era officially begins. The word "internet" enters mainstream consciousness.</p>
+  </div>
+  <div class="date-item">
+    <span class="date-stamp">Mar 10, 2000</span>
+    <p class="date-event"><strong>NASDAQ peaks at 5,048.</strong> The dot-com bubble is at its maximum. Within two years, $5 trillion in value evaporates.</p>
+  </div>
+  <div class="date-item">
+    <span class="date-stamp">Jan 15, 2001</span>
+    <p class="date-event"><strong>Wikipedia launches.</strong> The radical idea that strangers can collaboratively write a reliable encyclopedia. It becomes one of the greatest knowledge projects in human history.</p>
+  </div>
+  <div class="date-item">
+    <span class="date-stamp">Oct 1, 2003</span>
+    <p class="date-event"><strong>4chan launches</strong>, anonymous image board. No accounts, no memory, total chaos. Becomes one of the most culturally influential sites in internet history.</p>
+  </div>
+  <div class="date-item">
+    <span class="date-stamp">Apr 1, 2004</span>
+    <p class="date-event"><strong>Gmail launches</strong> with 1GB of storage (competitors offered 4MB). The Ajax interface feels like a desktop app. The web as a platform is no longer theoretical.</p>
+  </div>
+</div>
 
 <blockquote>
-  "The web is not a collection of pages. It's a collection of applications."
-  — The mental shift that defined the transition from Web 1.0 to Web 2.0.
+  "The web was supposed to be about documents. But people kept trying to build
+  applications in it. Eventually, the platform caught up with the ambition."
 </blockquote>

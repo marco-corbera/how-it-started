@@ -1,15 +1,16 @@
 /* MODERN THEME — Chapter 6: The Modern Web (2010–Now)
-   Clean. Minimal. White space. System fonts. Dark mode ready.
-   Think Notion, Linear, Vercel. */
+   Inter. White space. Subtle shadows. Dark mode ready.
+   Think Vercel, Linear, Notion. The anti-theme theme.
+   Minimalism as a design philosophy, not an absence of ideas. */
 
 [data-theme="modern"] {
   --color-bg: #ffffff;
   --color-text: #111111;
   --color-accent: #0070f3;
-  --font-body: 'Inter', system-ui, -apple-system, BlinkMacSystemFont, sans-serif;
-  --font-mono: 'JetBrains Mono', 'Fira Code', 'SF Mono', monospace;
-  --nav-bg: rgba(255,255,255,0.85);
-  --nav-bottom-bg: rgba(255,255,255,0.95);
+  --font-body: 'Inter', system-ui, -apple-system, BlinkMacSystemFont, 'Segoe UI', sans-serif;
+  --font-mono: 'JetBrains Mono', 'Fira Code', 'SF Mono', 'Cascadia Code', monospace;
+  --nav-bg: rgba(255,255,255,0.8);
+  --nav-bottom-bg: rgba(255,255,255,0.92);
 }
 
 [data-theme="modern"] body {
@@ -17,51 +18,79 @@
 }
 
 [data-theme="modern"] #top-nav {
-  border-bottom: 1px solid #eee;
-  backdrop-filter: blur(12px);
-  background: rgba(255,255,255,0.85);
+  border-bottom: 1px solid rgba(0,0,0,0.06);
+  backdrop-filter: blur(16px) saturate(180%);
+  -webkit-backdrop-filter: blur(16px) saturate(180%);
+  background: rgba(255,255,255,0.8);
 }
 
 [data-theme="modern"] #nav-title {
   color: #111;
   font-family: 'Inter', system-ui, sans-serif;
+  font-weight: 600;
+  font-size: 13px;
+  letter-spacing: -0.01em;
 }
 
 [data-theme="modern"] .dot {
   background: #111;
+  width: 7px;
+  height: 7px;
+}
+[data-theme="modern"] .dot.active {
+  background: #0070f3;
+  box-shadow: 0 0 0 2px rgba(0,112,243,0.2);
+}
+[data-theme="modern"] .dot.visited {
+  background: #0070f3;
+  opacity: 0.4;
 }
 
 [data-theme="modern"] #chapter-content h1 {
   color: #111;
   font-family: 'Inter', system-ui, sans-serif;
+  font-weight: 800;
+  letter-spacing: -0.03em;
 }
 
 [data-theme="modern"] #chapter-content h2 {
   color: #111;
-  border-bottom: 1px solid #eee;
-  padding-bottom: 8px;
   font-family: 'Inter', system-ui, sans-serif;
+  font-weight: 700;
+  letter-spacing: -0.02em;
+  border-bottom: 1px solid #f0f0f0;
+  padding-bottom: 10px;
 }
 
 [data-theme="modern"] #chapter-content h3 {
   color: #333;
   font-family: 'Inter', system-ui, sans-serif;
+  font-weight: 600;
+  letter-spacing: -0.01em;
 }
 
 [data-theme="modern"] #chapter-content p {
-  color: #333;
+  color: #444;
   font-family: 'Inter', system-ui, sans-serif;
+  font-size: 16px;
+  line-height: 1.75;
+}
+
+[data-theme="modern"] #chapter-content .chapter-eyebrow {
+  color: #0070f3;
 }
 
 [data-theme="modern"] #chapter-content .chapter-intro {
-  border-bottom-color: #eee;
-  color: #444;
+  border-bottom: 1px solid #f0f0f0;
+  color: #555;
+  font-size: 18px;
 }
 
 [data-theme="modern"] #chapter-content code {
   background: #f4f4f5;
   color: #0070f3;
   border: 1px solid #e4e4e7;
+  font-family: 'JetBrains Mono', monospace;
   font-size: 13px;
 }
 
@@ -69,72 +98,83 @@
   background: #0a0a0a;
   border: 1px solid #222;
   color: #e0e0e0;
+  border-radius: 12px;
 }
 
 [data-theme="modern"] #chapter-content pre code {
-  color: #e0e0e0;
   background: none;
   border: none;
+  color: #e0e0e0;
+  padding: 0;
+  font-size: 13px;
 }
 
 [data-theme="modern"] #chapter-content blockquote {
-  border-left: 3px solid #0070f3;
-  color: #555;
+  border-left: 2px solid #0070f3;
+  color: #666;
   background: #fafafa;
-  padding: 12px 20px;
+  padding: 14px 22px;
+  font-style: italic;
+}
+
+[data-theme="modern"] #chapter-content ul li {
+  color: #444;
+  font-family: 'Inter', system-ui, sans-serif;
+}
+[data-theme="modern"] #chapter-content ul li::marker {
+  color: #0070f3;
+}
+
+[data-theme="modern"] #chapter-content strong {
+  color: #111;
+  font-weight: 600;
 }
 
 [data-theme="modern"] .concept-box {
   background: #fafafa;
   border: 1px solid #e4e4e7;
   border-radius: 12px;
+  box-shadow: 0 1px 4px rgba(0,0,0,0.04);
 }
-
 [data-theme="modern"] .concept-box .concept-label {
   color: #0070f3;
 }
-
 [data-theme="modern"] .concept-box h4 {
   color: #111;
+  font-family: 'Inter', system-ui, sans-serif;
+  letter-spacing: -0.01em;
 }
-
 [data-theme="modern"] .concept-box p {
-  color: #555;
+  color: #666;
+  font-size: 15px;
 }
 
 [data-theme="modern"] #prev-btn,
 [data-theme="modern"] #next-btn {
   color: #111;
-  border-color: #e4e4e7;
+  border: 1px solid #e4e4e7;
   background: #fff;
-  font-family: 'Inter', system-ui, sans-serif;
   border-radius: 8px;
+  font-family: 'Inter', system-ui, sans-serif;
+  font-weight: 500;
+  font-size: 14px;
+  box-shadow: 0 1px 2px rgba(0,0,0,0.05);
 }
-
 [data-theme="modern"] #prev-btn:hover,
 [data-theme="modern"] #next-btn:hover {
   background: #fafafa;
   border-color: #ccc;
+  box-shadow: 0 2px 4px rgba(0,0,0,0.08);
 }
 
 [data-theme="modern"] #chapter-nav-controls {
-  border-top: 1px solid #eee;
-  background: rgba(255,255,255,0.95);
+  border-top: 1px solid #f0f0f0;
+  backdrop-filter: blur(16px) saturate(180%);
+  background: rgba(255,255,255,0.92);
 }
 
 [data-theme="modern"] #chapter-progress {
-  color: #999;
-}
-
-[data-theme="modern"] #chapter-content .chapter-eyebrow {
-  color: #0070f3;
-}
-
-[data-theme="modern"] .chapter-entry:hover {
-  background: rgba(0,0,0,0.02);
-  border-color: #eee;
-}
-
-[data-theme="modern"] .chapter-entry {
-  border-color: transparent;
+  color: #aaa;
+  font-family: 'JetBrains Mono', monospace;
+  font-size: 11px;
 }

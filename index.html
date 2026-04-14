@@ -4,7 +4,11 @@
   <meta charset="UTF-8">
   <meta name="viewport" content="width=device-width, initial-scale=1.0">
   <title>How It Started — A History of the Web</title>
+  <link rel="preconnect" href="https://fonts.googleapis.com">
+  <link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
+  <link href="https://fonts.googleapis.com/css2?family=Inter:wght@400;500;600;700;800&family=JetBrains+Mono:wght@400;600&display=swap" rel="stylesheet">
   <link rel="stylesheet" href="css/base.css">
+  <link rel="stylesheet" href="css/components.css">
   <link rel="stylesheet" href="css/themes/landing.css" id="theme-css">
   <script src="https://unpkg.com/htmx.org@1.9.12"></script>
 </head>
@@ -14,71 +18,164 @@
 
   <nav id="top-nav">
     <div class="nav-inner">
-      <span id="nav-title">How It Started</span>
+      <span id="nav-title" onclick="backToLanding()">How It Started</span>
       <div id="chapter-indicators">
-        <span class="dot active" data-chapter="0"></span>
-        <span class="dot" data-chapter="1"></span>
-        <span class="dot" data-chapter="2"></span>
-        <span class="dot" data-chapter="3"></span>
-        <span class="dot" data-chapter="4"></span>
-        <span class="dot" data-chapter="5"></span>
-        <span class="dot" data-chapter="6"></span>
+        <span class="dot active" data-chapter="0" title="Home"></span>
+        <span class="dot" data-chapter="1" title="Before the Web"></span>
+        <span class="dot" data-chapter="2" title="The First Web"></span>
+        <span class="dot" data-chapter="3" title="Browser Wars & Forums"></span>
+        <span class="dot" data-chapter="4" title="The Dynamic Web"></span>
+        <span class="dot" data-chapter="5" title="Web 2.0"></span>
+        <span class="dot" data-chapter="6" title="The Modern Web"></span>
       </div>
     </div>
   </nav>
 
   <main id="content">
 
-    <!-- LANDING SCREEN -->
+    <!-- ── LANDING SCREEN ── -->
     <div id="landing-screen">
       <div class="landing-inner">
-        <div class="landing-tag">A history of the web</div>
-        <h1 class="landing-title">How It<br><span>Started</span></h1>
-        <p class="landing-subtitle">
-          From a cold-war military network to the app on your screen right now.
-          Every concept explained. Every era lived in.
-        </p>
-        <div class="chapter-list">
-          <div class="chapter-entry" data-chapter="1">
-            <span class="chapter-num">01</span>
-            <span class="chapter-name">Before the Web</span>
-            <span class="chapter-years">1960s – 1989</span>
-          </div>
-          <div class="chapter-entry" data-chapter="2">
-            <span class="chapter-num">02</span>
-            <span class="chapter-name">The First Web</span>
-            <span class="chapter-years">1989 – 1995</span>
-          </div>
-          <div class="chapter-entry" data-chapter="3">
-            <span class="chapter-num">03</span>
-            <span class="chapter-name">The Browser Wars</span>
-            <span class="chapter-years">1993 – 2001</span>
-          </div>
-          <div class="chapter-entry" data-chapter="4">
-            <span class="chapter-num">04</span>
-            <span class="chapter-name">The Dynamic Web</span>
-            <span class="chapter-years">1995 – 2004</span>
-          </div>
-          <div class="chapter-entry" data-chapter="5">
-            <span class="chapter-num">05</span>
-            <span class="chapter-name">Web 2.0</span>
-            <span class="chapter-years">2004 – 2010</span>
-          </div>
-          <div class="chapter-entry" data-chapter="6">
-            <span class="chapter-num">06</span>
-            <span class="chapter-name">The Modern Web</span>
-            <span class="chapter-years">2010 – Now</span>
-          </div>
+
+        <div class="landing-kicker">
+          <span class="kicker-dot"></span>
+          A history of the web
         </div>
-        <button id="start-btn" onclick="loadChapter(1)">Start from the beginning →</button>
+
+        <h1 class="landing-title">
+          How It<br>
+          <span class="title-accent">Started</span>
+        </h1>
+
+        <p class="landing-subtitle">
+          From a cold-war military network to the app on your screen.
+          Every era lived in. Every concept explained.
+          Six chapters through 60 years of the web.
+        </p>
+
+        <div class="chapter-grid">
+
+          <div class="chapter-card ch-terminal" data-chapter="1" onclick="loadChapter(1)">
+            <div class="card-era-preview">
+              <span class="preview-terminal">C:\&gt; connect ARPANET_<br>Linking to IMP node 1...<br><span class="preview-cursor">█</span></span>
+            </div>
+            <div class="card-body">
+              <div class="card-num">01</div>
+              <div class="card-info">
+                <h3>Before the Web</h3>
+                <span>1960s – 1989</span>
+              </div>
+              <div class="card-arrow">→</div>
+            </div>
+          </div>
+
+          <div class="chapter-card ch-earlyweb" data-chapter="2" onclick="loadChapter(2)">
+            <div class="card-era-preview">
+              <span class="preview-early">
+                <b>WorldWideWeb</b> — T. Berners-Lee<br>
+                <u style="color:#0000ee">http://info.cern.ch/</u><br>
+                <hr style="border:1px solid #888;margin:4px 0">
+                Welcome to the World Wide Web.
+              </span>
+            </div>
+            <div class="card-body">
+              <div class="card-num">02</div>
+              <div class="card-info">
+                <h3>The First Web</h3>
+                <span>1989 – 1995</span>
+              </div>
+              <div class="card-arrow">→</div>
+            </div>
+          </div>
+
+          <div class="chapter-card ch-late90s" data-chapter="3" onclick="loadChapter(3)">
+            <div class="card-era-preview">
+              <span class="preview-90s">
+                ★ WELCOME TO MY PAGE ★<br>
+                <span style="color:#00ffff">Best viewed in Netscape!</span><br>
+                <span style="font-size:10px;color:#ff69b4">Visitor #000847 🔥 SIGN MY GUESTBOOK</span>
+              </span>
+            </div>
+            <div class="card-body">
+              <div class="card-num">03</div>
+              <div class="card-info">
+                <h3>Browser Wars & Forums</h3>
+                <span>1993 – 2001</span>
+              </div>
+              <div class="card-arrow">→</div>
+            </div>
+          </div>
+
+          <div class="chapter-card ch-flash" data-chapter="4" onclick="loadChapter(4)">
+            <div class="card-era-preview">
+              <span class="preview-flash">
+                <span style="color:#aa44ff;text-shadow:0 0 8px #aa44ff">◈ ENTER SITE ◈</span><br>
+                <span style="font-size:10px;opacity:0.6">[ Loading... 47% ]</span><br>
+                <span style="font-size:9px;color:#8866dd">Macromedia Flash Player required</span>
+              </span>
+            </div>
+            <div class="card-body">
+              <div class="card-num">04</div>
+              <div class="card-info">
+                <h3>The Dynamic Web</h3>
+                <span>1995 – 2004</span>
+              </div>
+              <div class="card-arrow">→</div>
+            </div>
+          </div>
+
+          <div class="chapter-card ch-web20" data-chapter="5" onclick="loadChapter(5)">
+            <div class="card-era-preview">
+              <span class="preview-web20">
+                <span style="background:linear-gradient(180deg,#4d90fe,#1a73e8);color:#fff;padding:2px 8px;border-radius:4px;font-size:11px">MySpace</span>
+                <span style="background:linear-gradient(180deg,#3b5998,#2a4587);color:#fff;padding:2px 8px;border-radius:4px;font-size:11px">Facebook</span><br>
+                <span style="font-size:10px;color:#1a73e8;margin-top:4px;display:block">Ajax · jQuery · Web 2.0 Beta ✨</span>
+              </span>
+            </div>
+            <div class="card-body">
+              <div class="card-num">05</div>
+              <div class="card-info">
+                <h3>Web 2.0</h3>
+                <span>2004 – 2010</span>
+              </div>
+              <div class="card-arrow">→</div>
+            </div>
+          </div>
+
+          <div class="chapter-card ch-modern" data-chapter="6" onclick="loadChapter(6)">
+            <div class="card-era-preview">
+              <span class="preview-modern">
+                <span style="font-family:'Inter',sans-serif;font-weight:700;font-size:14px;color:#111">The Modern Web</span><br>
+                <span style="font-size:10px;color:#666;font-family:'Inter',sans-serif">React · Node · TypeScript · PWA</span><br>
+                <span style="font-size:10px;color:#0070f3;font-family:'Inter',sans-serif">HTMX ← where we are now</span>
+              </span>
+            </div>
+            <div class="card-body">
+              <div class="card-num">06</div>
+              <div class="card-info">
+                <h3>The Modern Web</h3>
+                <span>2010 – Now</span>
+              </div>
+              <div class="card-arrow">→</div>
+            </div>
+          </div>
+
+        </div>
+
+        <button id="start-btn" onclick="loadChapter(1)">
+          Start from the beginning →
+        </button>
+
+        <p class="landing-footnote">Use arrow keys to navigate between chapters</p>
+
       </div>
     </div>
 
-    <!-- CHAPTER CONTENT (loaded by HTMX / JS) -->
+    <!-- ── CHAPTER SCREEN ── -->
     <div id="chapter-screen" style="display:none;">
       <div id="chapter-content"></div>
       <div id="chapter-nav-controls">
-        <button id="prev-btn" onclick="prevChapter()">← Previous</button>
+        <button id="prev-btn" onclick="prevChapter()">← Back</button>
         <span id="chapter-progress"></span>
         <button id="next-btn" onclick="nextChapter()">Next →</button>
       </div>

@@ -1,34 +1,58 @@
 /* LATE 90s THEME — Chapter 3: Browser Wars (1993–2001)
-   Table layouts. Comic Sans vibes. Neon on dark. Hit counters.
-   You know the aesthetic. */
-
-@import url('https://fonts.googleapis.com/css2?family=Rammetto+One&display=swap');
+   Dark backgrounds. Neon. Comic Sans. Tiled stars.
+   Hit counters. Guestbooks. Under Construction GIFs.
+   You know exactly what this looks like. */
 
 [data-theme="late-90s"] {
   --color-bg: #000033;
   --color-text: #ffffff;
   --color-accent: #ffff00;
-  --font-body: 'Comic Sans MS', 'Chalkboard SE', cursive;
+  --font-body: 'Comic Sans MS', 'Chalkboard SE', 'Bradley Hand', cursive;
   --font-mono: 'Courier New', monospace;
   --nav-bg: #000066;
-  --nav-bottom-bg: #000033;
+  --nav-bottom-bg: rgba(0,0,33,0.98);
 }
 
 [data-theme="late-90s"] body {
-  background: #000033;
-  background-image: url("data:image/svg+xml,%3Csvg width='20' height='20' xmlns='http://www.w3.org/2000/svg'%3E%3Ccircle cx='2' cy='2' r='1' fill='rgba(255,255,255,0.05)'/%3E%3C/svg%3E");
+  background-color: #000033;
+  /* Starfield tiling background — very 1998 */
+  background-image:
+    radial-gradient(1px 1px at 20% 30%, rgba(255,255,255,0.8) 0%, transparent 100%),
+    radial-gradient(1px 1px at 40% 70%, rgba(255,255,255,0.6) 0%, transparent 100%),
+    radial-gradient(1px 1px at 60% 20%, rgba(255,255,255,0.9) 0%, transparent 100%),
+    radial-gradient(1px 1px at 80% 60%, rgba(255,255,255,0.5) 0%, transparent 100%),
+    radial-gradient(1px 1px at 10% 80%, rgba(255,255,255,0.7) 0%, transparent 100%),
+    radial-gradient(1px 1px at 90% 10%, rgba(255,255,255,0.8) 0%, transparent 100%),
+    radial-gradient(1px 1px at 50% 50%, rgba(255,255,255,0.4) 0%, transparent 100%),
+    radial-gradient(1px 1px at 30% 90%, rgba(255,255,255,0.6) 0%, transparent 100%),
+    radial-gradient(2px 2px at 70% 40%, rgba(255,255,180,0.4) 0%, transparent 100%),
+    radial-gradient(1px 1px at 15% 50%, rgba(255,255,255,0.5) 0%, transparent 100%);
+}
+
+/* Marquee-style pulsing on h1 */
+@keyframes rainbow {
+  0%   { color: #ff0000; text-shadow: 2px 2px 0 #880000; }
+  16%  { color: #ff8800; text-shadow: 2px 2px 0 #884400; }
+  33%  { color: #ffff00; text-shadow: 2px 2px 0 #888800; }
+  50%  { color: #00ff00; text-shadow: 2px 2px 0 #008800; }
+  66%  { color: #00ffff; text-shadow: 2px 2px 0 #008888; }
+  83%  { color: #ff00ff; text-shadow: 2px 2px 0 #880088; }
+  100% { color: #ff0000; text-shadow: 2px 2px 0 #880000; }
 }
 
 [data-theme="late-90s"] #top-nav {
   border-bottom: 3px solid #ffff00;
-  background: linear-gradient(90deg, #000066, #000033, #000066);
+  border-top: 2px solid rgba(255,255,0,0.3);
+  background: linear-gradient(90deg, #000066, #000044, #000066);
+  box-shadow: 0 2px 0 rgba(255,255,0,0.2);
 }
 
 [data-theme="late-90s"] #nav-title {
   color: #ffff00;
   font-family: 'Comic Sans MS', cursive;
-  font-size: 16px;
-  text-shadow: 0 0 10px rgba(255,255,0,0.5);
+  font-size: 15px;
+  text-shadow: 0 0 10px rgba(255,255,0,0.6), 1px 1px 0 #888800;
+  letter-spacing: 0.05em;
 }
 
 [data-theme="late-90s"] .dot {
@@ -36,71 +60,90 @@
   border-radius: 0;
   width: 12px;
   height: 12px;
+  box-shadow: 0 0 6px rgba(255,255,0,0.5);
 }
 
 [data-theme="late-90s"] #chapter-content h1 {
-  font-family: 'Comic Sans MS', 'Impact', cursive;
-  color: #ffff00;
-  text-shadow: 2px 2px 0 #ff0000, 4px 4px 0 rgba(0,0,0,0.3);
-  font-size: clamp(28px, 5vw, 48px);
+  font-family: 'Comic Sans MS', cursive;
+  animation: rainbow 3s linear infinite;
+  font-size: clamp(26px, 5vw, 44px);
   text-align: center;
+  margin-bottom: 16px;
 }
+
+[data-theme="late-90s"] #chapter-content h1::before { content: '✦ '; }
+[data-theme="late-90s"] #chapter-content h1::after  { content: ' ✦'; }
 
 [data-theme="late-90s"] #chapter-content h2 {
   font-family: 'Comic Sans MS', cursive;
   color: #00ffff;
-  text-shadow: 0 0 8px rgba(0,255,255,0.5);
+  text-shadow: 0 0 10px rgba(0,255,255,0.5), 1px 1px 0 #008888;
   border: none;
-  text-align: left;
+  border-bottom: 2px dashed rgba(0,255,255,0.3);
+  padding-bottom: 8px;
 }
 
 [data-theme="late-90s"] #chapter-content h3 {
   color: #ff69b4;
   font-family: 'Comic Sans MS', cursive;
+  text-shadow: 0 0 8px rgba(255,105,180,0.4);
 }
 
 [data-theme="late-90s"] #chapter-content p {
   font-family: 'Comic Sans MS', cursive;
   font-size: 15px;
-  color: #e0e0ff;
+  color: #e8e8ff;
+  line-height: 1.9;
+}
+
+[data-theme="late-90s"] #chapter-content .chapter-eyebrow {
+  color: #ff69b4;
+  font-family: 'Comic Sans MS', cursive;
+  text-shadow: 0 0 6px rgba(255,105,180,0.4);
 }
 
 [data-theme="late-90s"] #chapter-content .chapter-intro {
   color: #ffffff;
-  border-bottom: 3px dashed #ffff00;
+  border-bottom: 3px dashed rgba(255,255,0,0.3);
   font-family: 'Comic Sans MS', cursive;
+  font-size: 16px;
 }
 
 [data-theme="late-90s"] #chapter-content code {
   background: #000;
   color: #00ff00;
   border: 1px solid #00ff00;
+  text-shadow: 0 0 4px rgba(0,255,0,0.4);
 }
 
 [data-theme="late-90s"] #chapter-content pre {
   background: #000000;
   border: 2px solid #00ff00;
   color: #00ff00;
-  box-shadow: 0 0 15px rgba(0,255,0,0.2);
+  box-shadow: 0 0 20px rgba(0,255,0,0.15), inset 0 0 10px rgba(0,255,0,0.05);
 }
 
 [data-theme="late-90s"] #chapter-content blockquote {
   border-left: 4px solid #ffff00;
-  color: #ffff00;
+  color: #ffff88;
   background: rgba(255,255,0,0.05);
   padding: 12px 20px;
-}
-
-[data-theme="late-90s"] .concept-box {
-  background: rgba(0,0,100,0.5);
-  border: 2px solid #ffff00;
-  border-radius: 0;
-  box-shadow: 0 0 15px rgba(255,255,0,0.15);
-}
-
-[data-theme="late-90s"] .concept-box .concept-label {
-  color: #ffff00;
   font-family: 'Comic Sans MS', cursive;
+  font-style: normal;
+}
+
+[data-theme="late-90s"] #chapter-content ul li {
+  color: #e8e8ff;
+  font-family: 'Comic Sans MS', cursive;
+}
+
+[data-theme="late-90s"] #chapter-content ul li::marker {
+  color: #ffff00;
+}
+
+[data-theme="late-90s"] #chapter-content strong {
+  color: #ffff00;
+  text-shadow: 0 0 4px rgba(255,255,0,0.3);
 }
 
 [data-theme="late-90s"] #prev-btn,
@@ -112,28 +155,34 @@
   font-family: 'Comic Sans MS', cursive;
   text-transform: uppercase;
   letter-spacing: 0.05em;
+  text-shadow: 0 0 6px rgba(255,255,0,0.4);
 }
-
 [data-theme="late-90s"] #prev-btn:hover,
 [data-theme="late-90s"] #next-btn:hover {
   background: #000066;
-  box-shadow: 0 0 10px rgba(255,255,0,0.4);
+  box-shadow: 0 0 15px rgba(255,255,0,0.3);
 }
 
 [data-theme="late-90s"] #chapter-nav-controls {
-  border-top: 3px solid #ffff00;
+  border-top: 3px solid rgba(255,255,0,0.4);
   background: rgba(0,0,33,0.98);
 }
 
-/* Marquee-style decoration */
-[data-theme="late-90s"] #chapter-content h1::before {
-  content: '★ ';
-}
-[data-theme="late-90s"] #chapter-content h1::after {
-  content: ' ★';
+[data-theme="late-90s"] #chapter-progress {
+  color: rgba(255,255,0,0.5);
+  font-family: 'Comic Sans MS', cursive;
 }
 
-[data-theme="late-90s"] #chapter-content .chapter-eyebrow {
-  color: #ff69b4;
+/* The under-construction vibe */
+[data-theme="late-90s"] #chapter-content::before {
+  content: '⚠ This page is best viewed at 800×600 resolution in Netscape Navigator 4.0 ⚠';
+  display: block;
+  text-align: center;
   font-family: 'Comic Sans MS', cursive;
+  font-size: 10px;
+  color: #ff69b4;
+  margin-bottom: 24px;
+  padding: 6px;
+  border: 1px dashed rgba(255,105,180,0.3);
+  opacity: 0.7;
 }

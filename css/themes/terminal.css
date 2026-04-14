@@ -1,33 +1,48 @@
 /* TERMINAL THEME — Chapter 1: Before the Web (1960s–1989)
-   Green phosphor on black CRT monitor. */
+   Green phosphor CRT. Scanlines. That specific glow.
+   You are logged into something important. */
 
 [data-theme="terminal"] {
   --color-bg: #000000;
   --color-text: #00e040;
   --color-accent: #00ff41;
-  --font-body: 'Courier New', Courier, monospace;
-  --font-mono: 'Courier New', Courier, monospace;
-  --nav-bg: rgba(0,0,0,0.9);
+  --font-body: 'JetBrains Mono', 'Courier New', Courier, monospace;
+  --font-mono: 'JetBrains Mono', 'Courier New', Courier, monospace;
+  --nav-bg: rgba(0,0,0,0.95);
   --nav-bottom-bg: rgba(0,0,0,0.98);
 }
 
 [data-theme="terminal"] body {
   background: #000;
+  /* CRT scanlines */
   background-image: repeating-linear-gradient(
     0deg,
     transparent,
-    transparent 2px,
-    rgba(0, 200, 60, 0.015) 2px,
-    rgba(0, 200, 60, 0.015) 4px
+    transparent 3px,
+    rgba(0, 200, 60, 0.018) 3px,
+    rgba(0, 200, 60, 0.018) 4px
   );
+}
+
+/* CRT screen flicker — subtle */
+@keyframes flicker {
+  0%, 97%, 100% { opacity: 1; }
+  98% { opacity: 0.97; }
+  99% { opacity: 0.99; }
+}
+[data-theme="terminal"] #chapter-content {
+  animation: flicker 8s ease-in-out infinite;
 }
 
 [data-theme="terminal"] #top-nav {
   border-bottom: 1px solid rgba(0, 255, 65, 0.2);
+  background: rgba(0,0,0,0.98);
 }
 
 [data-theme="terminal"] #nav-title {
   color: #00ff41;
+  text-shadow: 0 0 8px rgba(0,255,65,0.6);
+  letter-spacing: 0.08em;
 }
 
 [data-theme="terminal"] .dot {
@@ -35,82 +50,103 @@
   border-radius: 0;
   width: 10px;
   height: 10px;
+  box-shadow: 0 0 4px rgba(0,255,65,0.5);
+}
+[data-theme="terminal"] .dot.active {
+  box-shadow: 0 0 10px rgba(0,255,65,0.8);
 }
 
 [data-theme="terminal"] #chapter-content h1 {
   color: #00ff41;
-  text-shadow: 0 0 20px rgba(0,255,65,0.4);
-  font-size: clamp(24px, 3.5vw, 36px);
+  text-shadow: 0 0 20px rgba(0,255,65,0.5), 0 0 40px rgba(0,255,65,0.2);
+  font-size: clamp(22px, 3vw, 34px);
+  letter-spacing: 0.02em;
+}
+
+[data-theme="terminal"] #chapter-content h1::after {
+  content: ' _';
+  animation: blink 1s step-end infinite;
+  color: #00ff41;
 }
 
 [data-theme="terminal"] #chapter-content h2 {
   color: #00e040;
   border-left: 3px solid #00ff41;
-  padding-left: 12px;
+  padding-left: 14px;
+  text-shadow: 0 0 8px rgba(0,255,65,0.3);
+  letter-spacing: 0.02em;
+}
+
+[data-theme="terminal"] #chapter-content h3 {
+  color: #00cc35;
+  letter-spacing: 0.02em;
+}
+
+[data-theme="terminal"] #chapter-content p {
+  color: #00d038;
+}
+
+[data-theme="terminal"] #chapter-content .chapter-eyebrow {
+  color: rgba(0,255,65,0.5);
 }
 
 [data-theme="terminal"] #chapter-content .chapter-intro {
-  border-bottom-color: rgba(0,255,65,0.2);
+  border-bottom: 1px solid rgba(0,255,65,0.15);
+  color: #00cc35;
 }
 
 [data-theme="terminal"] #chapter-content code {
-  background: rgba(0,255,65,0.1);
+  background: rgba(0,255,65,0.08);
   color: #00ff41;
-  border: 1px solid rgba(0,255,65,0.3);
+  border: 1px solid rgba(0,255,65,0.25);
+  text-shadow: 0 0 4px rgba(0,255,65,0.3);
 }
 
 [data-theme="terminal"] #chapter-content pre {
   background: #000;
-  border-color: rgba(0,255,65,0.3);
+  border: 1px solid rgba(0,255,65,0.3);
   color: #00e040;
+  box-shadow: 0 0 20px rgba(0,255,65,0.06), inset 0 0 20px rgba(0,255,65,0.03);
 }
 
 [data-theme="terminal"] #chapter-content blockquote {
-  border-left-color: #00ff41;
-  color: #00cc35;
-}
-
-[data-theme="terminal"] .concept-box {
+  border-left: 3px solid rgba(0,255,65,0.5);
+  color: rgba(0,200,60,0.8);
   background: rgba(0,255,65,0.03);
-  border-color: rgba(0,255,65,0.2);
+  padding: 12px 20px;
 }
 
-[data-theme="terminal"] .concept-box .concept-label {
+[data-theme="terminal"] #chapter-content ul li::marker {
   color: #00ff41;
+}
+
+[data-theme="terminal"] #chapter-content strong {
+  color: #00ff41;
+  text-shadow: 0 0 6px rgba(0,255,65,0.3);
 }
 
 [data-theme="terminal"] #prev-btn,
 [data-theme="terminal"] #next-btn {
   color: #00ff41;
   border-color: rgba(0,255,65,0.3);
+  font-family: 'Courier New', monospace;
+  letter-spacing: 0.05em;
+  text-shadow: 0 0 6px rgba(0,255,65,0.4);
 }
-
 [data-theme="terminal"] #prev-btn:hover,
 [data-theme="terminal"] #next-btn:hover {
   background: rgba(0,255,65,0.08);
   border-color: #00ff41;
+  box-shadow: 0 0 12px rgba(0,255,65,0.2);
 }
 
 [data-theme="terminal"] #chapter-nav-controls {
-  border-top-color: rgba(0,255,65,0.15);
+  border-top: 1px solid rgba(0,255,65,0.15);
   background: rgba(0,0,0,0.98);
 }
 
-[data-theme="terminal"] #start-btn {
-  background: #00ff41;
-  color: #000;
-}
-
-[data-theme="terminal"] .chapter-entry:hover {
-  background: rgba(0,255,65,0.05);
-  border-color: rgba(0,255,65,0.15);
-}
-
-/* Cursor blink on title */
-[data-theme="terminal"] #chapter-content h1::after {
-  content: '_';
-  animation: blink 1s step-end infinite;
-  color: #00ff41;
+[data-theme="terminal"] #chapter-progress {
+  color: rgba(0,255,65,0.4);
 }
 
 @keyframes blink {
