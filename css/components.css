@@ -6,12 +6,27 @@
 /* ---- KEY DATES TIMELINE ---- */
 .key-dates {
   margin: 48px 0;
-  padding: 32px;
+  padding: 32px 32px 32px 48px;
   background: var(--dates-bg, rgba(255,255,255,0.03));
   border: 1px solid var(--dates-border, rgba(255,255,255,0.08));
   border-radius: 16px;
   position: relative;
 }
+/* Vertical timeline line */
+.key-dates::before {
+  content: '';
+  position: absolute;
+  left: 48px;
+  top: 72px;
+  bottom: 32px;
+  width: 1px;
+  background: linear-gradient(to bottom,
+    var(--color-accent, #4f8eff),
+    rgba(79,142,255,0.1)
+  );
+  opacity: 0.4;
+}
+
 .key-dates-title {
   font-family: var(--font-mono, monospace);
   font-size: 11px;
@@ -23,19 +38,38 @@
   align-items: center;
   gap: 10px;
 }
+.key-dates-title::before {
+  content: '◈';
+  font-size: 14px;
+}
 .key-dates-title::after {
   content: '';
   flex: 1;
   height: 1px;
   background: var(--dates-border, rgba(255,255,255,0.08));
 }
+
 .date-item {
   display: grid;
-  grid-template-columns: 100px 1fr;
-  gap: 16px;
+  grid-template-columns: 110px 1fr;
+  gap: 20px;
   padding: 14px 0;
   border-bottom: 1px solid var(--dates-border, rgba(255,255,255,0.05));
   align-items: start;
+  position: relative;
+}
+/* Timeline dot at each date */
+.date-item::before {
+  content: '';
+  position: absolute;
+  left: -30px;
+  top: 18px;
+  width: 8px;
+  height: 8px;
+  border-radius: 50%;
+  background: var(--color-accent, #4f8eff);
+  box-shadow: 0 0 8px var(--color-accent, #4f8eff);
+  opacity: 0.8;
 }
 .date-item:last-child {
   border-bottom: none;
@@ -44,15 +78,16 @@
 .date-stamp {
   font-family: var(--font-mono, monospace);
   font-size: 11px;
-  font-weight: 600;
+  font-weight: 700;
   color: var(--color-accent, #4f8eff);
-  opacity: 0.8;
-  line-height: 1.4;
+  opacity: 0.9;
+  line-height: 1.5;
   padding-top: 2px;
+  letter-spacing: 0.03em;
 }
 .date-event {
   font-size: 14px;
-  line-height: 1.5;
+  line-height: 1.6;
   opacity: 0.85;
   margin: 0;
 }
@@ -64,11 +99,20 @@
 /* ---- FUN FACT BOX ---- */
 .fun-fact {
   margin: 32px 0;
-  padding: 20px 24px;
+  padding: 20px 24px 20px 68px;
   background: var(--fact-bg, rgba(79,142,255,0.06));
-  border-left: 3px solid var(--color-accent, #4f8eff);
-  border-radius: 0 12px 12px 0;
+  border: 1px solid rgba(79,142,255,0.15);
+  border-radius: 12px;
   position: relative;
+}
+.fun-fact::before {
+  content: '💡';
+  position: absolute;
+  left: 22px;
+  top: 50%;
+  transform: translateY(-50%);
+  font-size: 22px;
+  filter: grayscale(0.2);
 }
 .fun-fact-label {
   display: block;
@@ -78,11 +122,11 @@
   text-transform: uppercase;
   color: var(--color-accent, #4f8eff);
   margin-bottom: 8px;
-  font-weight: 600;
+  font-weight: 700;
 }
 .fun-fact p {
   font-size: 14px;
-  line-height: 1.6;
+  line-height: 1.65;
   opacity: 0.85;
   margin: 0 !important;
 }
@@ -102,12 +146,12 @@
   border-radius: 12px;
   overflow: hidden;
   cursor: pointer;
-  transition: transform 0.2s, box-shadow 0.2s;
+  transition: transform 0.25s cubic-bezier(.22,.68,0,1.2), box-shadow 0.25s ease;
   border: 1px solid rgba(255,255,255,0.06);
 }
 .chapter-card:hover {
-  transform: translateY(-2px);
-  box-shadow: 0 8px 32px rgba(0,0,0,0.3);
+  transform: translateY(-4px) scale(1.01);
+  box-shadow: 0 12px 40px rgba(0,0,0,0.4);
 }
 .card-era-preview {
   padding: 16px;
@@ -156,16 +200,12 @@
 }
 .chapter-card:hover .card-arrow {
   opacity: 0.9;
-  transform: translateX(3px);
+  transform: translateX(4px);
 }
 
 /* Era-specific card backgrounds */
-.ch-terminal {
-  background: #000;
-}
-.ch-terminal .card-era-preview {
-  background: #000;
-}
+.ch-terminal { background: #000; }
+.ch-terminal .card-era-preview { background: #000; }
 .preview-terminal {
   color: #00ff41;
   text-shadow: 0 0 6px rgba(0,255,65,0.5);
@@ -261,63 +301,85 @@
   background: #d4d0c8;
   border: 2px inset #888;
   border-radius: 0;
+  padding-left: 52px;
 }
+[data-theme="early-web"] .key-dates::before { background: #000080; opacity: 0.3; left: 52px; }
+[data-theme="early-web"] .date-item::before { background: #000080; box-shadow: none; left: -26px; }
 [data-theme="early-web"] .key-dates-title { color: #000080; }
 [data-theme="early-web"] .date-stamp { color: #000080; }
 [data-theme="early-web"] .date-item { border-bottom-color: #aaa; }
-[data-theme="early-web"] .fun-fact { background: #d4d0c8; border-left-color: #000080; border-radius: 0; }
+[data-theme="early-web"] .fun-fact { background: #d4d0c8; border-color: #000080; border-radius: 0; }
+[data-theme="early-web"] .fun-fact::before { content: '?'; font-size: 20px; color: #000080; filter: none; }
 [data-theme="early-web"] .fun-fact-label { color: #000080; }
 
 [data-theme="terminal"] .key-dates {
   background: rgba(0,255,65,0.03);
   border-color: rgba(0,255,65,0.2);
   border-radius: 0;
+  padding-left: 52px;
 }
+[data-theme="terminal"] .key-dates::before { background: linear-gradient(to bottom, #00ff41, rgba(0,255,65,0.05)); opacity: 0.6; left: 52px; }
+[data-theme="terminal"] .date-item::before { background: #00ff41; box-shadow: 0 0 6px rgba(0,255,65,0.8); left: -26px; }
 [data-theme="terminal"] .key-dates-title { color: #00ff41; }
 [data-theme="terminal"] .key-dates-title::after { background: rgba(0,255,65,0.15); }
+[data-theme="terminal"] .key-dates-title::before { color: #00ff41; }
 [data-theme="terminal"] .date-stamp { color: #00ff41; }
 [data-theme="terminal"] .date-item { border-bottom-color: rgba(0,255,65,0.1); }
 [data-theme="terminal"] .date-event { color: #00e040; }
-[data-theme="terminal"] .fun-fact { background: rgba(0,255,65,0.04); border-left-color: #00ff41; }
+[data-theme="terminal"] .fun-fact { background: rgba(0,255,65,0.04); border-color: rgba(0,255,65,0.3); }
+[data-theme="terminal"] .fun-fact::before { content: '>_'; font-size: 14px; color: #00ff41; filter: none; }
 [data-theme="terminal"] .fun-fact-label { color: #00ff41; }
 
 [data-theme="late-90s"] .key-dates {
   background: rgba(0,0,80,0.5);
   border: 2px solid #ffff00;
   border-radius: 0;
+  padding-left: 52px;
 }
+[data-theme="late-90s"] .key-dates::before { background: linear-gradient(to bottom, #ffff00, rgba(255,255,0,0.05)); opacity: 0.5; left: 52px; }
+[data-theme="late-90s"] .date-item::before { background: #ffff00; box-shadow: 0 0 8px rgba(255,255,0,0.7); left: -26px; }
 [data-theme="late-90s"] .key-dates-title { color: #ffff00; font-family: 'Comic Sans MS', cursive; }
+[data-theme="late-90s"] .key-dates-title::before { color: #ffff00; }
 [data-theme="late-90s"] .key-dates-title::after { background: rgba(255,255,0,0.2); }
 [data-theme="late-90s"] .date-stamp { color: #00ffff; }
 [data-theme="late-90s"] .date-item { border-bottom-color: rgba(255,255,255,0.1); }
 [data-theme="late-90s"] .date-event { color: #e0e0ff; font-family: 'Comic Sans MS', cursive; }
-[data-theme="late-90s"] .fun-fact { background: rgba(255,255,0,0.05); border-left-color: #ffff00; }
+[data-theme="late-90s"] .fun-fact { background: rgba(255,255,0,0.05); border-color: rgba(255,255,0,0.3); }
+[data-theme="late-90s"] .fun-fact::before { content: '★'; color: #ffff00; filter: none; }
 [data-theme="late-90s"] .fun-fact-label { color: #ffff00; font-family: 'Comic Sans MS', cursive; }
 [data-theme="late-90s"] .fun-fact p { font-family: 'Comic Sans MS', cursive; color: #e0e0ff; }
 
 [data-theme="flash-era"] .key-dates {
   background: rgba(170,68,255,0.04);
   border-color: rgba(170,68,255,0.25);
+  padding-left: 52px;
 }
+[data-theme="flash-era"] .key-dates::before { background: linear-gradient(to bottom, #aa44ff, rgba(170,68,255,0.05)); left: 52px; }
+[data-theme="flash-era"] .date-item::before { background: #aa44ff; box-shadow: 0 0 8px rgba(170,68,255,0.8); left: -26px; }
 [data-theme="flash-era"] .key-dates-title { color: #aa44ff; }
+[data-theme="flash-era"] .key-dates-title::before { color: #aa44ff; }
 [data-theme="flash-era"] .key-dates-title::after { background: rgba(170,68,255,0.15); }
 [data-theme="flash-era"] .date-stamp { color: #aa44ff; }
 [data-theme="flash-era"] .date-event { color: #c8b8ff; }
 [data-theme="flash-era"] .date-item { border-bottom-color: rgba(170,68,255,0.1); }
-[data-theme="flash-era"] .fun-fact { background: rgba(170,68,255,0.06); border-left-color: #aa44ff; }
+[data-theme="flash-era"] .fun-fact { background: rgba(170,68,255,0.06); border-color: rgba(170,68,255,0.25); }
 [data-theme="flash-era"] .fun-fact-label { color: #aa44ff; }
 
 [data-theme="web20"] .key-dates {
   background: #f8faff;
   border: 1px solid #c8d8fa;
   box-shadow: 0 1px 4px rgba(0,0,0,0.06);
+  padding-left: 52px;
 }
+[data-theme="web20"] .key-dates::before { background: linear-gradient(to bottom, #1a73e8, rgba(26,115,232,0.1)); left: 52px; }
+[data-theme="web20"] .date-item::before { background: #1a73e8; box-shadow: 0 0 6px rgba(26,115,232,0.5); left: -26px; }
 [data-theme="web20"] .key-dates-title { color: #1a73e8; }
+[data-theme="web20"] .key-dates-title::before { color: #1a73e8; }
 [data-theme="web20"] .key-dates-title::after { background: #d8e8fa; }
 [data-theme="web20"] .date-stamp { color: #1a73e8; }
 [data-theme="web20"] .date-event { color: #333; }
 [data-theme="web20"] .date-item { border-bottom-color: #e8f0fe; }
-[data-theme="web20"] .fun-fact { background: #f0f6ff; border-left-color: #4d90fe; }
+[data-theme="web20"] .fun-fact { background: #f0f6ff; border-color: #c0d4f8; }
 [data-theme="web20"] .fun-fact-label { color: #1a73e8; }
 [data-theme="web20"] .fun-fact p { color: #333; }
 
@@ -325,12 +387,16 @@
   background: #fafafa;
   border-color: #eee;
   border-radius: 16px;
+  padding-left: 52px;
 }
+[data-theme="modern"] .key-dates::before { background: linear-gradient(to bottom, #0070f3, rgba(0,112,243,0.05)); left: 52px; }
+[data-theme="modern"] .date-item::before { background: #0070f3; box-shadow: 0 0 6px rgba(0,112,243,0.4); left: -26px; }
 [data-theme="modern"] .key-dates-title { color: #0070f3; }
+[data-theme="modern"] .key-dates-title::before { color: #0070f3; }
 [data-theme="modern"] .key-dates-title::after { background: #eee; }
 [data-theme="modern"] .date-stamp { color: #0070f3; }
 [data-theme="modern"] .date-event { color: #333; }
 [data-theme="modern"] .date-item { border-bottom-color: #f0f0f0; }
-[data-theme="modern"] .fun-fact { background: #f8f9ff; border-left-color: #0070f3; }
+[data-theme="modern"] .fun-fact { background: #f8f9ff; border-color: #e0e8ff; }
 [data-theme="modern"] .fun-fact-label { color: #0070f3; }
 [data-theme="modern"] .fun-fact p { color: #444; }
