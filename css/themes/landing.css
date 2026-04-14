@@ -12,6 +12,86 @@
 [data-theme="landing"] body {
   background: var(--color-bg);
   background-image:
-    radial-gradient(ellipse at 20% 50%, rgba(79,142,255,0.06) 0%, transparent 60%),
-    radial-gradient(ellipse at 80% 20%, rgba(120,80,255,0.04) 0%, transparent 50%);
+    radial-gradient(ellipse at 20% 50%, rgba(79,142,255,0.08) 0%, transparent 60%),
+    radial-gradient(ellipse at 80% 20%, rgba(120,80,255,0.06) 0%, transparent 50%),
+    radial-gradient(ellipse at 60% 90%, rgba(60,180,255,0.04) 0%, transparent 40%);
+}
+
+/* Stars in the background */
+[data-theme="landing"] body::before {
+  content: '';
+  position: fixed;
+  inset: 0;
+  background-image:
+    radial-gradient(1px 1px at 15% 25%, rgba(255,255,255,0.4) 0%, transparent 100%),
+    radial-gradient(1px 1px at 35% 65%, rgba(255,255,255,0.3) 0%, transparent 100%),
+    radial-gradient(1.5px 1.5px at 52% 12%, rgba(255,255,255,0.5) 0%, transparent 100%),
+    radial-gradient(1px 1px at 71% 78%, rgba(255,255,255,0.25) 0%, transparent 100%),
+    radial-gradient(1px 1px at 88% 35%, rgba(255,255,255,0.35) 0%, transparent 100%),
+    radial-gradient(1px 1px at 7% 88%, rgba(255,255,255,0.2) 0%, transparent 100%),
+    radial-gradient(1.5px 1.5px at 45% 45%, rgba(255,255,255,0.15) 0%, transparent 100%),
+    radial-gradient(1px 1px at 92% 62%, rgba(255,255,255,0.3) 0%, transparent 100%),
+    radial-gradient(1px 1px at 28% 88%, rgba(255,255,255,0.2) 0%, transparent 100%),
+    radial-gradient(1px 1px at 66% 40%, rgba(255,255,255,0.15) 0%, transparent 100%),
+    radial-gradient(1px 1px at 80% 85%, rgba(255,255,255,0.25) 0%, transparent 100%),
+    radial-gradient(1px 1px at 12% 55%, rgba(255,255,255,0.2) 0%, transparent 100%);
+  pointer-events: none;
+  z-index: 0;
+  animation: starDrift 60s linear infinite;
+}
+
+@keyframes starDrift {
+  from { transform: translateY(0); }
+  to { transform: translateY(-20px); }
+}
+
+[data-theme="landing"] #landing-screen {
+  position: relative;
+  z-index: 1;
+}
+
+/* Glowing accent under the title */
+[data-theme="landing"] .landing-title {
+  position: relative;
+}
+[data-theme="landing"] .landing-title .title-accent {
+  background: linear-gradient(135deg, #4f8eff 0%, #a78bfa 50%, #4f8eff 100%);
+  background-size: 200% auto;
+  -webkit-background-clip: text;
+  -webkit-text-fill-color: transparent;
+  background-clip: text;
+  animation: shimmer 4s linear infinite;
+}
+@keyframes shimmer {
+  from { background-position: 0% center; }
+  to { background-position: 200% center; }
+}
+
+/* Chapter stat bar under subtitle */
+[data-theme="landing"] .landing-stats {
+  display: flex;
+  gap: 28px;
+  margin-bottom: 40px;
+  padding: 16px 0;
+  border-top: 1px solid rgba(255,255,255,0.06);
+  border-bottom: 1px solid rgba(255,255,255,0.06);
+}
+[data-theme="landing"] .stat-item {
+  display: flex;
+  flex-direction: column;
+  gap: 2px;
+}
+[data-theme="landing"] .stat-num {
+  font-size: 22px;
+  font-weight: 700;
+  color: #4f8eff;
+  font-family: 'JetBrains Mono', monospace;
+  letter-spacing: -0.02em;
+}
+[data-theme="landing"] .stat-label {
+  font-size: 11px;
+  opacity: 0.4;
+  text-transform: uppercase;
+  letter-spacing: 0.1em;
+  font-family: 'JetBrains Mono', monospace;
 }
