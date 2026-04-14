@@ -157,7 +157,7 @@ async function loadChapter(chapterId) {
   });
 }
 
-// ---- AUDIO PLAYER ----
+// ---- WINAMP AUDIO PLAYER ----
 let audioReady = false;
 
 function audioFmtTime(s) {
@@ -173,10 +173,51 @@ function audioToggle() {
   el.paused ? el.play() : el.pause();
 }
 
+function audioStop() {
+  const el = document.getElementById('audio-el');
+  el.pause();
+  el.currentTime = 0;
+}
+
 function audioToggleMute() {
   const el = document.getElementById('audio-el');
   el.muted = !el.muted;
   document.getElementById('audio-vol-btn').textContent = el.muted ? '🔇' : '🔊';
+}
+
+function audioVolume(val) {
+  const el = document.getElementById('audio-el');
+  el.volume = val / 100;
+  el.muted = (val == 0);
+  document.getElementById('audio-vol-btn').textContent = (val == 0) ? '🔇' : '🔊';
+}
+
+function audioSeekRel(secs) {
+  const el = document.getElementById('audio-el');
+  if (!audioReady) return;
+  el.currentTime = Math.max(0, Math.min(el.duration || 0, el.currentTime + secs));
+}
+
+function winampMinimize() {
+  const player = document.getElementById('audio-player');
+  player.classList.toggle('wa-minimized');
+}
+
+function winampSetPlaying(playing) {
+  const spectrum = document.getElementById('wa-spectrum');
+  const playBtn = document.getElementById('audio-play-btn');
+  const marquee = document.getElementById('audio-track-title');
+  if (playing) {
+    spectrum.classList.add('playing');
+    playBtn.textContent = '⏸';
+    playBtn.classList.remove('wa-play');
+    marquee.classList.remove('paused');
+  } else {
+    spectrum.classList.remove('playing');
+    playBtn.textContent = '▶';
+    playBtn.classList.add('wa-play');
+    marquee.classList.add('paused');
+  }
 }
 
 function loadAudio(chapterId) {
@@ -185,26 +226,57 @@ function loadAudio(chapterId) {
   const player = document.getElementById('audio-player');
   const src = `audio/ch${chapterId}.mp3`;
 
-  // Pause and reset previous
   el.pause();
   audioReady = false;
   player.classList.remove('visible');
-  document.getElementById('audio-play-btn').textContent = '▶';
+  winampSetPlaying(false);
   document.getElementById('audio-seek').value = 0;
   document.getElementById('audio-current').textContent = '0:00';
   document.getElementById('audio-duration').textContent = '0:00';
 
-  // Check if audio file exists before showing player
   fetch(src, { method: 'HEAD' })
     .then(res => {
       if (!res.ok) return;
       el.src = src;
       el.load();
-      document.getElementById('audio-track-title').textContent =
-        `${chapter.title}  ·  ${chapter.years}`;
+      const title = `${chapter.title}  ·  ${chapter.years}  ·  How It Started`;
+      document.getElementById('audio-track-title').textContent = title;
       player.classList.add('visible');
     })
-    .catch(() => { /* no audio for this chapter */ });
+    .catch(() => {});
+}
+
+// ---- WINAMP DRAG ----
+function initWinampDrag() {
+  const player = document.getElementById('audio-player');
+  const titlebar = player.querySelector('.wa-titlebar');
+  let dragging = false, startX, startY, origLeft, origBottom;
+
+  titlebar.addEventListener('mousedown', e => {
+    if (e.target.classList.contains('wa-tb-btn')) return;
+    dragging = true;
+    startX = e.clientX;
+    startY = e.clientY;
+    const rect = player.getBoundingClientRect();
+    origLeft = rect.left;
+    origBottom = window.innerHeight - rect.bottom;
+    player.style.right = 'auto';
+    player.style.left = origLeft + 'px';
+    player.style.bottom = origBottom + 'px';
+    e.preventDefault();
+  });
+
+  document.addEventListener('mousemove', e => {
+    if (!dragging) return;
+    const dx = e.clientX - startX;
+    const dy = e.clientY - startY;
+    const newLeft = Math.max(0, Math.min(window.innerWidth - player.offsetWidth, origLeft + dx));
+    const newBottom = Math.max(0, Math.min(window.innerHeight - player.offsetHeight, origBottom - dy));
+    player.style.left = newLeft + 'px';
+    player.style.bottom = newBottom + 'px';
+  });
+
+  document.addEventListener('mouseup', () => { dragging = false; });
 }
 
 // Wire up audio element events after DOM is ready
@@ -225,17 +297,11 @@ document.addEventListener('DOMContentLoaded', () => {
     document.getElementById('audio-duration').textContent = audioFmtTime(el.duration);
   });
 
-  el.addEventListener('play', () => {
-    document.getElementById('audio-play-btn').textContent = '⏸';
-  });
-
-  el.addEventListener('pause', () => {
-    document.getElementById('audio-play-btn').textContent = '▶';
-  });
-
+  el.addEventListener('play',  () => winampSetPlaying(true));
+  el.addEventListener('pause', () => winampSetPlaying(false));
   el.addEventListener('ended', () => {
-    document.getElementById('audio-play-btn').textContent = '▶';
-    document.getElementById('audio-seek').value = 0;
+    winampSetPlaying(false);
+    seekEl.value = 0;
   });
 
   seekEl.addEventListener('input', () => {
@@ -243,6 +309,8 @@ document.addEventListener('DOMContentLoaded', () => {
       el.currentTime = (seekEl.value / 100) * el.duration;
     }
   });
+
+  initWinampDrag();
 });
 
 // ---- NAVIGATION ----
@@ -265,6 +333,7 @@ function backToLanding() {
     // Stop audio when leaving chapter view
     const audioEl = document.getElementById('audio-el');
     audioEl.pause();
+    winampSetPlaying(false);
     document.getElementById('audio-player').classList.remove('visible');
 
     setTheme('landing');

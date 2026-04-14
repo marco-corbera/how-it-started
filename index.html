@@ -190,21 +190,78 @@
     <!-- ── CHAPTER SCREEN ── -->
     <div id="chapter-screen" style="display:none;">
       <div id="chapter-content"></div>
-      <!-- ── AUDIO PLAYER ── -->
-      <div id="audio-player">
+      <!-- ── WINAMP AUDIO PLAYER ── -->
+      <div id="audio-player" id="winamp">
         <audio id="audio-el" preload="metadata"></audio>
-        <div class="audio-inner">
-          <button class="audio-btn" id="audio-play-btn" onclick="audioToggle()" title="Play / Pause">▶</button>
-          <div class="audio-track">
-            <span class="audio-title" id="audio-track-title"></span>
-            <div class="audio-progress-wrap">
-              <span class="audio-time" id="audio-current">0:00</span>
-              <input type="range" class="audio-seek" id="audio-seek" min="0" max="100" value="0" step="0.1">
-              <span class="audio-time" id="audio-duration">0:00</span>
+
+        <!-- Title bar -->
+        <div class="wa-titlebar">
+          <span class="wa-logo">WINAMP</span>
+          <div class="wa-titlebar-btns">
+            <button class="wa-tb-btn" id="wa-minimize" title="Minimize" onclick="winampMinimize()">_</button>
+            <button class="wa-tb-btn" onclick="backToLanding()" title="Close">×</button>
+          </div>
+        </div>
+
+        <!-- LCD display -->
+        <div class="wa-display">
+          <div class="wa-lcd-left">
+            <div class="wa-time" id="audio-current">0:00</div>
+            <div class="wa-bitrate">128k</div>
+          </div>
+          <div class="wa-lcd-center">
+            <div class="wa-marquee-wrap">
+              <div class="wa-marquee" id="audio-track-title">No track loaded</div>
+            </div>
+            <!-- Spectrum visualizer -->
+            <div class="wa-spectrum" id="wa-spectrum">
+              <div class="wa-bar" style="--h:30%"></div>
+              <div class="wa-bar" style="--h:60%"></div>
+              <div class="wa-bar" style="--h:80%"></div>
+              <div class="wa-bar" style="--h:45%"></div>
+              <div class="wa-bar" style="--h:90%"></div>
+              <div class="wa-bar" style="--h:55%"></div>
+              <div class="wa-bar" style="--h:70%"></div>
+              <div class="wa-bar" style="--h:35%"></div>
+              <div class="wa-bar" style="--h:50%"></div>
+              <div class="wa-bar" style="--h:65%"></div>
+              <div class="wa-bar" style="--h:40%"></div>
+              <div class="wa-bar" style="--h:75%"></div>
+              <div class="wa-bar" style="--h:25%"></div>
+              <div class="wa-bar" style="--h:85%"></div>
+              <div class="wa-bar" style="--h:20%"></div>
+              <div class="wa-bar" style="--h:60%"></div>
+              <div class="wa-bar" style="--h:45%"></div>
+              <div class="wa-bar" style="--h:70%"></div>
             </div>
           </div>
-          <button class="audio-btn audio-vol-btn" id="audio-vol-btn" onclick="audioToggleMute()" title="Mute / Unmute">🔊</button>
+          <div class="wa-lcd-right">
+            <div class="wa-duration" id="audio-duration">0:00</div>
+            <div class="wa-kbps">44k</div>
+          </div>
         </div>
+
+        <!-- Seek bar -->
+        <div class="wa-seekbar-row">
+          <input type="range" class="wa-seek" id="audio-seek" min="0" max="100" value="0" step="0.1">
+        </div>
+
+        <!-- Controls row -->
+        <div class="wa-controls">
+          <div class="wa-transport">
+            <button class="wa-btn wa-prev" onclick="audioSeekRel(-10)" title="Back 10s">⏮</button>
+            <button class="wa-btn wa-play" id="audio-play-btn" onclick="audioToggle()" title="Play/Pause">▶</button>
+            <button class="wa-btn wa-pause" onclick="audioToggle()" title="Pause">⏸</button>
+            <button class="wa-btn wa-stop" onclick="audioStop()" title="Stop">⏹</button>
+            <button class="wa-btn wa-next" onclick="audioSeekRel(10)" title="Skip 10s">⏭</button>
+          </div>
+          <div class="wa-vol-wrap">
+            <span class="wa-vol-label">VOL</span>
+            <input type="range" class="wa-vol-slider" id="audio-vol-slider" min="0" max="100" value="100" oninput="audioVolume(this.value)">
+          </div>
+          <button class="wa-eq-btn" id="audio-vol-btn" onclick="audioToggleMute()" title="Mute">🔊</button>
+        </div>
+
       </div>
       <div id="chapter-nav-controls">
         <button id="prev-btn" onclick="prevChapter()">← Back</button>
