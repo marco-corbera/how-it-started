@@ -119,6 +119,10 @@ function getChapters() {
   return currentLang === 'es' ? CHAPTERS_ES : CHAPTERS;
 }
 
+function getCourseModules() {
+  return currentLang === 'es' ? COURSE_MODULES_ES : COURSE_MODULES;
+}
+
 function t(key) {
   return TRANSLATIONS[currentLang][key] || TRANSLATIONS['en'][key] || key;
 }
@@ -150,6 +154,12 @@ function setLang(lang) {
     if (h3)   h3.textContent   = ch.title;
     if (span) span.textContent = ch.years;
   });
+
+  // If a course module is open, re-render it in the new language
+  if (courseMode && currentModule > 0) {
+    renderCourseModule(currentModule);
+    return;
+  }
 
   // If a chapter is open, reload its content and refresh nav/progress
   if (currentChapter > 0) {
@@ -650,7 +660,7 @@ function markCourseModulePassed(moduleId) {
   p[`module${moduleId}`] = { passed: true };
   saveProgress(p);
   const completed = Object.keys(p).filter(k => k.startsWith('module') && p[k].passed).length;
-  if (completed === COURSE_MODULES.length) {
+  if (completed === getCourseModules().length) {
     setTimeout(showCompletionModal, 800);
   }
 }
@@ -795,7 +805,7 @@ function showCompletionModal() {
   modal.classList.add('visible');
   const pillsEl = document.getElementById('completion-chapters-list');
   if (pillsEl) {
-    pillsEl.innerHTML = COURSE_MODULES.map(m =>
+    pillsEl.innerHTML = getCourseModules().map(m =>
       `<span class="completion-ch-pill">${m.title}</span>`).join('');
   }
   launchConfetti();
@@ -1268,6 +1278,421 @@ const COURSE_MODULES = [
   },
 ];
 
+// ---- COURSE DATA (SPANISH) ----
+const COURSE_MODULES_ES = [
+  {
+    id: 1,
+    eyebrow: 'Módulo 01',
+    title: 'Cómo Carga una Página',
+    intro: 'Cada vez que escribes una URL y presionas Enter, se desencadena una secuencia precisa — búsquedas DNS, conexiones TCP, conversaciones HTTP, análisis y renderizado. Todo ocurre en menos de un segundo. Entender esta secuencia es la base para comprender todo lo demás sobre la web.',
+    objectives: [
+      'Qué es DNS y por qué escribes nombres en lugar de números',
+      'Cómo se ve una petición y respuesta HTTP',
+      'Por qué una sola carga de página genera muchas peticiones separadas',
+    ],
+    sections: [
+      {
+        type: 'text',
+        heading: 'Paso 1 — Analizar la URL',
+        body: `La URL que escribes son en realidad tres cosas en una. Toma <code>https://example.com/about</code>. El <strong>esquema</strong> (<code>https://</code>) le dice al navegador qué protocolo usar. El <strong>host</strong> (<code>example.com</code>) es donde vive el servidor. La <strong>ruta</strong> (<code>/about</code>) es el recurso específico que estás solicitando. El navegador los separa antes de hacer cualquier otra cosa.`,
+      },
+      {
+        type: 'text',
+        heading: 'Paso 2 — DNS: Convertir Nombres en Números',
+        body: `Las computadoras no usan <code>example.com</code>. Usan direcciones IP — números como <code>93.184.216.34</code>. El DNS (Sistema de Nombres de Dominio) es la guía telefónica distribuida que traduce uno en el otro. Tu navegador primero revisa su caché local, luego la caché del SO, y luego consulta a un resolvedor DNS (generalmente tu proveedor de internet o el <code>8.8.8.8</code> de Google). La búsqueda completa suele tomar milisegundos de un solo dígito.`,
+      },
+      {
+        type: 'concept',
+        label: 'Concepto clave',
+        heading: '¿Qué es una Dirección IP?',
+        body: `Cada dispositivo en internet tiene una dirección IP — un número único que identifica su ubicación en la red. Las direcciones IPv4 se ven así: <code>93.184.216.34</code> (cuatro números entre 0 y 255). Hay ~4.300 millones de direcciones IPv4 posibles. Ya las agotamos, por eso existe IPv6 (direcciones de 128 bits, con combinaciones vastamente mayores). Tu laptop tiene una. El servidor al que te conectas tiene una. Incluso tu router tiene dos — una hacia tu red doméstica y otra hacia internet.`,
+      },
+      {
+        type: 'text',
+        heading: 'Paso 3 — La Conversación HTTP',
+        body: `Con la dirección IP, el navegador abre una conexión TCP (un protocolo de enlace de tres vías que confirma que ambos lados están listos). Luego envía una petición HTTP — un mensaje de texto estructurado:<br><br><code>GET /about HTTP/1.1<br>Host: example.com<br>User-Agent: Mozilla/5.0...</code><br><br>El servidor lo lee, encuentra el recurso y responde:<br><br><code>HTTP/1.1 200 OK<br>Content-Type: text/html<br><br>&lt;!DOCTYPE html&gt;...</code><br><br>Eso es toda la web. Una conversación de texto estructurada, miles de millones de veces por día.`,
+      },
+      {
+        type: 'text',
+        heading: 'Paso 4 — Renderizado',
+        body: `El navegador analiza el HTML de arriba a abajo. Cada <code>&lt;link&gt;</code>, <code>&lt;script&gt;</code> e <code>&lt;img&gt;</code> genera una nueva petición HTTP. Una sola carga de página puede implicar 50 a 100+ peticiones separadas — HTML, CSS, JavaScript, fuentes, imágenes, analíticas. El navegador las prioriza, carga primero las críticas y renderiza progresivamente a medida que llegan los datos.`,
+      },
+      {
+        type: 'lab',
+        label: 'Pruébalo — Lab DevTools',
+        heading: 'Observa una Carga de Página en Tiempo Real',
+        steps: [
+          'Abre DevTools: <code>F12</code> en Windows, <code>Cmd ⌥ I</code> en Mac',
+          'Haz clic en la pestaña <strong>Network</strong>',
+          'Recarga esta página (<code>Cmd+R</code> o <code>Ctrl+R</code>)',
+          'Observa cómo aparece cada petición — primero el HTML, luego CSS, JS, fuentes, imágenes...',
+        ],
+        explain: `La primera fila es el documento HTML. Todo lo demás fue descubierto mientras el navegador analizaba ese HTML. El gráfico de cascada muestra el tiempo de cada petición. Haz clic en cualquier fila para ver las cabeceras completas de petición y respuesta.`,
+      },
+    ],
+    quiz: [
+      { q: '¿Qué hace el DNS?', opts: ['Cifra datos entre cliente y servidor', 'Traduce nombres de host como example.com a direcciones IP', 'Gestiona las cookies HTTP y las sesiones', 'Comprime el HTML antes de enviarlo'], correct: 1 },
+      { q: '¿Qué significa un código de estado 200 en una respuesta HTTP?', opts: ['La respuesta tiene 200 bytes', 'La petición fue exitosa', 'El servidor está ubicado en la dirección 200', 'La página requiere autenticación'], correct: 1 },
+      { q: '¿Cuántas peticiones HTTP requiere normalmente cargar una página web?', opts: ['Exactamente una — el documento HTML', 'Dos — HTML y CSS', 'Decenas — el HTML más todos los recursos vinculados', 'Cientos — una por cada carácter en pantalla'], correct: 2 },
+    ],
+  },
+  {
+    id: 2,
+    eyebrow: 'Módulo 02',
+    title: 'HTML — Estructura',
+    intro: 'HTML no es un lenguaje de programación. No tiene bucles, ni condiciones, ni funciones. Es un lenguaje de marcado — su trabajo es describir qué es el contenido: esto es un encabezado, esto es un párrafo, esto es un enlace. El navegador lee esa descripción y decide cómo presentarla.',
+    objectives: [
+      'La diferencia entre HTML y un lenguaje de programación',
+      'Qué es el DOM y por qué importa',
+      'Qué significa HTML semántico y por qué es importante',
+    ],
+    sections: [
+      {
+        type: 'text',
+        heading: 'Etiquetas, Elementos, Atributos',
+        body: `HTML está construido con <strong>etiquetas</strong> — etiquetas con corchetes angulares que envuelven contenido y le dan significado. La mayoría vienen en pares: una etiqueta de apertura y una de cierre.<br><br><code>&lt;h1&gt;Esto es un encabezado&lt;/h1&gt;<br>&lt;p&gt;Esto es un párrafo.&lt;/p&gt;<br>&lt;a href="https://example.com"&gt;Esto es un enlace&lt;/a&gt;</code><br><br>La etiqueta le dice al navegador qué <em>es</em> el contenido. El navegador decide cómo mostrarlo. Esa separación — contenido vs. presentación — es intencional y fundamental.`,
+      },
+      {
+        type: 'concept',
+        label: 'Concepto clave',
+        heading: 'El DOM — Modelo de Objeto del Documento',
+        body: `Cuando el navegador analiza el HTML, no conserva el texto. Construye un <strong>árbol</strong> de objetos en memoria llamado el DOM. Cada elemento se convierte en un nodo. El <code>&lt;html&gt;</code> es la raíz. <code>&lt;head&gt;</code> y <code>&lt;body&gt;</code> son sus hijos. Cada etiqueta interior se convierte en hijo de su etiqueta padre.<br><br>Esto importa porque CSS y JavaScript no interactúan con el texto HTML — interactúan con el árbol DOM. Cuando JavaScript cambia algo en pantalla, está modificando el DOM, no reescribiendo HTML.`,
+      },
+      {
+        type: 'text',
+        heading: 'HTML Semántico',
+        body: `HTML tiene muchas etiquetas. Podrías técnicamente poner todo tu contenido en etiquetas <code>&lt;div&gt;</code>. Pero el lenguaje ofrece etiquetas específicas para significados específicos: <code>&lt;article&gt;</code>, <code>&lt;nav&gt;</code>, <code>&lt;header&gt;</code>, <code>&lt;footer&gt;</code>, <code>&lt;main&gt;</code>.<br><br>Usar la etiqueta correcta importa por tres razones: <strong>accesibilidad</strong> (los lectores de pantalla usan etiquetas semánticas para navegar), <strong>SEO</strong> (los motores de búsqueda dan más peso al contenido semántico) y <strong>mantenibilidad</strong> (el código que dice lo que significa es más fácil de entender).`,
+      },
+      {
+        type: 'fun-fact',
+        label: 'Dato curioso',
+        body: `La primera versión de HTML, escrita por Tim Berners-Lee en 1991, tenía 18 etiquetas. El HTML5 moderno tiene más de 110. La etiqueta más importante jamás añadida fue <code>&lt;a&gt;</code> — el hipervínculo. Sin ella, HTML sería solo un lenguaje de formato. Con ella, se convirtió en una web.`,
+      },
+      {
+        type: 'lab',
+        label: 'Pruébalo — Lab DevTools',
+        heading: 'Inspecciona el DOM en Vivo',
+        steps: [
+          'Haz clic derecho en cualquier parte de esta página y elige <strong>Inspeccionar</strong>',
+          'El panel Elements muestra el árbol DOM en vivo',
+          'Pasa el cursor sobre cualquier elemento en el panel — el navegador lo resalta en pantalla',
+          'Haz doble clic en cualquier texto dentro de una etiqueta para editarlo en vivo',
+        ],
+        explain: `Lo que estás viendo no es el archivo HTML original. Es el DOM en vivo. Cualquier cambio que JavaScript haya hecho desde que se cargó la página se refleja aquí. El HTML original está en Ver código fuente (<code>Cmd+U</code> / <code>Ctrl+U</code>) — compara los dos.`,
+      },
+    ],
+    quiz: [
+      { q: '¿Qué es el DOM?', opts: ['El archivo HTML almacenado en el servidor', 'Un árbol de objetos que el navegador construye al analizar el HTML', 'Un patrón de diseño para organizar JavaScript', 'Un preprocesador CSS integrado en los navegadores modernos'], correct: 1 },
+      { q: '¿Por qué importa el HTML semántico?', opts: ['Carga más rápido que el HTML no semántico', 'Es requerido por los navegadores modernos', 'Mejora la accesibilidad, el SEO y la mantenibilidad', 'Permite que CSS funcione correctamente'], correct: 2 },
+      { q: '¿Cuál fue la etiqueta más importante que Tim Berners-Lee añadió al HTML?', opts: ['&lt;img&gt; — las imágenes hicieron la web visual', '&lt;div&gt; — sin ella el diseño es imposible', '&lt;a&gt; — el hipervínculo que hizo de la web una red', '&lt;html&gt; — el elemento raíz que necesita cada página'], correct: 2 },
+    ],
+  },
+  {
+    id: 3,
+    eyebrow: 'Módulo 03',
+    title: 'CSS — Estilo',
+    intro: 'HTML le da estructura al contenido. CSS le da estilo. Fueron separados intencionalmente — el contenido y la presentación son preocupaciones diferentes, y mantenerlos separados hace que ambos sean más fáciles de cambiar de forma independiente.',
+    objectives: [
+      'Cómo los selectores CSS apuntan a elementos en el DOM',
+      'Qué significa "cascada" y cómo la especificidad resuelve conflictos',
+      'Qué es el modelo de caja y por qué importa para el diseño',
+    ],
+    sections: [
+      {
+        type: 'text',
+        heading: 'Selectores — Apuntar a Elementos',
+        body: `CSS funciona con dos partes: un <strong>selector</strong> que apunta a elementos y un <strong>bloque de declaración</strong> que define los estilos. El navegador encuentra cada elemento que coincide con el selector y aplica los estilos.<br><br><code>h1 { color: #333; }<br>.card { border-radius: 8px; }<br>#nav { position: fixed; }</code><br><br>Puedes apuntar por tipo de elemento (<code>h1</code>), por clase (<code>.card</code>), por ID (<code>#nav</code>), por atributo, por relación, por estado (<code>:hover</code>, <code>:focus</code>). El sistema de selectores es donde CSS obtiene su poder — y su complejidad.`,
+      },
+      {
+        type: 'concept',
+        label: 'Concepto clave',
+        heading: 'La Cascada y la Especificidad',
+        body: `Múltiples reglas CSS pueden coincidir con el mismo elemento. Cuando entran en conflicto, el navegador usa la <strong>especificidad</strong> para decidir cuál gana. La jerarquía aproximada:<br><br><code>estilos en línea &gt; #id &gt; .clase &gt; elemento</code><br><br>Una regla que apunta a <code>#nav</code> supera a una que apunta a <code>.nav</code>. Ambas superan a una regla que apunta a <code>nav</code>. El "cascada" en CSS se refiere a esta resolución por capas — las reglas fluyen hacia abajo y gana la más específica. Cuando la especificidad es igual, gana la regla que aparece más tarde en el archivo.`,
+      },
+      {
+        type: 'concept',
+        label: 'Concepto clave',
+        heading: 'El Modelo de Caja',
+        body: `Cada elemento HTML es una caja rectangular. Esa caja tiene cuatro capas, de adentro hacia afuera:<br><br><strong>Contenido</strong> — el texto o imagen real.<br><strong>Padding</strong> — espacio entre el contenido y el borde (dentro del elemento).<br><strong>Borde</strong> — una línea alrededor del padding (puede ser invisible).<br><strong>Margen</strong> — espacio fuera del borde (entre este elemento y otros).<br><br>Entender el modelo de caja es obligatorio para hacer diseño. Cuando un elemento es "más grande de lo esperado" casi siempre es por el padding o el borde que olvidaste.`,
+      },
+      {
+        type: 'text',
+        heading: 'Diseño Responsivo — Un CSS, Todas las Pantallas',
+        body: `Las <strong>media queries</strong> permiten aplicar diferentes reglas CSS según el tamaño de pantalla. El principio: diseñar para la pantalla más pequeña primero y luego agregar complejidad para pantallas más grandes.<br><br><code>@media (max-width: 768px) {<br>  .grid { flex-direction: column; }<br>}</code><br><br>Ethan Marcotte acuñó "Diseño Web Responsivo" en 2010. En dos años se convirtió en el enfoque estándar. Antes, la mayoría de los sitios tenían una versión móvil separada en <code>m.example.com</code> que siempre estaba desactualizada.`,
+      },
+      {
+        type: 'lab',
+        label: 'Pruébalo — Lab DevTools',
+        heading: 'Edita Estilos en Vivo',
+        steps: [
+          'Haz clic derecho en cualquier elemento de esta página y elige <strong>Inspeccionar</strong>',
+          'En el panel Styles a la derecha, encuentra cualquier propiedad CSS',
+          'Haz clic en el valor y cámbialo — la página se actualiza inmediatamente',
+          'Intenta agregar una nueva propiedad: haz clic después de la última regla en un bloque y escribe lo que quieras',
+        ],
+        explain: `Estos cambios solo están en la memoria de tu navegador — desaparecen al recargar. Pero este ciclo de edición en vivo (cambiar CSS → ver resultado al instante) es como trabajan todos los desarrolladores frontend. Sin recargar. La pestaña Computed muestra el valor final resuelto de cada propiedad en el elemento seleccionado.`,
+      },
+    ],
+    quiz: [
+      { q: 'Cuando dos reglas CSS entran en conflicto en el mismo elemento, ¿qué determina cuál gana?', opts: ['La regla que aparece antes en el archivo', 'La regla con mayor especificidad', 'La regla con más propiedades', 'La regla adjunta directamente al elemento HTML'], correct: 1 },
+      { q: 'En el modelo de caja CSS, ¿qué es el "padding"?', opts: ['Espacio fuera del borde del elemento', 'Espacio entre el contenido y el borde del elemento', 'El ancho del borde en sí', 'El tamaño mínimo del área de contenido'], correct: 1 },
+      { q: '¿Para qué se usa una media query en CSS?', opts: ['Consultar la base de datos para obtener contenido', 'Aplicar diferentes estilos según el tamaño de pantalla', 'Cargar archivos CSS de forma asíncrona', 'Cachear reglas CSS en el navegador'], correct: 1 },
+    ],
+  },
+  {
+    id: 4,
+    eyebrow: 'Módulo 04',
+    title: 'JavaScript — Comportamiento',
+    intro: 'HTML describe la estructura. CSS define el estilo. JavaScript hace que las páginas reaccionen. Es el único lenguaje de programación que se ejecuta de forma nativa en el navegador — y puede leer y modificar cualquier cosa del DOM, responder a eventos del usuario, hacer peticiones de red y ejecutar código en un temporizador.',
+    objectives: [
+      'Cómo JavaScript interactúa con el DOM',
+      'Qué significa la programación basada en eventos',
+      'Cómo usar la consola del navegador como un entorno JS en vivo',
+    ],
+    sections: [
+      {
+        type: 'text',
+        heading: 'Manipular el DOM',
+        body: `JavaScript puede encontrar cualquier elemento, leer su contenido, cambiarlo, moverlo, agregar nuevos o eliminarlos. Los dos métodos más usados:<br><br><code>// Encontrar un elemento<br>const el = document.querySelector('.mi-clase');<br><br>// Cambiar su contenido<br>el.textContent = 'Hola';<br><br>// Cambiar su estilo<br>el.style.color = 'red';<br><br>// Agregar una clase CSS<br>el.classList.add('activo');</code><br><br>Cada cosa interactiva que hayas hecho en una página web — un menú desplegable abriéndose, un modal apareciendo, un contador incrementando — fue JavaScript haciendo esto.`,
+      },
+      {
+        type: 'concept',
+        label: 'Concepto clave',
+        heading: 'Programación Basada en Eventos',
+        body: `JavaScript no se ejecuta de arriba a abajo y se detiene. Se ejecuta, configura <strong>escuchadores de eventos</strong> y luego espera. Cuando algo sucede — un clic, una tecla presionada, un temporizador que dispara, una petición de red que se completa — se ejecuta el escuchador correspondiente.<br><br><code>document.querySelector('#btn').addEventListener('click', () => {<br>  alert('¡Botón clickeado!');<br>});</code><br><br>Este modelo es por qué JavaScript se siente "vivo". El código es reactivo — responde a las cosas a medida que ocurren. El bucle de eventos del navegador es el motor que ejecuta todo esto.`,
+      },
+      {
+        type: 'text',
+        heading: 'Fetch — Hacer Peticiones desde JS',
+        body: `JavaScript puede hacer peticiones HTTP sin que el usuario navegue a ningún lado. La API <code>fetch()</code> es la forma moderna:<br><br><code>fetch('/api/datos')<br>  .then(res => res.json())<br>  .then(datos => {<br>    console.log(datos);<br>  });</code><br><br>Así funciona toda aplicación web moderna. La página carga una vez. Luego JavaScript obtiene datos en segundo plano y actualiza el DOM. Sin recarga completa. Esto es Ajax — la técnica que hizo posible Gmail y Google Maps.`,
+      },
+      {
+        type: 'fun-fact',
+        label: 'Dato curioso',
+        body: `JavaScript fue creado por Brendan Eich en Netscape en 10 días en 1995. La primera versión fue escrita para enviarse con Netscape Navigator 2.0 — el plazo era real. Las peculiaridades del lenguaje (coerción de tipos, comportamiento de <code>this</code>, <code>null == undefined</code>) se explican en parte por esta historia. Sin embargo, se convirtió en el lenguaje de programación más desplegado de la historia. A veces la velocidad supera a la pureza.`,
+      },
+      {
+        type: 'lab',
+        label: 'Pruébalo — Lab DevTools',
+        heading: 'Ejecuta JavaScript en la Consola',
+        steps: [
+          'Abre DevTools y ve a la pestaña <strong>Console</strong>',
+          'Escribe: <code>document.title = "hackeado"</code> y presiona Enter',
+          'Mira la pestaña del navegador — el título cambió',
+          'Escribe: <code>document.body.style.background = "hotpink"</code>',
+        ],
+        explain: `La Consola es un REPL (Read-Eval-Print Loop) de JavaScript en vivo. Cada línea que escribes se ejecuta inmediatamente en el contexto de la página actual. Tienes acceso completo al DOM, todo el JavaScript cargado y todas las APIs del navegador. Esta es la herramienta de depuración y exploración más poderosa disponible para un desarrollador web.`,
+      },
+    ],
+    quiz: [
+      { q: '¿Qué hace document.querySelector(\'.btn\')?', opts: ['Crea un nuevo elemento botón', 'Devuelve el primer elemento que coincide con el selector CSS .btn', 'Consulta al servidor datos de botones', 'Elimina todos los elementos con clase "btn"'], correct: 1 },
+      { q: '¿Qué es un escuchador de eventos?', opts: ['Un proceso en segundo plano que monitorea la salud del servidor', 'Una función registrada para ejecutarse cuando ocurre un evento específico', 'Una regla CSS que se activa con la interacción del usuario', 'Una petición de red que sondea actualizaciones'], correct: 1 },
+      { q: '¿Qué hace la API fetch()?', opts: ['Obtiene la página completa y la recarga', 'Hace una petición HTTP desde JavaScript sin recargar la página', 'Recupera datos de localStorage', 'Descarga archivos a la computadora del usuario'], correct: 1 },
+    ],
+  },
+  {
+    id: 5,
+    eyebrow: 'Módulo 05',
+    title: 'APIs y el Servidor',
+    intro: 'Cuando cargas un feed de redes sociales, el HTML no está almacenado en un archivo. Un servidor ejecuta código que lo genera dinámicamente — verificando quién eres, consultando una base de datos, ensamblando una respuesta solo para ti. Y cuando JavaScript necesita más datos sin recargar la página, habla con una API.',
+    objectives: [
+      'La diferencia entre servidores estáticos y dinámicos',
+      'Qué es una API REST y qué significan los verbos HTTP',
+      'Por qué los servidores usan llamadas asíncronas — y qué significa eso en la práctica',
+    ],
+    sections: [
+      {
+        type: 'text',
+        heading: 'Servidores Estáticos vs Dinámicos',
+        body: `Un <strong>servidor estático</strong> sirve archivos exactamente como están en disco — HTML, CSS, JS, imágenes. Rápido, simple, no se ejecuta código. Este sitio es estático: GitHub Pages simplemente entrega los archivos. Un <strong>servidor dinámico</strong> ejecuta código para generar cada respuesta. Cuando abres tu feed de Twitter, un servidor ejecuta Python, Node.js o Go, consulta una base de datos, verifica tu sesión y construye una respuesta HTML o JSON única solo para ti. Cada petición puede producir una salida completamente diferente.`,
+      },
+      {
+        type: 'concept',
+        label: 'Concepto clave',
+        heading: 'APIs REST y Verbos HTTP',
+        body: `REST (Transferencia de Estado Representacional) es un conjunto de convenciones para construir APIs web. La idea: usar los verbos incorporados de HTTP para expresar la intención con claridad.<br><br><code>GET    /pedidos        → listar todos los pedidos<br>GET    /pedidos/42     → obtener pedido 42<br>POST   /pedidos        → crear un nuevo pedido<br>PUT    /pedidos/42     → actualizar pedido 42<br>DELETE /pedidos/42     → eliminar pedido 42</code><br><br>Sin nuevos protocolos. Solo HTTP usado de forma consistente. REST se convirtió en el estándar porque todos los desarrolladores ya entienden HTTP y se mapea naturalmente a las operaciones que cualquier aplicación necesita.`,
+      },
+      {
+        type: 'concept',
+        label: 'Concepto clave',
+        heading: 'Por Qué los Servidores Usan Llamadas Asíncronas',
+        body: `Un servidor que maneja una petición a menudo necesita hacer varias cosas lentas: consultar una base de datos, llamar a una API externa, leer un archivo. Cada una toma milisegundos — pero con miles de usuarios simultáneos, bloquear y esperar en serie arruinaría el rendimiento.<br><br>La <strong>programación asíncrona</strong> permite al servidor decir "inicia esta consulta de base de datos y mientras esperas que regrese, ve a manejar otras peticiones". Cuando la consulta termina, retoma desde donde lo dejaste.<br><br>Por eso los backends modernos se escriben con lo asíncrono en mente (async/await en Node.js y Python, corrutinas en Go). Un servidor que maneja 10.000 usuarios simultáneos sin colapsar no ejecuta 10.000 hilos — usa async para hacer muchas cosas a la vez con muchos menos recursos.`,
+      },
+      {
+        type: 'text',
+        heading: 'JSON — El Formato de Datos de la Web',
+        body: `Cuando una API devuelve datos, necesita un formato que ambas partes entiendan. JSON (Notación de Objetos de JavaScript) ganó esta competencia por completo. Se parece a los objetos de JavaScript, es legible por humanos y todos los lenguajes de programación pueden analizarlo de forma nativa.<br><br><code>{<br>  "nombre": "Marco",<br>  "rol": "desarrollador",<br>  "habilidades": ["Django", "React", "PostgreSQL"]<br>}</code><br><br>Antes de JSON, las APIs usaban XML — verboso, profundamente anidado, tedioso de trabajar en JavaScript. JSON es más simple en todas las dimensiones. Para 2010 era el estándar predeterminado para prácticamente todas las APIs web.`,
+      },
+      {
+        type: 'lab',
+        label: 'Pruébalo — Lab DevTools',
+        heading: 'Llama a una API Real desde la Consola',
+        steps: [
+          'Abre DevTools → pestaña Console',
+          'Pega: <code>fetch(\'https://api.github.com/users/octocat\').then(r=>r.json()).then(console.log)</code>',
+          'Presiona Enter — verás una Promise, luego el resultado JSON aparece abajo',
+          'Expande el objeto registrado para explorar: repos, followers, created_at...',
+        ],
+        explain: `Acabas de hacer una petición HTTP GET real a la API de GitHub, recibiste JSON, lo analizaste y lo registraste — exactamente lo mismo que hace JavaScript en cualquier aplicación web al obtener datos. Nota que la pestaña Network también muestra la petición: URL, estado 200, cabeceras de respuesta, cuerpo completo. Ese es el ciclo completo de petición-respuesta del Módulo 1 ocurriendo en vivo.`,
+      },
+    ],
+    quiz: [
+      { q: '¿Cuál es la diferencia entre un servidor estático y uno dinámico?', opts: ['Los servidores estáticos son más rápidos; los dinámicos son más lentos', 'Los servidores estáticos sirven archivos tal como están; los dinámicos ejecutan código para generar cada respuesta', 'Los servidores estáticos solo sirven imágenes; los dinámicos sirven HTML', 'Los servidores estáticos son gratuitos; los dinámicos tienen costo'], correct: 1 },
+      { q: '¿Por qué los servidores backend usan programación asíncrona?', opts: ['Para cifrar datos antes de enviarlos', 'Para manejar muchas peticiones simultáneas sin bloquear mientras esperan operaciones lentas', 'Para comprimir respuestas para entrega más rápida', 'Para evitar escribir callbacks en JavaScript'], correct: 1 },
+      { q: '¿Qué verbo HTTP deberías usar para crear un nuevo recurso?', opts: ['GET', 'PUT', 'POST', 'DELETE'], correct: 2 },
+    ],
+  },
+  {
+    id: 6,
+    eyebrow: 'Módulo 06',
+    title: 'Bases de Datos',
+    intro: 'Toda aplicación que necesita recordar algo — quién está conectado, qué se ordenó, qué se publicó — necesita una base de datos. Las bases de datos son la memoria a largo plazo de tu aplicación. Entender los tipos que existen y cuándo usar cada uno es uno de los conocimientos más útiles que puede tener alguien que no es desarrollador sobre cómo se construye el software.',
+    objectives: [
+      'Por qué los archivos no son suficientes y qué resuelven las bases de datos',
+      'La diferencia entre bases de datos relacionales (SQL) y NoSQL',
+      'Qué son las transacciones de bases de datos y por qué importan',
+    ],
+    sections: [
+      {
+        type: 'text',
+        heading: 'Por Qué los Archivos No Son Suficientes',
+        body: `Podrías almacenar los datos de tu app en archivos simples — archivos de texto, JSON, CSVs. Para un proyecto personal con un usuario, funciona. Pero se desmorona rápido a escala. Múltiples usuarios escribiendo simultáneamente corrompe los datos. Buscar en un millón de registros en un archivo plano es lento. Representar relaciones ("este pedido pertenece a este usuario que vive en esta dirección") se vuelve profundamente complicado. Recuperarse de escrituras parciales (la app se cayó a mitad de guardar) es frágil.<br><br>Las bases de datos fueron construidas para resolver exactamente estos problemas. Manejan la concurrencia, la búsqueda, las relaciones y la recuperación ante fallos correctamente — para que tú no tengas que hacerlo.`,
+      },
+      {
+        type: 'concept',
+        label: 'Concepto clave',
+        heading: 'Bases de Datos Relacionales (SQL)',
+        body: `El tipo dominante por 50 años. Los datos viven en <strong>tablas</strong> (como hojas de cálculo: filas y columnas). Las tablas se relacionan entre sí a través de claves.<br><br><code>tabla usuarios:  id | nombre | email<br>tabla pedidos: id | usuario_id | total | fecha</code><br><br><code>usuario_id</code> en pedidos apunta de vuelta a <code>id</code> en usuarios — esa es una relación. SQL (Lenguaje de Consulta Estructurado) es cómo hablas con la base de datos:<br><br><code>SELECT * FROM pedidos WHERE usuario_id = 42;</code><br><br>Principales opciones: <strong>PostgreSQL</strong> (el más potente, código abierto, usado en la mayoría de las apps de producción), <strong>MySQL</strong> (ampliamente usado, especialmente con PHP), <strong>SQLite</strong> (integrado, sin servidor necesario — usado en apps móviles y herramientas locales).`,
+      },
+      {
+        type: 'concept',
+        label: 'Concepto clave',
+        heading: 'Transacciones — Por Qué Importa la Integridad de los Datos',
+        body: `Una <strong>transacción</strong> es una unidad de trabajo que se completa completamente o no se ejecuta en absoluto. Ejemplo clásico: una transferencia bancaria. Paso 1: descontar $100 de la cuenta A. Paso 2: agregar $100 a la cuenta B. Si el servidor se cae entre los pasos 1 y 2, el dinero desaparece. Una transacción envuelve ambos pasos — si algo falla, todo se revierte como si nunca hubiera ocurrido.<br><br>Esto se llama cumplimiento <strong>ACID</strong> (Atomicidad, Consistencia, Aislamiento, Durabilidad). Toda base de datos relacional seria cumple con ACID. Por eso los bancos, el comercio electrónico y los sistemas de salud funcionan con bases de datos SQL.`,
+      },
+      {
+        type: 'text',
+        heading: 'Bases de Datos NoSQL — Cuando Gana la Flexibilidad',
+        body: `Las bases de datos relacionales tienen un esquema fijo: defines las columnas por adelantado y cada fila debe ajustarse. Las bases de datos NoSQL cambian esa rigidez por flexibilidad.<br><br><strong>Bases de datos de documentos</strong> (MongoDB, Firestore): almacenan documentos tipo JSON. Sin esquema fijo — cada documento puede tener diferentes campos. Excelentes para contenido, perfiles de usuario, catálogos de productos donde la forma de los datos varía.<br><br><strong>Almacenes clave-valor</strong> (Redis): almacenan datos por clave, lecturas extremadamente rápidas. Usados para caché, almacenamiento de sesiones, limitación de tasa, tablas de líderes en tiempo real. Redis puede servir millones de lecturas por segundo desde memoria.<br><br><strong>Cuándo usar cuál:</strong> datos financieros, pedidos, cuentas de usuario → PostgreSQL. Caché, sesiones, contadores en tiempo real → Redis. Contenido flexible, iteración rápida → MongoDB.`,
+      },
+      {
+        type: 'fun-fact',
+        label: 'Dato curioso',
+        body: `PostgreSQL fue lanzado por primera vez en 1996 y sigue siendo la base de datos más recomendada para nuevos proyectos hoy — casi 30 años después. La <em>Encuesta de Desarrolladores de Stack Overflow</em> lo ha clasificado como la base de datos más usada por desarrolladores profesionales durante varios años consecutivos, superando a MySQL. A pesar de docenas de alternativas más nuevas, los fundamentos sobre los que fue construido en la década de 1970 (modelo relacional, transacciones ACID, SQL) siguen sin ser superados para la gran mayoría de las aplicaciones.`,
+      },
+    ],
+    quiz: [
+      { q: '¿Qué problema resuelven las bases de datos que los archivos planos no pueden?', opts: ['Las bases de datos son más pequeñas en tamaño que los archivos', 'Las bases de datos manejan correctamente la concurrencia, las relaciones, la búsqueda y la recuperación ante fallos a escala', 'Las bases de datos se almacenan automáticamente en la nube', 'Las bases de datos cifran los datos por defecto'], correct: 1 },
+      { q: '¿Qué es una transacción de base de datos?', opts: ['Un pago procesado por la base de datos', 'Un tipo de consulta SQL para leer datos', 'Una unidad de trabajo que se completa completamente o se revierte en su totalidad — protegiendo la integridad de los datos', 'Una conexión entre dos servidores de base de datos'], correct: 2 },
+      { q: '¿Cuándo elegirías Redis sobre PostgreSQL?', opts: ['Cuando necesitas consultas relacionales complejas en muchas tablas', 'Para caché, sesiones y contadores en tiempo real donde importa la velocidad extrema de lectura', 'Para almacenar transacciones financieras que requieren cumplimiento ACID', 'Cuando tus datos tienen un esquema fijo y bien definido'], correct: 1 },
+    ],
+  },
+  {
+    id: 7,
+    eyebrow: 'Módulo 07',
+    title: 'Servicios de Terceros',
+    intro: 'Las aplicaciones modernas casi nunca construyen todo desde cero. Enviar emails, procesar pagos, mostrar mapas, autenticar usuarios, enviar SMS — todos son problemas resueltos con empresas enteras dedicadas a hacerlos de forma confiable. Saber qué servicios existen y por qué los usarías en lugar de construirlos internamente es conocimiento esencial de producto.',
+    objectives: [
+      'Por qué el dilema "construir vs comprar" casi siempre favorece comprar para problemas de infraestructura básica',
+      'Las categorías de servicios más importantes: email, pagos, autenticación, mapas y más',
+      'Qué es un webhook y por qué los servicios de terceros los usan',
+    ],
+    sections: [
+      {
+        type: 'text',
+        heading: 'Por Qué Existen los Servicios de Terceros',
+        body: `Toda aplicación eventualmente necesita enviar email, procesar un pago o mostrar un mapa. Podrías construir todos estos tú mismo — pero pasarías meses resolviendo problemas que ya han sido resueltos. El dilema <strong>construir vs comprar</strong> casi siempre favorece comprar para la infraestructura básica:<br><br>• La entrega de emails tiene filtros de spam, puntuaciones de reputación, manejo de rebotes, autenticación DKIM/SPF — toda una disciplina.<br>• El procesamiento de pagos requiere cumplimiento PCI-DSS, detección de fraude, manejo de contracargos, soporte para más de 200 métodos de pago.<br>• La autenticación requiere hash seguro de contraseñas, gestión de sesiones, flujos OAuth, MFA y parches de seguridad constantes.<br><br>Los servicios de terceros permiten que tu equipo se enfoque en lo que hace único a tu producto — no en reinventar problemas resueltos.`,
+      },
+      {
+        type: 'concept',
+        label: 'Email',
+        heading: 'Servicios de Email Transaccional',
+        body: `La entrega de email es sorprendentemente difícil. Gmail y Outlook filtran agresivamente el email de servidores desconocidos. Mantener una buena reputación de envío, manejar rebotes, gestionar cancelaciones de suscripción y pasar los filtros de spam es un trabajo de tiempo completo.<br><br><strong>SendGrid</strong> (ahora Twilio) — el más ampliamente usado. API simple, buena entregabilidad, generoso nivel gratuito.<br><strong>Mailgun</strong> — amigable para desarrolladores, buenas analíticas, popular para alto volumen.<br><strong>Postmark</strong> — enfocado en email transaccional (recibos, restablecimiento de contraseñas), excelente entregabilidad.<br><strong>AWS SES</strong> — el más barato a escala, pero requiere más configuración.<br><br>El <em>email transaccional</em> (confirmaciones de pedidos, restablecimiento de contraseñas) y el <em>email de marketing</em> (boletines, campañas) a menudo usan servicios diferentes — mezclarlos arriesga la entregabilidad de tu email transaccional.`,
+      },
+      {
+        type: 'concept',
+        label: 'Pagos',
+        heading: 'Procesamiento de Pagos',
+        body: `Casi nunca construyes tu propio procesamiento de pagos. Las razones: cumplimiento PCI-DSS (un estándar de auditoría de seguridad completo), sistemas de detección de fraude, gestión de contracargos, soporte para tarjetas de crédito, billeteras, transferencias bancarias en más de 150 países.<br><br><strong>Stripe</strong> — el estándar amigable para desarrolladores. API hermosa, excelente documentación, maneja tarjetas, transferencias bancarias, suscripciones, facturas, marketplaces. Usado por Amazon, Shopify, Lyft y miles de startups.<br><strong>PayPal / Braintree</strong> — ampliamente reconocido por los consumidores, mayor alcance global en algunos mercados.<br><strong>Culqi, Mercado Pago</strong> — líderes regionales en Latinoamérica.<br><br>El modelo de Stripe: tu frontend recopila los datos de la tarjeta directamente en los servidores de Stripe (nunca toca los tuyos), Stripe cobra la tarjeta y te envía un webhook confirmando el éxito.`,
+      },
+      {
+        type: 'concept',
+        label: 'Autenticación',
+        heading: 'Auth como Servicio',
+        body: `Implementar tu propia autenticación es una de las fuentes más comunes de vulnerabilidades de seguridad. Hash de contraseñas (bcrypt, no MD5), tokens de sesión, flujos OAuth para "Iniciar sesión con Google", MFA, recuperación de cuenta — todo debe hacerse correctamente.<br><br><strong>Auth0</strong> — nivel empresarial, soporta todos los proveedores OAuth, motor de reglas rico para lógica de autenticación personalizada.<br><strong>Clerk</strong> — moderno, hermosos componentes de UI preconstruidos, muy rápido de integrar.<br><strong>Firebase Auth</strong> — la oferta de Google, estrechamente integrada con el ecosistema Firebase.<br><strong>Supabase Auth</strong> — alternativa de código abierto, auto-hospedable.<br><br>La mayoría de los productos en etapas tempranas se benefician enormemente de delegar la autenticación completamente. El tiempo ahorrado — y las vulnerabilidades de seguridad evitadas — son ambos sustanciales.`,
+      },
+      {
+        type: 'text',
+        heading: 'Mapas, SMS, Almacenamiento y Más',
+        body: `<strong>Mapas y Ubicación:</strong> Google Maps Platform (más funciones, precios por uso), Mapbox (más flexibilidad de diseño, también de pago), OpenStreetMap + Leaflet.js (gratuito, código abierto, bueno para mapas personalizados).<br><br><strong>SMS y Voz:</strong> Twilio — el jugador dominante. Aprovisionamiento de números de teléfono, SMS, WhatsApp, llamadas de voz, todo vía API.<br><br><strong>Almacenamiento de Archivos:</strong> AWS S3 — el estándar para almacenar archivos subidos, imágenes, documentos. Cloudinary agrega redimensionamiento y optimización automática de imágenes sobre el almacenamiento.<br><br><strong>Analíticas:</strong> Google Analytics (gratuito, ampliamente usado), Mixpanel (basado en eventos, mejores analíticas de producto), PostHog (código abierto, auto-hospedable, control total de tus datos).<br><br><strong>Feature Flags:</strong> LaunchDarkly, Flagsmith — activa o desactiva funciones en producción sin desplegar código. Esencial para lanzamientos graduales y pruebas A/B.`,
+      },
+      {
+        type: 'concept',
+        label: 'Concepto clave',
+        heading: 'Webhooks — Cómo los Servicios Notifican a tu App',
+        body: `Cuando algo sucede en un servicio de terceros — un pago se completa, un email rebota, un archivo termina de procesarse — tu app necesita saberlo. Pero tu app no puede preguntar constantemente "¿ya pasó algo?"<br><br>La solución: los <strong>webhooks</strong>. Le dices al servicio "cuando ocurra X, envía un HTTP POST a esta URL en mi servidor". El servicio llama a tu endpoint con los datos del evento. Tu servidor lo procesa.<br><br>Ejemplo: el usuario paga vía Stripe → Stripe envía POST a <code>tuapp.com/webhooks/stripe</code> con los detalles del pago → tu servidor marca el pedido como pagado. No sondeas a Stripe — Stripe te notifica. Esta es la columna vertebral de cómo el ecosistema de servicios se mantiene sincronizado.`,
+      },
+    ],
+    quiz: [
+      { q: '¿Por qué la mayoría de las empresas usan Stripe en lugar de construir su propio sistema de pagos?', opts: ['Stripe es el único procesador de pagos legalmente permitido para operar', 'Construir pagos requiere cumplimiento PCI, detección de fraude e infraestructura que la mayoría de los equipos no puede justificar', 'Los pagos de Stripe se liquidan más rápido que las transferencias bancarias directas', 'Stripe es gratuito para todos los volúmenes de transacciones'], correct: 1 },
+      { q: '¿Qué es un webhook?', opts: ['Una API del navegador para detectar eventos de scroll', 'Un tipo de token de autenticación', 'Una petición HTTP enviada por un servicio de terceros para notificar a tu app cuando ocurre un evento', 'Un método para cachear respuestas de API'], correct: 2 },
+      { q: '¿Cuál es la diferencia clave entre email transaccional y email de marketing?', opts: ['El email transaccional es gratuito; el de marketing es de pago', 'El email transaccional es activado por acciones del usuario (recibos, restablecimientos); el de marketing son campañas masivas — y mezclarlos arriesga la entregabilidad', 'El email transaccional usa HTML; el de marketing usa texto plano', 'No hay diferencia — ambos usan la misma infraestructura de envío'], correct: 1 },
+    ],
+  },
+  {
+    id: 8,
+    eyebrow: 'Módulo 08',
+    title: 'Alojamiento y Dominios',
+    intro: 'Tu código funciona localmente. Llevarlo a internet significa decidir dónde se ejecuta, cómo la gente lo encuentra y quién lo gestiona. Estas decisiones afectan el costo, el rendimiento, la fiabilidad y la velocidad de despliegue — y la respuesta correcta depende completamente de lo que estás construyendo.',
+    objectives: [
+      'Cómo funcionan los dominios y los registros DNS en la práctica',
+      'El espectro desde el alojamiento estático hasta la infraestructura cloud gestionada',
+      'Cuándo usar Vercel/Netlify vs cuándo usar AWS/GCP/Azure',
+    ],
+    sections: [
+      {
+        type: 'text',
+        heading: 'Dominios — Qué Son y Dónde Registrarlos',
+        body: `Un <strong>dominio</strong> es un nombre que alquilas (no compras) de un registrador, renovado anualmente. Registradores populares: Namecheap, Cloudflare Registrar (al costo), GoDaddy, Google Domains (ahora Squarespace).<br><br>Una vez registrado, configuras <strong>registros DNS</strong> para apuntar el dominio a tu alojamiento:<br><br><strong>Registro A</strong> — mapea tu dominio a una dirección IP (<code>misitio.com → 192.0.2.1</code>).<br><strong>CNAME</strong> — mapea un subdominio a otro dominio (<code>www.misitio.com → misitio.com</code>). Muy usado por Vercel y Netlify.<br><strong>Registro MX</strong> — dirige el email a tu proveedor de correo.<br><strong>Registro TXT</strong> — prueba la propiedad del dominio (Google, Stripe y otros usan esto para verificación).<br><br>Los cambios de DNS tienen un <strong>TTL (Tiempo de Vida)</strong> — un tiempo de expiración de caché. Un TTL de 3600 significa que tarda hasta una hora en propagarse globalmente. Bájalo antes de migraciones; súbelo cuando esté estable.`,
+      },
+      {
+        type: 'concept',
+        label: 'Nivel 1 — Alojamiento Estático',
+        heading: 'Netlify, Vercel, GitHub Pages, Cloudflare Pages',
+        body: `Para sitios sin código del lado del servidor — HTML/CSS/JS, documentación, páginas de marketing, portafolios — el alojamiento estático es la opción más simple y económica. Subes código a git, ellos lo construyen y despliegan.<br><br><strong>Vercel</strong> — construido alrededor de Next.js, pero funciona con cualquier framework. CDN global, HTTPS automático, despliegues de vista previa en cada PR, funciones serverless en el edge.<br><strong>Netlify</strong> — conjunto de funciones similar, ligeramente más agnóstico al ecosistema. Excelente para sitios JAMstack.<br><strong>GitHub Pages</strong> — gratuito, simple, sin pipeline de construcción. Ideal para documentación y demostraciones estáticas (este curso funciona sobre él).<br><strong>Cloudflare Pages</strong> — CDN global con la red de Cloudflare, muy rápido, generoso nivel gratuito.<br><br><strong>Cuándo usarlo:</strong> sitios de marketing, documentación, portafolios, demos de clientes, cualquier cosa sin un backend dinámico.`,
+      },
+      {
+        type: 'concept',
+        label: 'Nivel 2 — Plataforma como Servicio',
+        heading: 'Render, Railway, Fly.io, Heroku',
+        body: `Cuando tienes código del lado del servidor — una API Django, un backend Node, un worker de trabajos en segundo plano — necesitas algo que pueda ejecutarlo. Las plataformas PaaS manejan la configuración del servidor por ti: les das tu código (vía git o Docker), ellos lo ejecutan.<br><br><strong>Render</strong> — reemplazo moderno de Heroku. Soporta Node, Python, Ruby, Go, Docker. Nivel gratuito disponible, PostgreSQL gestionado incluido, despliegues automáticos desde git.<br><strong>Railway</strong> — configuración rápida, excelente DX, precios generosos, soporta bases de datos junto a servicios.<br><strong>Fly.io</strong> — ejecuta contenedores Docker en el edge a nivel mundial, más control que Render, ligeramente más configuración.<br><strong>Heroku</strong> — el PaaS original, una vez dominante, ahora caro en comparación con las alternativas.<br><br><strong>Cuándo usarlo:</strong> APIs, aplicaciones dinámicas, productos en etapa temprana, escala pequeña a mediana.`,
+      },
+      {
+        type: 'concept',
+        label: 'Nivel 3 — Infraestructura Cloud',
+        heading: 'AWS, GCP, Azure — y Cuándo Realmente los Necesitas',
+        body: `Los grandes proveedores de cloud ofrecen infraestructura pura: máquinas virtuales (EC2, Compute Engine), almacenamiento de objetos (S3, GCS), bases de datos gestionadas (RDS, Cloud SQL), CDN (CloudFront, Cloud CDN) y cientos de otros servicios.<br><br><strong>AWS</strong> — el líder del mercado (~33% de cuota). El catálogo de servicios más amplio. S3 para almacenamiento de archivos es casi universal incluso fuera de AWS. Complejo, pero todos los ingenieros DevOps lo conocen.<br><strong>Google Cloud (GCP)</strong> — sólido en datos/ML (BigQuery, Vertex AI), orígenes de Kubernetes, competitivo en precios.<br><strong>Azure</strong> — dominante en empresas con contratos Microsoft existentes (integración con Office 365, Active Directory).<br><br><strong>Cuándo realmente los necesitas:</strong> requisitos de cumplimiento (HIPAA, SOC2, PCI), industrias reguladas, muy alta escala, arquitecturas multi-servicio complejas, acuerdos empresariales existentes, necesidades avanzadas de ML/datos.`,
+      },
+      {
+        type: 'text',
+        heading: 'CDNs — Por Qué Tus Archivos Vienen de Cerca',
+        body: `Una <strong>CDN (Red de Distribución de Contenidos)</strong> almacena en caché tus archivos estáticos (imágenes, CSS, JS, fuentes) en servidores distribuidos por todo el mundo — nodos edge. Cuando un usuario en Lima solicita una imagen, la obtiene de São Paulo, no de un servidor en Virginia. La latencia baja de 200ms a 20ms.<br><br><strong>Cloudflare</strong> — la CDN más ampliamente usada, también proporciona protección DDoS, DNS y seguridad. El nivel gratuito cubre la mayoría de los sitios.<br><strong>AWS CloudFront</strong> — estrechamente integrado con S3 y EC2, el estándar para recursos alojados en AWS.<br><strong>Fastly</strong> — usado por GitHub, Twitter y grandes plataformas donde el rendimiento de la CDN es crítico.<br><br>Todas las plataformas de alojamiento de Nivel 1 (Vercel, Netlify, Cloudflare Pages) tienen una CDN integrada — obtienes distribución global automáticamente sin configuración adicional.`,
+      },
+      {
+        type: 'concept',
+        label: 'Marco de Decisión',
+        heading: 'Elegir el Alojamiento Correcto',
+        body: `<strong>Sitio estático, sin backend</strong> → Vercel, Netlify o GitHub Pages. Gratuito, instantáneo, distribuido globalmente.<br><br><strong>API + base de datos, etapa temprana</strong> → Render o Railway. Despliegue simple, base de datos gestionada incluida, sin necesidad de DevOps.<br><br><strong>App full-stack, escala media</strong> → Render o Fly.io. Más control, soporte Docker, escala razonablemente.<br><br><strong>Alta escala, requisitos de cumplimiento o arquitectura compleja</strong> → AWS, GCP o Azure. Acepta la complejidad a cambio de control y certificaciones de cumplimiento.<br><br><strong>Empresa con stack Microsoft existente</strong> → Azure, casi siempre.<br><br>El error más común: usar AWS para un proyecto que habría servido perfectamente con Render. El segundo más común: superar un PaaS y no migrar a AWS con suficiente anticipación. El objetivo es ajustar la complejidad de la infraestructura a las necesidades reales del producto.`,
+      },
+    ],
+    quiz: [
+      { q: '¿Para qué se usa un registro DNS CNAME?', opts: ['Mapear un dominio a una dirección IP', 'Dirigir el email a un servidor de correo', 'Mapear un subdominio a otro nombre de dominio', 'Verificar la propiedad del dominio para servicios de terceros'], correct: 2 },
+      { q: '¿Cuándo deberías elegir Vercel o Netlify sobre AWS?', opts: ['Cuando necesitas cumplimiento HIPAA', 'Para sitios estáticos y aplicaciones frontend — son más simples, más rápidos de configurar y a menudo gratuitos', 'Cuando tu app maneja más de 1 millón de usuarios', 'Cuando necesitas una base de datos relacional gestionada'], correct: 1 },
+      { q: '¿Qué hace una CDN por el rendimiento de tu sitio?', opts: ['Reduce el tamaño de tus archivos JavaScript', 'Almacena en caché tus archivos estáticos en servidores de todo el mundo para que los usuarios los obtengan desde una ubicación cercana', 'Optimiza automáticamente tus consultas SQL', 'Comprime las respuestas HTML antes de enviarlas'], correct: 1 },
+    ],
+  },
+];
+
 // ---- ERA → AUDIO CHAPTER ----
 
 function startCourse(era) {
@@ -1312,7 +1737,7 @@ function startCourse(era) {
 }
 
 function renderCourseModule(moduleId) {
-  const mod = COURSE_MODULES.find(m => m.id === moduleId);
+  const mod = getCourseModules().find(m => m.id === moduleId);
   if (!mod) return;
 
   currentModule = moduleId;
@@ -1365,8 +1790,8 @@ function renderCourseModule(moduleId) {
 }
 
 function updateCourseNav(moduleId) {
-  const total = COURSE_MODULES.length;
-  const mod   = COURSE_MODULES.find(m => m.id === moduleId);
+  const total = getCourseModules().length;
+  const mod   = getCourseModules().find(m => m.id === moduleId);
 
   document.getElementById('nav-title').textContent =
     `${mod.eyebrow} — ${mod.title}`;
@@ -1384,12 +1809,12 @@ function updateCourseNav(moduleId) {
 
 function updateCourseProgress(moduleId) {
   updateCourseNav(moduleId);
-  const pct = ((moduleId - 1) / COURSE_MODULES.length) * 100;
+  const pct = ((moduleId - 1) / getCourseModules().length) * 100;
   progressBar.style.width = pct + '%';
 }
 
 function nextCourseModule() {
-  if (currentModule < COURSE_MODULES.length) {
+  if (currentModule < getCourseModules().length) {
     eraTransition(() => {
       renderCourseModule(currentModule + 1);
     });
