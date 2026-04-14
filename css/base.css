@@ -213,7 +213,7 @@ main {
 #chapter-content {
   max-width: 720px;
   margin: 0 auto;
-  padding: 40px 40px 120px;
+  padding: 40px 40px 170px;
   line-height: 1.8;
 }
 #chapter-nav-controls {
@@ -377,10 +377,118 @@ main {
 .anim-fadein:nth-child(5) { animation-delay: 0.20s; }
 .anim-fadein:nth-child(6) { animation-delay: 0.25s; }
 
+
+/* AUDIO PLAYER */
+#audio-player {
+  position: fixed;
+  bottom: 72px;
+  left: 0;
+  right: 0;
+  background: var(--nav-bottom-bg, rgba(10,10,10,0.95));
+  border-top: 1px solid rgba(255,255,255,0.06);
+  backdrop-filter: blur(12px);
+  z-index: 98;
+  padding: 10px 40px;
+  display: none;
+}
+#audio-player.visible {
+  display: block;
+}
+.audio-inner {
+  max-width: 720px;
+  margin: 0 auto;
+  display: flex;
+  align-items: center;
+  gap: 12px;
+}
+.audio-btn {
+  background: transparent;
+  border: 1px solid rgba(255,255,255,0.2);
+  color: var(--color-text, #fff);
+  border-radius: 50%;
+  width: 34px;
+  height: 34px;
+  display: flex;
+  align-items: center;
+  justify-content: center;
+  cursor: pointer;
+  font-size: 13px;
+  flex-shrink: 0;
+  transition: all 0.2s;
+  padding: 0;
+  line-height: 1;
+}
+.audio-btn:hover {
+  background: rgba(255,255,255,0.1);
+  border-color: rgba(255,255,255,0.4);
+}
+.audio-track {
+  flex: 1;
+  min-width: 0;
+}
+.audio-title {
+  display: block;
+  font-size: 10px;
+  opacity: 0.5;
+  font-family: var(--font-mono, monospace);
+  letter-spacing: 0.06em;
+  text-transform: uppercase;
+  margin-bottom: 5px;
+  white-space: nowrap;
+  overflow: hidden;
+  text-overflow: ellipsis;
+}
+.audio-progress-wrap {
+  display: flex;
+  align-items: center;
+  gap: 8px;
+}
+.audio-time {
+  font-family: var(--font-mono, monospace);
+  font-size: 10px;
+  opacity: 0.45;
+  flex-shrink: 0;
+  min-width: 28px;
+}
+.audio-seek {
+  flex: 1;
+  -webkit-appearance: none;
+  appearance: none;
+  height: 3px;
+  background: rgba(255,255,255,0.15);
+  border-radius: 2px;
+  outline: none;
+  cursor: pointer;
+  accent-color: var(--color-accent, #4f8eff);
+}
+.audio-seek::-webkit-slider-thumb {
+  -webkit-appearance: none;
+  appearance: none;
+  width: 11px;
+  height: 11px;
+  border-radius: 50%;
+  background: var(--color-accent, #4f8eff);
+  cursor: pointer;
+}
+.audio-seek::-moz-range-thumb {
+  width: 11px;
+  height: 11px;
+  border-radius: 50%;
+  background: var(--color-accent, #4f8eff);
+  cursor: pointer;
+  border: none;
+}
+.audio-vol-btn {
+  border-radius: 6px;
+  font-size: 15px;
+}
+
+>>>>>>> fc837ad (Add persistent audio player bar to chapter view)
 /* RESPONSIVE */
 @media (max-width: 640px) {
   #top-nav { padding: 14px 20px; }
   #landing-screen { padding: 80px 24px 40px; }
-  #chapter-content { padding: 32px 24px 100px; }
+  #chapter-content { padding: 32px 24px 170px; }
   #chapter-nav-controls { padding: 16px 24px; }
+  #audio-player { padding: 10px 20px; }
 }

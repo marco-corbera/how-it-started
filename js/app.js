@@ -145,6 +145,9 @@ async function loadChapter(chapterId) {
          <p>Content coming soon.</p>`;
     }
 
+    // Load audio for this chapter (shows player only if file exists)
+    loadAudio(chapterId);
+
     // Scroll to top
     window.scrollTo({ top: 0, behavior: 'smooth' });
 
@@ -153,6 +156,94 @@ async function loadChapter(chapterId) {
     updateProgress();
   });
 }
+
+// ---- AUDIO PLAYER ----
+let audioReady = false;
+
+function audioFmtTime(s) {
+  if (!s || isNaN(s)) return '0:00';
+  const m = Math.floor(s / 60);
+  const sec = Math.floor(s % 60);
+  return `${m}:${sec.toString().padStart(2, '0')}`;
+}
+
+function audioToggle() {
+  const el = document.getElementById('audio-el');
+  if (!audioReady) return;
+  el.paused ? el.play() : el.pause();
+}
+
+function audioToggleMute() {
+  const el = document.getElementById('audio-el');
+  el.muted = !el.muted;
+  document.getElementById('audio-vol-btn').textContent = el.muted ? '🔇' : '🔊';
+}
+
+function loadAudio(chapterId) {
+  const chapter = CHAPTERS[chapterId];
+  const el = document.getElementById('audio-el');
+  const player = document.getElementById('audio-player');
+  const src = `audio/ch${chapterId}.mp3`;
+
+  // Pause and reset previous
+  el.pause();
+  audioReady = false;
+  player.classList.remove('visible');
+  document.getElementById('audio-play-btn').textContent = '▶';
+  document.getElementById('audio-seek').value = 0;
+  document.getElementById('audio-current').textContent = '0:00';
+  document.getElementById('audio-duration').textContent = '0:00';
+
+  // Check if audio file exists before showing player
+  fetch(src, { method: 'HEAD' })
+    .then(res => {
+      if (!res.ok) return;
+      el.src = src;
+      el.load();
+      document.getElementById('audio-track-title').textContent =
+        `${chapter.title}  ·  ${chapter.years}`;
+      player.classList.add('visible');
+    })
+    .catch(() => { /* no audio for this chapter */ });
+}
+
+// Wire up audio element events after DOM is ready
+document.addEventListener('DOMContentLoaded', () => {
+  const el = document.getElementById('audio-el');
+  const seekEl = document.getElementById('audio-seek');
+
+  el.addEventListener('canplay', () => { audioReady = true; });
+
+  el.addEventListener('timeupdate', () => {
+    if (!isNaN(el.duration) && el.duration > 0) {
+      seekEl.value = (el.currentTime / el.duration) * 100;
+    }
+    document.getElementById('audio-current').textContent = audioFmtTime(el.currentTime);
+  });
+
+  el.addEventListener('durationchange', () => {
+    document.getElementById('audio-duration').textContent = audioFmtTime(el.duration);
+  });
+
+  el.addEventListener('play', () => {
+    document.getElementById('audio-play-btn').textContent = '⏸';
+  });
+
+  el.addEventListener('pause', () => {
+    document.getElementById('audio-play-btn').textContent = '▶';
+  });
+
+  el.addEventListener('ended', () => {
+    document.getElementById('audio-play-btn').textContent = '▶';
+    document.getElementById('audio-seek').value = 0;
+  });
+
+  seekEl.addEventListener('input', () => {
+    if (!isNaN(el.duration) && el.duration > 0) {
+      el.currentTime = (seekEl.value / 100) * el.duration;
+    }
+  });
+});
 
 // ---- NAVIGATION ----
 function nextChapter() {
@@ -171,6 +262,11 @@ function prevChapter() {
 
 function backToLanding() {
   eraTransition(() => {
+    // Stop audio when leaving chapter view
+    const audioEl = document.getElementById('audio-el');
+    audioEl.pause();
+    document.getElementById('audio-player').classList.remove('visible');
+
     setTheme('landing');
     currentChapter = 0;
     updateNav(0);
