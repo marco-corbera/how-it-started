@@ -134,6 +134,59 @@
   The word spread. The next era had arrived.
 </p>
 
+<div class="lab-box">
+  <div class="lab-label">Try It — DevTools Exercise</div>
+  <h4>See a CORS Error in Real Time</h4>
+  <p>
+    As Ajax let pages fetch data from any server, a new security boundary became critical:
+    the <strong>Same-Origin Policy</strong>. A browser will only let JavaScript read a
+    response if the server explicitly says it's allowed — via a
+    <code>Access-Control-Allow-Origin</code> header. Without it, the browser blocks the
+    response entirely. This is CORS: Cross-Origin Resource Sharing.
+  </p>
+  <p>
+    It's one of the most common errors in web development. Here's how to spot it.
+  </p>
+  <div class="lab-steps">
+    <div class="lab-step">
+      <span class="step-num">1</span>
+      <span>Open DevTools — <code>F12</code> on Windows, <code>Cmd ⌥ I</code> on Mac</span>
+    </div>
+    <div class="lab-step">
+      <span class="step-num">2</span>
+      <span>Click the <strong>Console</strong> tab (not Network — Console)</span>
+    </div>
+    <div class="lab-step">
+      <span class="step-num">3</span>
+      <span>Click the button below to fire a cross-origin fetch</span>
+    </div>
+  </div>
+  <button class="lab-btn" onclick="triggerCorsDemo()">Trigger the CORS error →</button>
+  <div class="fake-console">
+    <div class="console-bar">
+      <span class="console-dot red"></span>
+      <span class="console-dot yellow"></span>
+      <span class="console-dot green"></span>
+      <span class="console-title">Console — DevTools</span>
+    </div>
+    <div class="console-body">
+      <div class="console-error">
+        <span class="console-icon">✕</span>
+        <span>Access to fetch at 'https://www.bbc.com/' from origin 'null' has been blocked by CORS policy: No 'Access-Control-Allow-Origin' header is present on the requested resource.</span>
+      </div>
+      <div class="console-error">
+        <span class="console-icon">✕</span>
+        <span>TypeError: Failed to fetch</span>
+      </div>
+      <div class="console-caption">↑ this is what you'll see live in your actual Console tab</div>
+    </div>
+  </div>
+  <div class="lab-explain">
+    <p><strong>What this means:</strong> The request went out. The server responded. But the browser checked the response headers and found no <code>Access-Control-Allow-Origin</code>. So it threw the response away before JavaScript could read it. The server didn't reject you — the browser protected you.</p>
+    <p><strong>Why Console, not Network?</strong> Open the Network tab: you'll often see the request with a status 200 (success). CORS errors only appear in Console because this is browser-level enforcement, not an HTTP error. This trips up every developer the first time. Now it won't trip you up.</p>
+  </div>
+</div>
+
 <div class="key-dates">
   <div class="key-dates-title">Key Dates</div>
   <div class="date-item">

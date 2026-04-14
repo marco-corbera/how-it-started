@@ -448,6 +448,12 @@ document.addEventListener('DOMContentLoaded', () => {
   initWinampDrag();
 });
 
+// ---- CORS LAB ----
+function triggerCorsDemo() {
+  // Intentional cross-origin fetch — will fail with CORS error visible in DevTools Console
+  fetch('https://www.bbc.com/').catch(() => {});
+}
+
 // ---- NAVIGATION ----
 function nextChapter() {
   if (currentChapter < CHAPTERS.length - 1) {
