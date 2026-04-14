@@ -1,0 +1,176 @@
+<p class="chapter-eyebrow">Capítulo 04 &mdash; 1995 al 2004</p>
+<h1>La Web Dinámica</h1>
+<p class="chapter-intro">
+  Las páginas HTML estáticas fueron un comienzo. Pero la web real — donde inicias sesión,
+  donde la página sabe quién eres, donde las cosas ocurren sin recargar — requería que
+  la web adquiriera memoria y aprendiera a ejecutar código. Esta es la era en que la web
+  dejó de ser un sistema de documentos y se convirtió en una plataforma.
+</p>
+
+<h2>El Problema de la Apatridia</h2>
+<p>
+  HTTP fue diseñado para ser <strong>sin estado</strong>. Cada petición es independiente.
+  El servidor responde, cierra la conexión y te olvida de inmediato. La siguiente petición
+  llega como si viniera de un desconocido.
+</p>
+<p>
+  Es elegante desde el punto de vista del protocolo — simple, fiable, escalable.
+  Pero crea un problema práctico: ¿cómo sabe un sitio web que has iniciado sesión?
+  ¿Cómo persiste un carrito de compras entre páginas?
+</p>
+
+<div class="concept-box">
+  <div class="concept-label">Concepto Clave</div>
+  <h4>Cookies: Cómo la Web te Recuerda</h4>
+  <p>
+    Inventadas por Lou Montulli en Netscape en 1994. Cuando un servidor responde, puede
+    incluir un pequeño dato en las cabeceras: una cookie. Tu navegador la almacena.
+    En cada petición posterior a ese servidor, el navegador la envía automáticamente.
+    <br><br>
+    El servidor dice: "aquí tienes un token que identifica tu sesión" → el navegador
+    lo guarda → el navegador lo envía en cada petición → el servidor lo consulta:
+    "ah, es Marco." El HTTP sin estado de repente tiene memoria.
+    Así funciona el inicio de sesión hoy en día.
+  </p>
+</div>
+
+<h2>Scripts del Lado del Servidor: Páginas que Piensan</h2>
+<p>
+  Las primeras páginas web eran estáticas: un archivo en disco, servido tal cual.
+  El mismo HTML llegaba a todos los visitantes. Para cambiarlo, editabas el archivo
+  a mano.
+</p>
+<p>
+  Los scripts del lado del servidor cambiaron esto. En lugar de servir un archivo
+  estático, el servidor ejecuta un programa que <em>genera</em> el HTML dinámicamente —
+  contenido diferente por usuario, datos obtenidos de una base de datos, respuestas
+  a entradas de formularios.
+</p>
+<p>
+  Las herramientas iniciales eran rudimentarias: scripts CGI en Perl, arrancando un nuevo
+  proceso por petición. Luego llegó PHP (1995) — diseñado específicamente para incrustar
+  código dentro de HTML. PHP hizo las páginas dinámicas accesibles a un público mucho
+  más amplio. En 2000, impulsaba una parte enorme de la web. Sigue haciéndolo.
+</p>
+
+<div class="fun-fact">
+  <span class="fun-fact-label">Curiosidad</span>
+  <p>PHP fue creado originalmente por Rasmus Lerdorf en 1994 para registrar visitas a su
+  currículum en línea. Lo llamó "Personal Home Page Tools." Nunca tuvo intención de
+  convertirse en un lenguaje de programación. Simplemente creció en uno porque la gente
+  no dejaba de añadir funciones. PHP ahora impulsa alrededor del 77% de todos los sitios
+  web con un lenguaje del lado del servidor conocido, incluyendo WordPress,
+  que ejecuta ~43% de toda la web.</p>
+</div>
+
+<h2>Flash: El Gran Desvío de la Web</h2>
+<p>
+  Macromedia Flash permitía a los desarrolladores crear animaciones ricas, juegos y
+  experiencias interactivas que HTML simplemente no podía hacer. Durante casi una década,
+  Flash estaba en todas partes: intros animadas, juegos en el navegador, reproductores
+  de música, sitios enteros construidos con movimiento y sonido personalizados.
+</p>
+<p>
+  Flash impulsó la primera oleada de video web. Impulsó el YouTube temprano.
+  Nos dio Homestar Runner, Newgrounds y toda una generación de cultura de internet.
+  Era lo más parecido que tenía la web a un runtime multimedia real.
+</p>
+<p>
+  Pero Flash era propietario (Macromedia, luego Adobe), un desastre de seguridad,
+  terrible para la accesibilidad y el SEO, y requería un plugin que había que instalar
+  manualmente y actualizar constantemente. En 2010, Steve Jobs publicó "Pensamientos
+  sobre Flash" y se negó a permitirlo en el iPhone. HTML5 llegó con video nativo,
+  canvas y animación. La muerte de Flash era inevitable desde ese momento.
+  Adobe lo mató el 31 de diciembre de 2020.
+</p>
+
+<div class="fun-fact">
+  <span class="fun-fact-label">Curiosidad</span>
+  <p>El juego Flash "The Impossible Quiz" (2007) fue jugado por un estimado de
+  100 millones de personas. Miles de queridos juegos y animaciones Flash —
+  más de 15 años de cultura de internet — se apagaron el 31 de diciembre de 2020
+  cuando Flash murió. El proyecto Flashpoint ha archivado más de 70.000 juegos Flash
+  y 8.000 animaciones para preservarlos. Toda una era del arte de internet
+  rescatada por voluntarios.</p>
+</div>
+
+<h2>La Era de los Foros Madura</h2>
+<p>
+  Los finales de los 90 tuvieron phpBB. Los primeros 2000 fueron la edad de oro de los
+  foros de internet. vBulletin (2000), Invision Power Board (2002) y docenas más competían.
+  Cada comunidad de nicho tenía su propio dominio y su propio software de foro.
+</p>
+<p>
+  La cultura de los foros en esta era se convirtió en sistemas sociales genuinamente complejos:
+</p>
+<ul>
+  <li><strong>NeoGAF</strong> — el foro de gaming donde los profesionales de la industria publicaban junto a los fans. Noticias de última hora de desarrolladores. Información filtrada. Escándalos. Baneos y desbaneos como teatro público.</li>
+  <li><strong>Something Awful</strong> — lanzado en 1999, registro de pago para publicar. Control de calidad mediante fricción. El foro que produjo gran parte de la cultura temprana de internet incluyendo los primeros memes, YouTube Poop y muchos creadores que luego llegaron a lo mainstream.</li>
+  <li><strong>Slashdot</strong> — agregador de noticias tecnológicas con comentarios. Inventó el concepto de sistemas de moderación de comentarios. "Slashdotteado" (cuando tu servidor colapsa porque Slashdot enlazó a ti) entró en el vocabulario.</li>
+  <li><strong>4chan</strong> — lanzado en 2003, anónimo. Sin cuentas, sin historial, hilos efímeros. Caos total. Y de alguna manera, increíblemente influyente.</li>
+</ul>
+
+<h2>El Auge y Caída de las Punto-com</h2>
+<p>
+  Entre 1997 y 2000, los inversores inyectaron cientos de miles de millones en empresas
+  de internet. La lógica: la web lo cambiaría todo, los primeros en llegar ganan,
+  la rentabilidad es irrelevante.
+</p>
+<p>
+  Pets.com recaudó 82,5 millones de dólares en su OPV y quebró nueve meses después.
+  Boo.com quemó 188 millones de dólares en 18 meses y colapsó. El calcetín de juguete
+  se convirtió en la mascota del exceso especulativo.
+</p>
+<p>
+  En marzo de 2000, el NASDAQ alcanzó los 5.048 puntos. Luego se desplomó.
+  En octubre de 2002, había caído a 1.114. Cinco billones de dólares en valor de mercado —
+  desaparecidos. Cientos de punto-com cerraron. Miles de ingenieros se quedaron sin trabajo.
+</p>
+<p>
+  Lo que sobrevivió: Amazon, Google, eBay, PayPal — empresas con productos y usuarios reales.
+  La burbuja mató el hype. No mató la web.
+</p>
+
+<h2>XMLHttpRequest: La Revolución Silenciosa</h2>
+<p>
+  En 1999, Microsoft añadió <code>XMLHttpRequest</code> a Internet Explorer 5 —
+  una pequeña API que permitía a JavaScript obtener datos en segundo plano sin recargar
+  la página. Durante años, casi nadie lo notó. Luego Google lanzó Gmail en 2004.
+  Luego Google Maps en 2005. Páginas que se sentían como aplicaciones de escritorio.
+  Jesse James Garrett nombró la técnica <strong>Ajax</strong> en 2005.
+  La palabra se extendió. La siguiente era había llegado.
+</p>
+
+<div class="key-dates">
+  <div class="key-dates-title">Fechas Clave</div>
+  <div class="date-item">
+    <span class="date-stamp">1994</span>
+    <p class="date-event"><strong>Las cookies son inventadas</strong> por Lou Montulli en Netscape. La web adquiere memoria. También: el primer pedido de pizza online (Pizza Hut). La web comercial es real.</p>
+  </div>
+  <div class="date-item">
+    <span class="date-stamp">9 ago. 1995</span>
+    <p class="date-event"><strong>OPV de Netscape</strong> — una empresa sin beneficios valorada en 2.900 millones. La era punto-com comienza oficialmente. La palabra "internet" entra en la conciencia popular.</p>
+  </div>
+  <div class="date-item">
+    <span class="date-stamp">10 mar. 2000</span>
+    <p class="date-event"><strong>El NASDAQ alcanza los 5.048 puntos.</strong> La burbuja punto-com está en su máximo. En dos años, 5 billones de dólares en valor se evaporan.</p>
+  </div>
+  <div class="date-item">
+    <span class="date-stamp">15 ene. 2001</span>
+    <p class="date-event"><strong>Wikipedia se lanza.</strong> La idea radical de que desconocidos pueden escribir colaborativamente una enciclopedia fiable. Se convierte en uno de los mayores proyectos de conocimiento de la historia humana.</p>
+  </div>
+  <div class="date-item">
+    <span class="date-stamp">1 oct. 2003</span>
+    <p class="date-event"><strong>4chan se lanza</strong>, tablero de imágenes anónimo. Sin cuentas, sin memoria, caos total. Se convierte en uno de los sitios más influyentes culturalmente en la historia de internet.</p>
+  </div>
+  <div class="date-item">
+    <span class="date-stamp">1 abr. 2004</span>
+    <p class="date-event"><strong>Gmail se lanza</strong> con 1GB de almacenamiento (los competidores ofrecían 4MB). La interfaz Ajax se siente como una app de escritorio. La web como plataforma ya no es teórica.</p>
+  </div>
+</div>
+
+<blockquote>
+  "La web se suponía que era sobre documentos. Pero la gente no dejaba de intentar
+  construir aplicaciones en ella. Con el tiempo, la plataforma se puso a la altura
+  de la ambición."
+</blockquote>

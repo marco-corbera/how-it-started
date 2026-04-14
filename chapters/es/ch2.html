@@ -1,0 +1,173 @@
+<p class="chapter-eyebrow">Capítulo 02 &mdash; 1989 al 1995</p>
+<h1>La Primera Web</h1>
+<p class="chapter-intro">
+  En 1989, un físico del CERN escribió una propuesta llamada "Gestión de la Información:
+  Una Propuesta." Su jefe escribió "Vago pero emocionante" en la portada y se la devolvió.
+  Ese físico era Tim Berners-Lee. Lo que estaba proponiendo se convertiría con el tiempo
+  en el medio de comunicación más transformador de la historia humana.
+</p>
+
+<h2>El Problema en el CERN</h2>
+<p>
+  El CERN empleaba a miles de científicos de distintas universidades, usando distintas
+  computadoras, cambiando constantemente de proyectos y roles. Cada vez que alguien se
+  marchaba, su conocimiento se marchaba con ellos. Existían documentos, pero estaban
+  dispersos en sistemas incompatibles.
+</p>
+<p>
+  La intuición de Tim Berners-Lee: internet ya existía. Las computadoras ya estaban
+  en red. Lo que faltaba era un sistema que permitiera a los documentos enlazarse entre
+  sí a través de distintas máquinas — para que leer un documento te llevara de forma
+  natural a los documentos relacionados, dondequiera que estuvieran.
+</p>
+<p>
+  Lo llamó <strong>hipertexto</strong> — texto que contiene enlaces a otro texto.
+  El concepto existía (Ted Nelson lo teorizó en los años 60), pero Berners-Lee fue el
+  primero en implementarlo sobre una red real.
+</p>
+
+<h2>Los Tres Inventos</h2>
+<p>
+  Para que la web funcionara, Berners-Lee tenía que resolver tres problemas.
+  Inventó tres cosas:
+</p>
+
+<div class="concept-box">
+  <div class="concept-label">Invento 1</div>
+  <h4>HTML — Lenguaje de Marcado de Hipertexto</h4>
+  <p>
+    Un lenguaje simple para estructurar documentos. Las etiquetas describen qué <em>es</em>
+    el contenido: un encabezado, un párrafo, un enlace.
+    <br><br>
+    La función estrella: la etiqueta <code>&lt;a href="..."&gt;</code>. Un hipervínculo.
+    Una forma de apuntar desde un documento a otro, en cualquier parte de la red.
+    Ese mecanismo — hacer clic en un enlace, cargar un documento — es lo que
+    hizo de la web una red.
+  </p>
+</div>
+
+<div class="concept-box">
+  <div class="concept-label">Invento 2</div>
+  <h4>URL — Localizador Uniforme de Recursos</h4>
+  <p>
+    Un formato de dirección estandarizado para cualquier cosa en internet.
+    <code>http://info.cern.ch/hypertext/WWW/TheProject.html</code> — la primera URL de la historia.
+    <br><br>
+    Tres partes: el <em>esquema</em> (<code>http://</code>) indica al navegador qué protocolo
+    usar; el <em>host</em> (<code>info.cern.ch</code>) es resuelto por el DNS a una IP;
+    la <em>ruta</em> localiza el recurso en ese servidor.
+  </p>
+</div>
+
+<div class="concept-box">
+  <div class="concept-label">Invento 3</div>
+  <h4>HTTP — Protocolo de Transferencia de Hipertexto</h4>
+  <p>
+    El protocolo que define cómo se comunican los navegadores y los servidores.
+    Petición-respuesta simple. La primera versión, HTTP/0.9, era una sola línea:<br>
+    <code>GET /pagina.html</code><br>
+    El servidor respondía con el HTML. Sin cabeceras. Sin códigos de estado. Listo.
+    <br><br>
+    Los códigos de estado llegaron después: <code>200 OK</code>, <code>404 No Encontrado</code>,
+    <code>500 Error Interno del Servidor</code> — todo desarrollador los memoriza.
+  </p>
+</div>
+
+<h2>El Primer Sitio Web</h2>
+<p>
+  El 6 de agosto de 1991, Berners-Lee publicó el primer sitio web en internet,
+  corriendo en una computadora NeXT en el CERN. Pegó una nota en la máquina:
+  "Esta máquina es un servidor. ¡NO LA APAGUES!!"
+</p>
+<p>
+  El sitio describía el propio proyecto World Wide Web — qué era, cómo funcionaba,
+  cómo configurar un servidor web. Meta desde el primer día.
+</p>
+<p>
+  El primer navegador, también construido por Berners-Lee, se llamaba WorldWideWeb
+  (más tarde Nexus). Solo corría en computadoras NeXT. Podía mostrar texto e hipervínculos,
+  pero no imágenes. Las imágenes tendrían que esperar a Mosaic en 1993.
+</p>
+
+<div class="fun-fact">
+  <span class="fun-fact-label">Curiosidad</span>
+  <p>El primer servidor web — info.cern.ch — sigue respondiendo hoy.
+  La página en <strong>info.cern.ch/hypertext/WWW/TheProject.html</strong> ha sido preservada
+  y es accesible en internet. Puedes visitar el primer sitio web de la historia
+  ahora mismo. Carga en una fracción de segundo. En 1991, cargarlo era un acto de magia.</p>
+</div>
+
+<h2>Qué es Realmente HTML</h2>
+<p>
+  HTML no es un lenguaje de programación. No puedes escribir lógica en él.
+  No toma decisiones ni repite operaciones.
+  Es un <em>lenguaje de marcado</em> — describe estructura y significado.
+</p>
+<pre><code>&lt;!DOCTYPE html&gt;
+&lt;html&gt;
+  &lt;head&gt;
+    &lt;title&gt;Mi Primera Página&lt;/title&gt;
+  &lt;/head&gt;
+  &lt;body&gt;
+    &lt;h1&gt;Hola, Mundo&lt;/h1&gt;
+    &lt;p&gt;Esto es un párrafo.&lt;/p&gt;
+    &lt;a href="http://info.cern.ch"&gt;El primer sitio web&lt;/a&gt;
+  &lt;/body&gt;
+&lt;/html&gt;</code></pre>
+<p>
+  El navegador lee este marcado y decide cómo mostrarlo. En 1991, eso significaba
+  lo que el navegador creyera más adecuado — no existían hojas de estilo.
+  Cada navegador renderizaba las páginas de forma diferente. Ese caos duró años.
+</p>
+
+<h2>Una Decisión Crucial: Libre para Todos</h2>
+<p>
+  El 30 de abril de 1993, el CERN liberó la tecnología World Wide Web al dominio público.
+  Sin licencias. Sin cuotas. Sin restricciones. Cualquiera podía construir un servidor
+  web o un navegador.
+</p>
+<p>
+  Esta decisión es la razón por la que la web explotó y sigue existiendo como plataforma
+  abierta. Si el CERN la hubiera patentado — como podría haberlo hecho — la web podría
+  haberse quedado en una herramienta académica de nicho propiedad de un laboratorio de
+  física europeo.
+</p>
+
+<div class="fun-fact">
+  <span class="fun-fact-label">Curiosidad</span>
+  <p>Gopher — un sistema de navegación de documentos por menús que precedió a la web —
+  era en realidad más popular que la web en 1992. Era más limpio, rápido y fácil de usar.
+  Perdió porque la Universidad de Minnesota (que lo poseía) anunció que cobraría tarifas
+  de licencia en 1993. El CERN hizo la web gratuita exactamente en ese momento.
+  Una sola decisión sobre licencias cambió la historia de la comunicación humana.</p>
+</div>
+
+<div class="key-dates">
+  <div class="key-dates-title">Fechas Clave</div>
+  <div class="date-item">
+    <span class="date-stamp">12 mar. 1989</span>
+    <p class="date-event"><strong>Tim Berners-Lee presenta su propuesta</strong> "Gestión de la Información: Una Propuesta" a la dirección del CERN. Su jefe escribe "Vago pero emocionante." en la portada.</p>
+  </div>
+  <div class="date-item">
+    <span class="date-stamp">25 dic. 1990</span>
+    <p class="date-event"><strong>Primera comunicación HTTP exitosa</strong> entre un navegador y un servidor a través de internet. La web funciona por primera vez. Es el día de Navidad.</p>
+  </div>
+  <div class="date-item">
+    <span class="date-stamp">6 ago. 1991</span>
+    <p class="date-event"><strong>El primer sitio web se pone en marcha</strong> en info.cern.ch. Tim Berners-Lee lo publica en el grupo de noticias alt.hypertext. Casi nadie lo nota.</p>
+  </div>
+  <div class="date-item">
+    <span class="date-stamp">30 abr. 1993</span>
+    <p class="date-event"><strong>El CERN libera la web sin royalties.</strong> La decisión de código abierto más trascendental de la historia. La web pertenece a todos.</p>
+  </div>
+  <div class="date-item">
+    <span class="date-stamp">Jun. 1993</span>
+    <p class="date-event"><strong>Existen 500 servidores web</strong> en el mundo. En octubre de 1994 habrá 10.000. En 1996, más de 100.000. El crecimiento es exponencial desde el primer día.</p>
+  </div>
+</div>
+
+<blockquote>
+  "La web es más una creación social que técnica. La diseñé para un efecto social —
+  para ayudar a las personas a trabajar juntas — y no como un juguete técnico."
+  <br>— Tim Berners-Lee
+</blockquote>

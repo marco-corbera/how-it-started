@@ -13,6 +13,138 @@ const CHAPTERS = [
   { id: 6,  theme: 'modern',    title: 'The Modern Web',        years: '2010 – Now' },
 ];
 
+const CHAPTERS_ES = [
+  { id: 0,  theme: 'landing',   title: 'Cómo Empezó',                      years: '' },
+  { id: 1,  theme: 'terminal',  title: 'Antes de la Web',                   years: 'Años 60 – 1989' },
+  { id: 2,  theme: 'early-web', title: 'La Primera Web',                    years: '1989 – 1995' },
+  { id: 3,  theme: 'late-90s',  title: 'La Guerra de Navegadores',          years: '1993 – 2001' },
+  { id: 4,  theme: 'flash-era', title: 'La Web Dinámica',                   years: '1995 – 2004' },
+  { id: 5,  theme: 'web20',     title: 'Web 2.0',                           years: '2004 – 2010' },
+  { id: 6,  theme: 'modern',    title: 'La Web Moderna',                    years: '2010 – Hoy' },
+];
+
+// ---- LANGUAGE / i18n ----
+let currentLang = localStorage.getItem('lang') || 'en';
+
+const TRANSLATIONS = {
+  en: {
+    'kicker':        'A history of the web',
+    'title-line1':   'How It',
+    'title-accent':  'Started',
+    'subtitle':      'From a cold-war military network to the app on your screen. Every era lived in. Every concept explained. Six chapters through 60 years of the web.',
+    'stat-chapters': 'Chapters',
+    'stat-years':    'Years covered',
+    'stat-eras':     'Visual eras',
+    'start-btn':     'Start from the beginning →',
+    'footnote':      'Use arrow keys to navigate between chapters',
+    'prev-btn':      '← Back',
+    'next-btn':      'Next →',
+    'finish-btn':    'Finish',
+    'no-track':      'No track loaded',
+    'home-title':    'How It Started',
+    'coming-soon':   'Content coming soon.',
+    'chapter-label': 'Chapter',
+  },
+  es: {
+    'kicker':        'Una historia de la web',
+    'title-line1':   'Cómo',
+    'title-accent':  'Empezó',
+    'subtitle':      'De una red militar de la Guerra Fría a la app en tu pantalla. Cada era, vivida por dentro. Cada concepto, explicado. Seis capítulos y 60 años de historia de la web.',
+    'stat-chapters': 'Capítulos',
+    'stat-years':    'Años cubiertos',
+    'stat-eras':     'Eras visuales',
+    'start-btn':     'Empezar desde el principio →',
+    'footnote':      'Usa las teclas de flecha para navegar entre capítulos',
+    'prev-btn':      '← Atrás',
+    'next-btn':      'Siguiente →',
+    'finish-btn':    'Finalizar',
+    'no-track':      'Sin pista cargada',
+    'home-title':    'Cómo Empezó',
+    'coming-soon':   'Contenido próximamente.',
+    'chapter-label': 'Capítulo',
+  }
+};
+
+function getChapters() {
+  return currentLang === 'es' ? CHAPTERS_ES : CHAPTERS;
+}
+
+function t(key) {
+  return TRANSLATIONS[currentLang][key] || TRANSLATIONS['en'][key] || key;
+}
+
+function setLang(lang) {
+  currentLang = lang;
+  localStorage.setItem('lang', lang);
+  document.documentElement.lang = lang;
+
+  // Update all [data-i18n] elements
+  document.querySelectorAll('[data-i18n]').forEach(el => {
+    const key = el.dataset.i18n;
+    const val = TRANSLATIONS[lang][key];
+    if (val !== undefined) el.textContent = val;
+  });
+
+  // Update lang toggle button label
+  const btn = document.getElementById('lang-toggle');
+  if (btn) btn.textContent = lang === 'en' ? 'ES' : 'EN';
+
+  // Update chapter card titles/years on landing
+  const chapters = getChapters();
+  document.querySelectorAll('.chapter-card[data-chapter]').forEach(card => {
+    const id = parseInt(card.dataset.chapter);
+    const ch = chapters[id];
+    if (!ch) return;
+    const h3   = card.querySelector('.card-info h3');
+    const span = card.querySelector('.card-info span');
+    if (h3)   h3.textContent   = ch.title;
+    if (span) span.textContent = ch.years;
+  });
+
+  // If a chapter is open, reload its content and refresh nav/progress
+  if (currentChapter > 0) {
+    fetchChapterContent(currentChapter);
+    updateNav(currentChapter);
+    updateChapterProgress(currentChapter);
+  }
+}
+
+function toggleLang() {
+  setLang(currentLang === 'en' ? 'es' : 'en');
+}
+
+function fetchChapterContent(chapterId) {
+  const path = currentLang === 'es'
+    ? `chapters/es/ch${chapterId}.html`
+    : `chapters/ch${chapterId}.html`;
+  fetch(path)
+    .then(res => { if (!res.ok) throw new Error('not found'); return res.text(); })
+    .then(html => {
+      document.getElementById('chapter-content').innerHTML = html;
+      setTimeout(initScrollAnimations, 100);
+    })
+    .catch(() => {
+      // Fall back to English if Spanish file missing
+      if (currentLang === 'es') {
+        fetch(`chapters/ch${chapterId}.html`)
+          .then(res => res.text())
+          .then(html => {
+            document.getElementById('chapter-content').innerHTML = html;
+            setTimeout(initScrollAnimations, 100);
+          });
+      }
+    });
+}
+
+function updateChapterProgress(chapterId) {
+  const chapters = getChapters();
+  document.getElementById('chapter-progress').textContent =
+    `${chapters[chapterId].title}  ·  ${chapterId} / ${CHAPTERS.length - 1}`;
+  document.getElementById('prev-btn').textContent = t('prev-btn');
+  document.getElementById('next-btn').textContent =
+    chapterId < CHAPTERS.length - 1 ? t('next-btn') : t('finish-btn');
+}
+
 const THEME_STYLESHEETS = {
   'landing':   'css/themes/landing.css',
   'terminal':  'css/themes/terminal.css',
@@ -52,9 +184,9 @@ function updateNav(chapterId) {
 
   const navTitle = document.getElementById('nav-title');
   if (chapterId === 0) {
-    navTitle.textContent = 'How It Started';
+    navTitle.textContent = t('home-title');
   } else {
-    navTitle.textContent = `${String(chapterId).padStart(2,'0')} — ${CHAPTERS[chapterId].title}`;
+    navTitle.textContent = `${String(chapterId).padStart(2,'0')} — ${getChapters()[chapterId].title}`;
   }
   navTitle.onclick = chapterId > 0 ? () => backToLanding() : null;
   navTitle.style.cursor = chapterId > 0 ? 'pointer' : 'default';
@@ -122,27 +254,26 @@ async function loadChapter(chapterId) {
     progressBar.classList.add('visible');
     progressBar.style.width = '0%';
 
-    // Update progress text
-    document.getElementById('chapter-progress').textContent =
-      `${CHAPTERS[chapterId].title}  ·  ${chapterId} / ${CHAPTERS.length - 1}`;
-
-    // Update prev/next buttons
+    // Update progress text and nav buttons
     document.getElementById('prev-btn').style.visibility = chapterId > 1 ? 'visible' : 'hidden';
-    document.getElementById('next-btn').textContent =
-      chapterId < CHAPTERS.length - 1 ? 'Next →' : 'Finish';
+    updateChapterProgress(chapterId);
 
-    // Load chapter content via fetch
+    // Load chapter content via fetch (language-aware)
+    const langPath = currentLang === 'es'
+      ? `chapters/es/ch${chapterId}.html`
+      : `chapters/ch${chapterId}.html`;
     try {
-      const res = await fetch(`chapters/ch${chapterId}.html`);
+      const res = await fetch(langPath);
       if (!res.ok) throw new Error('not found');
       const html = await res.text();
       document.getElementById('chapter-content').innerHTML = html;
     } catch (e) {
+      const ch = getChapters()[chapterId];
       document.getElementById('chapter-content').innerHTML =
-        `<p class="chapter-eyebrow">Chapter ${chapterId}</p>
-         <h1>${chapter.title}</h1>
-         <p class="chapter-intro">${chapter.years}</p>
-         <p>Content coming soon.</p>`;
+        `<p class="chapter-eyebrow">${t('chapter-label')} ${chapterId}</p>
+         <h1>${ch.title}</h1>
+         <p class="chapter-intro">${ch.years}</p>
+         <p>${t('coming-soon')}</p>`;
     }
 
     // Load audio for this chapter (shows player only if file exists)
@@ -239,7 +370,8 @@ function loadAudio(chapterId) {
       if (!res.ok) return;
       el.src = src;
       el.load();
-      const title = `${chapter.title}  ·  ${chapter.years}  ·  How It Started`;
+      const ch = getChapters()[chapterId];
+      const title = `${ch.title}  ·  ${ch.years}  ·  ${t('home-title')}`;
       document.getElementById('audio-track-title').textContent = title;
       player.classList.add('visible');
     })
@@ -281,6 +413,9 @@ function initWinampDrag() {
 
 // Wire up audio element events after DOM is ready
 document.addEventListener('DOMContentLoaded', () => {
+  // Apply saved language preference on load
+  setLang(currentLang);
+
   const el = document.getElementById('audio-el');
   const seekEl = document.getElementById('audio-seek');
 
@@ -344,6 +479,7 @@ function backToLanding() {
     document.getElementById('chapter-screen').style.display = 'none';
     document.getElementById('landing-screen').style.display = 'flex';
     window.scrollTo({ top: 0 });
+    document.getElementById('nav-title').textContent = t('home-title');
   });
 }
 

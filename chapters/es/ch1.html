@@ -1,0 +1,182 @@
+<p class="chapter-eyebrow">Capítulo 01 &mdash; Años 60 al 1989</p>
+<h1>Antes de la Web</h1>
+<p class="chapter-intro">
+  Internet no es la web. Esa distinción importa más de lo que la mayoría imagina.
+  Antes de que Tim Berners-Lee escribiera una sola línea de HTML, ya existía una red global
+  de computadoras comunicándose entre sí — y entender cómo y por qué fue construida
+  es la base de todo lo que viene después en esta historia.
+</p>
+
+<h2>El Problema que lo Inició Todo</h2>
+<p>
+  Es 1962. La Guerra Fría está en su punto más álgido. El ejército de EE.UU. tiene un
+  problema crítico: su infraestructura de comunicaciones es centralizada. Un ataque nuclear
+  al nodo correcto y toda la red queda en silencio. Sin comunicación, sin coordinación,
+  sin respuesta.
+</p>
+<p>
+  La solución vino de Paul Baran en la RAND Corporation. Su idea era radical:
+  ¿y si los datos pudieran partirse en trozos, enviarse por múltiples rutas simultáneamente
+  y reensamblarse en el destino? Aunque se destruyera la mitad de la red,
+  el mensaje llegaría igual.
+</p>
+<p>
+  Esto es la <strong>conmutación de paquetes</strong> — y así funciona hoy cada mensaje
+  que envías por internet.
+</p>
+
+<div class="concept-box">
+  <div class="concept-label">Concepto Clave</div>
+  <h4>Conmutación de Paquetes vs Conmutación de Circuitos</h4>
+  <p>
+    Las antiguas redes telefónicas usaban <em>conmutación de circuitos</em>: se reservaba
+    una línea física dedicada entre tú y el interlocutor durante toda la llamada —
+    hablaras o no. Ineficiente y frágil.
+    <br><br>
+    La conmutación de paquetes divide los datos en fragmentos etiquetados (paquetes).
+    Cada paquete viaja de forma independiente, posiblemente por rutas distintas.
+    En el destino, se reensamblan en orden. Sin línea dedicada. Si una ruta falla,
+    los paquetes buscan otra.
+  </p>
+</div>
+
+<h2>ARPANET — La Primera Red</h2>
+<p>
+  En 1969, ARPA (la Agencia de Proyectos de Investigación Avanzada del Departamento de
+  Defensa de EE.UU.) financió la primera implementación real: ARPANET. El objetivo era
+  conectar universidades para que los científicos pudieran compartir recursos computacionales
+  de forma remota.
+</p>
+<p>
+  El primer mensaje fue enviado desde UCLA a Stanford. La palabra prevista era "login."
+  El sistema se cayó después de dos letras. Lo que llegó fue "lo."
+</p>
+<p>
+  No fue un gran comienzo. Pero fue suficiente.
+</p>
+
+<div class="fun-fact">
+  <span class="fun-fact-label">Curiosidad</span>
+  <p>El primer email fue enviado en 1971 por Ray Tomlinson — a sí mismo. Después admitió
+  que no recordaba qué escribió. Eligió <code>@</code> para separar nombres de usuario
+  de nombres de host porque estaba en el teclado y rara vez se usaba en nombres.
+  Ese símbolo ha sido enviado billones de veces desde entonces.</p>
+</div>
+
+<h2>¿Qué es un Protocolo?</h2>
+<p>
+  Computadoras de distintos fabricantes, con distintos sistemas operativos, necesitaban
+  comunicarse. Para eso hacían falta reglas acordadas. Esas reglas se llaman
+  <strong>protocolos</strong>.
+</p>
+<p>
+  Un protocolo es simplemente un contrato. Cuando envías una carta, hay protocolos
+  implícitos: formato de la dirección, colocación del sello, tamaño del sobre.
+  Sin esos acuerdos, el sistema postal colapsa. Misma idea — distinto medio.
+</p>
+
+<div class="concept-box">
+  <div class="concept-label">Concepto Clave</div>
+  <h4>¿Qué es un Servidor? ¿Qué es un Cliente?</h4>
+  <p>
+    Un <em>servidor</em> es un programa que <em>espera</em> peticiones y las responde.
+    Un <em>cliente</em> es un programa que <em>hace</em> peticiones.
+    <br><br>
+    Tu navegador es un cliente. Pregunta: "dame esta página." El servidor responde:
+    "aquí la tienes." Los servidores no tienen que ser hardware especial.
+    Cualquier computadora puede ser servidor. La diferencia es de comportamiento, no física.
+  </p>
+</div>
+
+<h2>TCP/IP — El Lenguaje de Internet</h2>
+<p>
+  En 1974, Vint Cerf y Bob Kahn publicaron el artículo que describía TCP/IP —
+  los protocolos que acabarían siendo el lenguaje universal de las computadoras en red.
+</p>
+<p>
+  <strong>IP (Protocolo de Internet)</strong> gestiona el direccionamiento. Cada dispositivo
+  recibe una dirección IP. Piensa en ello como la dirección postal de tu computadora.
+</p>
+<p>
+  <strong>TCP (Protocolo de Control de Transmisión)</strong> gestiona la entrega. Divide los
+  datos en paquetes, los envía, confirma que todos llegaron y solicita la retransmisión
+  de los que se perdieron. Garantiza la entrega.
+</p>
+<p>
+  El 1 de enero de 1983, ARPANET pasó oficialmente a TCP/IP. Esa fecha se considera
+  el cumpleaños de internet.
+</p>
+
+<h2>DNS — Por Qué Escribes Nombres, No Números</h2>
+<p>
+  Cada dispositivo en internet tiene una dirección IP: un número como <code>142.250.80.46</code>.
+  Memorizar esos números para cada sitio sería imposible. El DNS (Sistema de Nombres de Dominio),
+  creado en 1983, lo resuelve — es una guía telefónica distribuida que traduce
+  <code>google.com</code> a la dirección IP real que usan las computadoras.
+</p>
+
+<div class="concept-box">
+  <div class="concept-label">Modelo Mental</div>
+  <h4>Qué Pasa Cuando Escribes una URL</h4>
+  <p>
+    Escribes <code>example.com</code> → el DNS lo convierte en una IP →
+    tu navegador abre una conexión TCP a esa IP → envía una petición HTTP →
+    el servidor la procesa y devuelve HTML → tu navegador lo renderiza.
+    <br><br>
+    Todo eso en menos de un segundo. En cada carga de página.
+  </p>
+</div>
+
+<h2>Qué Existía Antes de la Web</h2>
+<p>
+  A finales de los 80, internet era real y funcional — pero no era la web.
+  Servicios que existían:
+</p>
+<ul>
+  <li><strong>Email</strong> — mensajes entre personas, desde 1971</li>
+  <li><strong>FTP</strong> — transferencia de archivos entre computadoras</li>
+  <li><strong>Usenet</strong> — tableros de discusión públicos, el antecesor de todos los foros</li>
+  <li><strong>Telnet</strong> — conectarse de forma remota a la línea de comandos de otra máquina</li>
+  <li><strong>IRC (1988)</strong> — chat de texto en tiempo real en canales. Discord antes de Discord.</li>
+  <li><strong>Gopher (1991)</strong> — navegación de documentos por menús. Casi ganó.</li>
+</ul>
+<p>
+  Eran útiles. Científicos y académicos los adoraban. Pero no eran para todos.
+  No había forma de enlazar entre documentos. Sin imágenes. Sin diseño. Solo texto.
+</p>
+<p>
+  Internet era infraestructura. Lo que necesitaba convertirse era en un medio.
+</p>
+
+<div class="key-dates">
+  <div class="key-dates-title">Fechas Clave</div>
+  <div class="date-item">
+    <span class="date-stamp">4 oct. 1957</span>
+    <p class="date-event"><strong>Lanzamiento del Sputnik.</strong> EE.UU. crea la ARPA como respuesta. La agencia que construirá internet nace como reacción a perder la carrera espacial.</p>
+  </div>
+  <div class="date-item">
+    <span class="date-stamp">29 oct. 1969</span>
+    <p class="date-event"><strong>Primer mensaje de ARPANET: "lo".</strong> UCLA envía "login" a Stanford. El sistema se cae tras dos letras. Internet empieza con un error tipográfico.</p>
+  </div>
+  <div class="date-item">
+    <span class="date-stamp">1971</span>
+    <p class="date-event"><strong>Primer email enviado</strong> por Ray Tomlinson. Elige <code>@</code> como separador y el símbolo se vuelve inmortal.</p>
+  </div>
+  <div class="date-item">
+    <span class="date-stamp">1 ene. 1983</span>
+    <p class="date-event"><strong>ARPANET pasa a TCP/IP.</strong> Se considera oficialmente el cumpleaños de internet. Todos los nodos conectados tuvieron que actualizarse al mismo tiempo.</p>
+  </div>
+  <div class="date-item">
+    <span class="date-stamp">1988</span>
+    <p class="date-event"><strong>IRC inventado</strong> por Jarkko Oikarinen en Finlandia. Comunicación de texto en tiempo real en canales. El modelo sobre el que se construyeron Discord, Slack y todas las herramientas de chat modernas.</p>
+  </div>
+  <div class="date-item">
+    <span class="date-stamp">2 nov. 1988</span>
+    <p class="date-event"><strong>El Gusano Morris</strong> — el primer gusano informático importante infecta ~6.000 computadoras (el 10% de internet en ese momento). Comienza la era de la ciberseguridad.</p>
+  </div>
+</div>
+
+<blockquote>
+  "Internet no es la web. Internet es la infraestructura.
+  La web es lo que corre encima."
+</blockquote>

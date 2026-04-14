@@ -1,0 +1,152 @@
+<p class="chapter-eyebrow">Capítulo 05 &mdash; 2004 al 2010</p>
+<h1>Web 2.0</h1>
+<p class="chapter-intro">
+  Alguien tenía que ponerle nombre al cambio. Tim O'Reilly lo hizo en 2004 con "Web 2.0."
+  No era una nueva versión de software — era una nueva idea de para qué servía la web.
+  No un medio que lees. Una plataforma que usas. No contenido que consumes. Contenido que creas.
+</p>
+
+<h2>Ajax: La Técnica que lo Cambió Todo</h2>
+<p>
+  Ajax — JavaScript y XML Asíncrono — era un patrón: usa JavaScript para obtener datos
+  en segundo plano, actualiza solo la parte de la página que cambió. Sin recarga completa.
+  Sin esperas. Páginas que se sentían vivas.
+</p>
+<p>
+  Gmail (2004) no se parecía en nada a una página web — se parecía a Outlook.
+  Google Maps (2005) te dejaba arrastrar y ver cómo llegaban nuevos tiles sin interrupciones.
+  El efecto demostración fue inmediato. Todas las aplicaciones web importantes adoptaron Ajax
+  en dos años. La experiencia de usuario de la web cambió fundamentalmente.
+</p>
+<pre><code>// El humilde XMLHttpRequest — todavía debajo de cada llamada fetch()
+var xhr = new XMLHttpRequest();
+xhr.open('GET', '/api/datos', true);
+xhr.onreadystatechange = function() {
+  if (xhr.readyState === 4 &amp;&amp; xhr.status === 200) {
+    var data = JSON.parse(xhr.responseText);
+    document.getElementById('resultado').textContent = data.mensaje;
+  }
+};
+xhr.send();</code></pre>
+
+<h2>jQuery: Domesticando el Caos de los Navegadores</h2>
+<p>
+  John Resig lanzó jQuery en 2006 con una promesa clara: "escribe menos, haz más."
+  Resolvía un problema real — los navegadores implementaban las APIs de JavaScript
+  de formas radicalmente distintas. Lo que funcionaba en Firefox fallaba en IE.
+  Lo que funcionaba en Safari era sutilmente diferente en Opera.
+</p>
+<p>
+  jQuery abstraía todo eso. Una sola API para todos los navegadores. Sintaxis más limpia
+  para manipular el DOM. Ecosistema de plugins. En su punto álgido, jQuery se usaba en
+  más del 75% de todos los sitios web. Sigue estando en aproximadamente el 70% hoy.
+</p>
+
+<div class="fun-fact">
+  <span class="fun-fact-label">Curiosidad</span>
+  <p>La función <code>$</code> de jQuery se volvió tan omnipresente que durante años los
+  nuevos desarrolladores asumían que <code>$</code> era parte de JavaScript en sí.
+  Cuando descubrían que no, era genuinamente sorprendente. John Resig escribió la primera
+  versión durante un solo fin de semana y la presentó en BarCampNYC en enero de 2006.
+  Tenía 22 años.</p>
+</div>
+
+<h2>Nace la Web Social</h2>
+<p>
+  Web 2.0 fue también cuando la web comenzó a tratarse de conectar personas, no solo
+  de servir contenido. La cronología de la era social merece memorizarse — ocurrió rápido:
+</p>
+<ul>
+  <li><strong>2003:</strong> MySpace. Perfiles personalizables, música de fondo, los "top 8" amigos. El pico de la cultura adolescente. 100 millones de usuarios en 2006.</li>
+  <li><strong>2004:</strong> Facebook desde un dormitorio de Harvard. Nombres reales. Limpio. Sin brillos. En menos de un año se extiende más allá del campus.</li>
+  <li><strong>2005:</strong> YouTube. Sube un video, cualquiera puede verlo. Adquirido por Google en 2006 por 1.650 millones de dólares — considerado absurdo en su momento.</li>
+  <li><strong>2006:</strong> Twitter. 140 caracteres. Nadie entendía para qué servía. Todo el mundo se volvió adicto.</li>
+  <li><strong>2007:</strong> Tumblr. El reblogueo. Una plataforma de blogs que se sentía como una red social. Donde vivían los fandoms.</li>
+  <li><strong>2008:</strong> Stack Overflow. Preguntas y respuestas para desarrolladores. Los foros reimaginados con votación y respuestas aceptadas. Se convierte en la columna vertebral del conocimiento de software.</li>
+</ul>
+<p>
+  El cambio fue profundo: las personas ordinarias se convirtieron en editores.
+  La web ya no era escrita por una clase técnica y leída por todos los demás.
+  Ahora todo el mundo podía escribir. Y todo el mundo lo hizo.
+</p>
+
+<div class="fun-fact">
+  <span class="fun-fact-label">Curiosidad</span>
+  <p>El primer video de YouTube — "Me at the zoo" — fue subido el 23 de abril de 2005
+  por el cofundador Jawed Karim. Dura 18 segundos. Está de pie frente a unos elefantes.
+  El video tiene actualmente más de 300 millones de visualizaciones. Los comentarios
+  están desactivados porque "restaban valor a la experiencia de visualización."
+  Ni siquiera los fundadores de YouTube podían con los comentarios de YouTube.</p>
+</div>
+
+<h2>JSON Gana en Silencio</h2>
+<p>
+  Ajax usaba XML. XML es verboso, jerárquico, tedioso de analizar en JavaScript.
+  JSON (JavaScript Object Notation) era más simple: datos como objetos nativos de
+  JavaScript, legibles sin un analizador.
+</p>
+<pre><code>// XML (agotador)
+&lt;usuario&gt;&lt;nombre&gt;Marco&lt;/nombre&gt;&lt;rol&gt;desarrollador&lt;/rol&gt;&lt;/usuario&gt;
+
+// JSON (obvio)
+{ "nombre": "Marco", "rol": "desarrollador" }</code></pre>
+<p>
+  JSON ganó. Para 2010, casi todas las APIs web lo usaban.
+  REST — un conjunto de convenciones para APIs HTTP usando verbos estándar
+  (GET, POST, PUT, DELETE) — se convirtió en la forma predeterminada de exponer
+  datos en la web.
+</p>
+
+<h2>Foros vs Redes Sociales: La Transición</h2>
+<p>
+  La era Web 2.0 es cuando los foros empezaron a perder terreno. No de inmediato —
+  los foros alcanzaron su pico alrededor de 2005–2008. Pero Facebook Groups podía llegar
+  a las mismas personas sin necesidad de visitar un dominio separado. Reddit (2005)
+  centralizó la discusión con votación. Twitter se llevó la conversación en tiempo real.
+  El modelo del feed venció al modelo del foro.
+</p>
+<p>
+  Lo que ofrecían los foros: profundidad, historial, hilos, indexabilidad.
+  Un gran hilo de 2007 sigue siendo encontrable y legible hoy.
+  Lo que ofrecían las redes sociales: todo el mundo en un solo lugar, sin fricción.
+  La gente eligió sin fricción.
+</p>
+
+<div class="key-dates">
+  <div class="key-dates-title">Fechas Clave</div>
+  <div class="date-item">
+    <span class="date-stamp">4 feb. 2004</span>
+    <p class="date-event"><strong>Facebook se lanza</strong> desde el dormitorio de Mark Zuckerberg en Harvard. Inicialmente "TheFacebook." Nombres reales obligatorios. Diseño limpio. En un año, la mayoría de las universidades de la Ivy League están en él.</p>
+  </div>
+  <div class="date-item">
+    <span class="date-stamp">23 abr. 2005</span>
+    <p class="date-event"><strong>Primer video de YouTube subido.</strong> "Me at the zoo" por Jawed Karim. 18 segundos. Comienza la era del video generado por usuarios.</p>
+  </div>
+  <div class="date-item">
+    <span class="date-stamp">23 jun. 2005</span>
+    <p class="date-event"><strong>Reddit se lanza.</strong> Links + votación + comentarios. Comunidades organizadas por interés, no por geografía. "La portada de internet."</p>
+  </div>
+  <div class="date-item">
+    <span class="date-stamp">9 oct. 2006</span>
+    <p class="date-event"><strong>Google compra YouTube</strong> por 1.650 millones en acciones. Considerado escandalosamente caro en su momento. YouTube genera actualmente ~30.000 millones de dólares al año.</p>
+  </div>
+  <div class="date-item">
+    <span class="date-stamp">21 mar. 2006</span>
+    <p class="date-event"><strong>Primer tweet enviado</strong> por Jack Dorsey: "just setting up my twttr." Twitter se lanza oficialmente en julio. Nadie sabe para qué sirve. Todo el mundo empieza a usarlo.</p>
+  </div>
+  <div class="date-item">
+    <span class="date-stamp">9 ene. 2007</span>
+    <p class="date-event"><strong>Steve Jobs presenta el iPhone.</strong> "Un iPod, un teléfono y un comunicador de internet." Comienza la era de la web móvil. La web de escritorio inicia su lento declive como punto de acceso principal.</p>
+  </div>
+  <div class="date-item">
+    <span class="date-stamp">13 sep. 2008</span>
+    <p class="date-event"><strong>Google Chrome se lanza.</strong> Rápido. Simple. Motor JavaScript V8. En 3 años se convierte en el navegador más usado del mundo. La era de IE termina.</p>
+  </div>
+</div>
+
+<blockquote>
+  "La web se suponía que era un lugar donde cualquiera podía decirle cualquier cosa a
+  cualquiera. En cambio, se convirtió en un lugar donde pocas empresas decidían lo que
+  todos podían decir — y descubrieron que la indignación generaba más engagement
+  que cualquier otra cosa."
+</blockquote>

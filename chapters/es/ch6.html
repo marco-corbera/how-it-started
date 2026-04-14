@@ -1,0 +1,180 @@
+<p class="chapter-eyebrow">Capítulo 06 &mdash; 2010 hasta hoy</p>
+<h1>La Web Moderna</h1>
+<p class="chapter-intro">
+  La web fue construida para documentos. Luego se convirtió en una plataforma de
+  aplicaciones. Luego en el sistema operativo. Hoy, la línea entre un "sitio web" y
+  una "aplicación nativa" es principalmente una cuestión de distribución.
+  Entender la web moderna significa entender cómo llegamos hasta aquí —
+  y ser honestos sobre lo que quizás hemos sobrecomplicado por el camino.
+</p>
+
+<h2>HTML5: Una Plataforma, No Solo Nuevas Etiquetas</h2>
+<p>
+  HTML5, publicado oficialmente en 2014 (con los navegadores implementándolo durante
+  años antes), no era solo una nueva versión de HTML. Era una colección de APIs que
+  convirtieron el navegador en un entorno de ejecución de aplicaciones real.
+</p>
+<ul>
+  <li><strong>API Canvas</strong> — gráficos 2D y 3D programáticos</li>
+  <li><strong>Web Storage</strong> — datos persistentes sin cookies</li>
+  <li><strong>WebSockets</strong> — comunicación bidireccional en tiempo real</li>
+  <li><strong>Geolocalización</strong> — ubicación del dispositivo con permiso del usuario</li>
+  <li><strong>Audio/video nativo</strong> — la sentencia de muerte de Flash</li>
+  <li><strong>Service Workers</strong> — scripts en segundo plano, soporte offline, la base de las PWAs</li>
+  <li><strong>Web Workers</strong> — hilos en segundo plano en JavaScript</li>
+</ul>
+
+<div class="fun-fact">
+  <span class="fun-fact-label">Curiosidad</span>
+  <p>El primer borrador de HTML5 fue publicado en 2008. La especificación no se finalizó
+  hasta el 28 de octubre de 2014 — seis años después. El W3C lo celebró tuiteando que
+  HTML5 estaba "listo." Los desarrolladores lo celebraron señalando que los navegadores
+  ya lo llevaban usando años. Los organismos de estándares se mueven despacio.
+  Los navegadores se mueven primero y estandarizan después. Siempre ha sido así.</p>
+</div>
+
+<h2>El Móvil Reescribe las Reglas</h2>
+<p>
+  El iPhone se lanzó en 2007. Android en 2008. Para 2013, el tráfico móvil había
+  superado al de escritorio en muchos sitios importantes. La web había sido construida
+  para monitores grandes y entrada por ratón. De repente tenía que funcionar en
+  una pantalla táctil de 8 centímetros.
+</p>
+<p>
+  Ethan Marcotte acuñó el <strong>Diseño Web Responsivo</strong> en 2010: un único código
+  que se adapta a cualquier tamaño de pantalla mediante media queries de CSS. En dos años
+  era el enfoque predeterminado. El diseño mobile-first — diseñar para pantallas pequeñas
+  primero — se convirtió en la metodología dominante para 2015.
+</p>
+<pre><code>/* El media query que cambió cómo construimos todo */
+@media (max-width: 768px) {
+  .contenedor {
+    flex-direction: column;
+    padding: 16px;
+  }
+}</code></pre>
+
+<h2>Las Guerras de Frameworks de JavaScript</h2>
+<p>
+  A medida que las aplicaciones web crecían en complejidad, jQuery + HTML renderizado
+  en servidor mostró sus límites. Gestionar estado, mantener la interfaz sincronizada
+  con los datos, manejar el enrutamiento y la reutilización de componentes — eran
+  problemas resolubles, pero jQuery no era la herramienta adecuada.
+</p>
+<p>
+  Una nueva clase de herramientas tomó el control completo del renderizado:
+</p>
+<ul>
+  <li><strong>Backbone.js (2010)</strong> — primer framework MVC importante para el frontend</li>
+  <li><strong>AngularJS (2010)</strong> — el framework de Google, enlace de datos bidireccional, opinionado</li>
+  <li><strong>React (2013)</strong> — la biblioteca de Facebook, modelo de componentes, DOM virtual, flujo de datos unidireccional</li>
+  <li><strong>Vue (2014)</strong> — más ligero, más accesible, adorado por desarrolladores independientes</li>
+  <li><strong>Svelte (2016)</strong> — compila componentes en tiempo de construcción, no envía runtime</li>
+  <li><strong>Next.js (2016)</strong> — React con renderizado en servidor, enrutamiento y despliegue integrados</li>
+</ul>
+<p>
+  El modelo de componentes de React ganó. La idea: la interfaz es una función pura del
+  estado. Cambia el estado, la interfaz se actualiza automáticamente. Menos bugs,
+  modelo mental más claro.
+</p>
+
+<div class="fun-fact">
+  <span class="fun-fact-label">Curiosidad</span>
+  <p>React fue creado por Jordan Walke en Facebook, desplegado por primera vez en el
+  News Feed de Facebook en 2011 y publicado como código abierto en 2013. Fue recibido
+  inicialmente con escepticismo — mezclar HTML y JavaScript en JSX era visto como
+  retrógrado y equivocado. En tres años era la biblioteca de interfaz dominante en la web.
+  A veces lo que peor parece al principio gana porque está resolviendo el problema
+  correcto.</p>
+</div>
+
+<h2>Node.js: JavaScript Escapa del Navegador</h2>
+<p>
+  En 2009, Ryan Dahl lanzó Node.js — un entorno de ejecución de JavaScript para el servidor.
+  La propuesta: un solo lenguaje en todas partes. El mismo desarrollador que escribe tu
+  frontend en React puede escribir tu backend. Sin cambio de contexto entre Python y JS.
+</p>
+<p>
+  El modelo de I/O no bloqueante y orientado a eventos de Node lo hacía especialmente
+  bueno para manejar muchas conexiones concurrentes — aplicaciones en tiempo real, APIs,
+  streaming. npm, el registro de paquetes de Node, se convirtió en el mayor registro de
+  software del mundo.
+</p>
+
+<h2>HTTPS: La Web Finalmente se Cifra</h2>
+<p>
+  En la web temprana, HTTPS era solo para bancos y páginas de pago.
+  Todo lo demás era HTTP plano — sin cifrar, legible por cualquiera en el camino entre
+  tú y el servidor. Tu ISP. El router de una cafetería. Un gobierno.
+</p>
+<p>
+  En 2014, Google dijo que HTTPS sería una señal de posicionamiento. En 2015, se lanzó
+  Let's Encrypt — certificados SSL gratuitos y automatizados. En 2018, Chrome marcó todos
+  los sitios HTTP como "No Seguro." Hoy HTTPS es el estándar. La web está cifrada por
+  primera vez en su historia.
+</p>
+
+<h2>La Contrarevolución: Vuelta a la Simplicidad</h2>
+<p>
+  Para 2020, la complejidad era innegable. Un proyecto web "simple" requería webpack,
+  Babel, ESLint, TypeScript, un package.json con 200 dependencias, un pipeline de CI/CD
+  y una plataforma de despliegue. La cadena de herramientas se había convertido en el
+  proyecto.
+</p>
+<p>
+  Surgió un movimiento contrario: HTMX, Astro, 11ty — enfoques que cuestionaban si
+  toda esa complejidad de JavaScript era realmente necesaria. ¿Podríamos construir mejor
+  volviendo al modelo original de la web — HTML, HTTP, hipervínculos?
+</p>
+
+<div class="concept-box">
+  <div class="concept-label">El Círculo se Cierra</div>
+  <h4>HTMX y el Regreso a los Hipermedia</h4>
+  <p>
+    HTMX extiende HTML con atributos que permiten a cualquier elemento hacer peticiones
+    HTTP e intercambiar contenido en la página. Sin JavaScript necesario para la mayoría
+    de interacciones. El servidor envía HTML. El navegador renderiza HTML. Como siempre
+    funcionó.
+    <br><br>
+    Es una filosofía: el modelo hipermedia original de la web era correcto.
+    Inventamos un problema (la SPA de JavaScript) y luego construimos soluciones
+    elaboradas para él. HTMX pregunta: ¿y si no lo hubiéramos hecho?
+    <br><br>
+    Este sitio está construido con HTMX. A propósito.
+  </p>
+</div>
+
+<div class="key-dates">
+  <div class="key-dates-title">Fechas Clave</div>
+  <div class="date-item">
+    <span class="date-stamp">7 jun. 2010</span>
+    <p class="date-event"><strong>Steve Jobs publica "Pensamientos sobre Flash."</strong> Flash no estará en el iPhone. Comienza la muerte de la era de los plugins.</p>
+  </div>
+  <div class="date-item">
+    <span class="date-stamp">9 may. 2013</span>
+    <p class="date-event"><strong>React publicado como código abierto por Facebook.</strong> JSX es ridiculizado. En 3 años es la biblioteca de interfaz más popular de la web. El modelo de componentes gana.</p>
+  </div>
+  <div class="date-item">
+    <span class="date-stamp">28 oct. 2014</span>
+    <p class="date-event"><strong>HTML5 finalizado.</strong> Los navegadores llevaban implementándolo 6 años. La especificación se pone al día con la realidad.</p>
+  </div>
+  <div class="date-item">
+    <span class="date-stamp">Abr. 2016</span>
+    <p class="date-event"><strong>Let's Encrypt sale de beta.</strong> SSL gratuito para todos. La web cifrada se convierte en la web predeterminada. HTTPS pasa del 30% al 80%+ del tráfico en 4 años.</p>
+  </div>
+  <div class="date-item">
+    <span class="date-stamp">31 dic. 2020</span>
+    <p class="date-event"><strong>Flash es oficialmente eliminado</strong> por Adobe. Más de 15 años de juegos, animaciones y cultura de internet se apagan. El proyecto Flashpoint archiva más de 70.000 juegos Flash.</p>
+  </div>
+  <div class="date-item">
+    <span class="date-stamp">30 nov. 2022</span>
+    <p class="date-event"><strong>ChatGPT se lanza.</strong> 1 millón de usuarios en 5 días. Comienza la era de la IA. El próximo capítulo de la web empieza a escribirse solo.</p>
+  </div>
+</div>
+
+<blockquote>
+  "La web no está terminada. Nunca se suponía que lo estuviera.
+  Tim Berners-Lee diseñó un sistema que pudiera evolucionar.
+  El hecho de que sigamos debatiendo la manera correcta de construir para ella
+  es la prueba de que funciona exactamente como fue concebida."
+</blockquote>
