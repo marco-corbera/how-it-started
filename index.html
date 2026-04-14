@@ -70,9 +70,16 @@
           </div>
         </div>
 
+        <div class="landing-course-progress" id="landing-course-progress" style="display:none">
+          <span class="lcp-label">Progress</span>
+          <div class="lcp-track"><div class="lcp-fill" id="lcp-fill"></div></div>
+          <span class="lcp-count" id="lcp-count">0 / 6</span>
+        </div>
+
         <div class="chapter-grid">
 
-          <div class="chapter-card ch-terminal" data-chapter="1" onclick="loadChapter(1)">
+          <div class="chapter-card ch-terminal" data-chapter="1" onclick="loadChapter(1)" style="position:relative">
+            <span class="card-complete-badge">✓</span>
             <div class="card-era-preview">
               <span class="preview-terminal">C:\&gt; connect ARPANET_<br>Linking to IMP node 1...<br><span class="preview-cursor">█</span></span>
             </div>
@@ -86,7 +93,8 @@
             </div>
           </div>
 
-          <div class="chapter-card ch-earlyweb" data-chapter="2" onclick="loadChapter(2)">
+          <div class="chapter-card ch-earlyweb" data-chapter="2" onclick="loadChapter(2)" style="position:relative">
+            <span class="card-complete-badge">✓</span>
             <div class="card-era-preview">
               <span class="preview-early">
                 <b>WorldWideWeb</b> — T. Berners-Lee<br>
@@ -105,7 +113,8 @@
             </div>
           </div>
 
-          <div class="chapter-card ch-late90s" data-chapter="3" onclick="loadChapter(3)">
+          <div class="chapter-card ch-late90s" data-chapter="3" onclick="loadChapter(3)" style="position:relative">
+            <span class="card-complete-badge">✓</span>
             <div class="card-era-preview">
               <span class="preview-90s">
                 ★ WELCOME TO MY PAGE ★<br>
@@ -123,7 +132,8 @@
             </div>
           </div>
 
-          <div class="chapter-card ch-flash" data-chapter="4" onclick="loadChapter(4)">
+          <div class="chapter-card ch-flash" data-chapter="4" onclick="loadChapter(4)" style="position:relative">
+            <span class="card-complete-badge">✓</span>
             <div class="card-era-preview">
               <span class="preview-flash">
                 <span style="color:#aa44ff;text-shadow:0 0 8px #aa44ff">◈ ENTER SITE ◈</span><br>
@@ -141,7 +151,8 @@
             </div>
           </div>
 
-          <div class="chapter-card ch-web20" data-chapter="5" onclick="loadChapter(5)">
+          <div class="chapter-card ch-web20" data-chapter="5" onclick="loadChapter(5)" style="position:relative">
+            <span class="card-complete-badge">✓</span>
             <div class="card-era-preview">
               <span class="preview-web20">
                 <span style="background:linear-gradient(180deg,#4d90fe,#1a73e8);color:#fff;padding:2px 8px;border-radius:4px;font-size:11px">MySpace</span>
@@ -159,7 +170,8 @@
             </div>
           </div>
 
-          <div class="chapter-card ch-modern" data-chapter="6" onclick="loadChapter(6)">
+          <div class="chapter-card ch-modern" data-chapter="6" onclick="loadChapter(6)" style="position:relative">
+            <span class="card-complete-badge">✓</span>
             <div class="card-era-preview">
               <span class="preview-modern">
                 <span style="font-family:'Inter',sans-serif;font-weight:700;font-size:14px;color:#111">The Modern Web</span><br>
@@ -181,6 +193,12 @@
 
         <button id="start-btn" onclick="loadChapter(1)" data-i18n="start-btn">
           Start from the beginning →
+        </button>
+
+        <div class="landing-or-divider" data-i18n="or-divider">or</div>
+
+        <button id="learn-btn" onclick="openEraSelector()" data-i18n="learn-btn">
+          Learn How the Web Works →
         </button>
 
         <p class="landing-footnote" data-i18n="footnote">Use arrow keys to navigate between chapters</p>
@@ -273,6 +291,67 @@
     </div>
 
   </main>
+
+  <!-- ── ERA SELECTOR MODAL ── -->
+  <div id="era-selector-modal" class="era-modal">
+    <div class="era-modal-backdrop" onclick="closeEraSelector()"></div>
+    <div class="era-modal-card">
+      <div class="era-modal-kicker">◈ Learn How the Web Works</div>
+      <h2 class="era-modal-title" data-i18n="era-title">Choose your study era</h2>
+      <p class="era-modal-subtitle" data-i18n="era-subtitle">Same course. Six different aesthetics. Pick the vibe you want to learn in.</p>
+      <div class="era-choice-grid">
+        <button class="era-choice" data-era="terminal" onclick="startCourse('terminal')">
+          <span class="era-choice-preview">C:\&gt; learn_<br>connecting...</span>
+          <span class="era-choice-name" data-i18n="era-terminal">Terminal</span>
+          <span class="era-choice-desc">1960s hacker vibes</span>
+        </button>
+        <button class="era-choice" data-era="early-web" onclick="startCourse('early-web')">
+          <span class="era-choice-preview"><b>WorldWideWeb</b><br><u style="color:#0000ee;font-size:10px">http://cern.ch</u></span>
+          <span class="era-choice-name" data-i18n="era-earlyweb">Early Web</span>
+          <span class="era-choice-desc">Windows 95 nostalgia</span>
+        </button>
+        <button class="era-choice" data-era="late-90s" onclick="startCourse('late-90s')">
+          <span class="era-choice-preview">★ WELCOME ★<br>best viewed in netscape!</span>
+          <span class="era-choice-name" data-i18n="era-90s">90s Web</span>
+          <span class="era-choice-desc">GeoCities energy</span>
+        </button>
+        <button class="era-choice" data-era="flash-era" onclick="startCourse('flash-era')">
+          <span class="era-choice-preview">◈ ENTER SITE ◈<br>[ loading 47% ]</span>
+          <span class="era-choice-name" data-i18n="era-flash">Flash Era</span>
+          <span class="era-choice-desc">Dark and glowing</span>
+        </button>
+        <button class="era-choice" data-era="web20" onclick="startCourse('web20')">
+          <span class="era-choice-preview">Web 2.0 Beta ✨<br>Ajax · jQuery</span>
+          <span class="era-choice-name" data-i18n="era-web20">Web 2.0</span>
+          <span class="era-choice-desc">Clean &amp; corporate</span>
+        </button>
+        <button class="era-choice" data-era="modern" onclick="startCourse('modern')">
+          <span class="era-choice-preview">// learn<br>React · Node · TS</span>
+          <span class="era-choice-name" data-i18n="era-modern">Modern</span>
+          <span class="era-choice-desc">Minimal &amp; focused</span>
+        </button>
+      </div>
+      <button class="era-modal-close" onclick="closeEraSelector()" data-i18n="era-cancel">Cancel</button>
+    </div>
+  </div>
+
+  <!-- ── COMPLETION MODAL ── -->
+  <div id="completion-modal" class="completion-modal">
+    <div class="completion-backdrop" onclick="closeCompletionModal()"></div>
+    <div class="completion-card">
+      <span class="completion-star">★</span>
+      <h2 class="completion-title" data-i18n="complete-title">Course Complete</h2>
+      <p class="completion-subtitle" data-i18n="complete-subtitle">You've covered the full history of how the web works — from ARPANET to React.</p>
+      <div class="completion-chapters" id="completion-chapters-list"></div>
+      <div class="completion-actions">
+        <button class="completion-btn-primary" onclick="closeCompletionModal(); backToLanding();" data-i18n="complete-home">Back to home</button>
+        <button class="completion-btn-secondary" onclick="closeCompletionModal()" data-i18n="complete-review">Keep reading</button>
+      </div>
+    </div>
+  </div>
+
+  <!-- ── CONFETTI ── -->
+  <div id="confetti-container" class="confetti-container"></div>
 
   <script src="js/app.js"></script>
 </body>
