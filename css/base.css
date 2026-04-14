@@ -34,6 +34,23 @@ body {
   opacity: 1;
 }
 
+/* READING PROGRESS BAR */
+#reading-progress {
+  position: fixed;
+  top: 0;
+  left: 0;
+  height: 3px;
+  width: 0%;
+  background: var(--color-accent, #4f8eff);
+  z-index: 200;
+  transition: width 0.1s linear, opacity 0.3s ease;
+  box-shadow: 0 0 8px var(--color-accent, #4f8eff);
+  opacity: 0;
+}
+#reading-progress.visible {
+  opacity: 1;
+}
+
 /* TOP NAV */
 #top-nav {
   position: fixed;
@@ -178,12 +195,14 @@ main {
   font-size: 15px;
   font-weight: 600;
   cursor: pointer;
-  transition: opacity 0.2s, transform 0.2s;
+  transition: opacity 0.2s, transform 0.2s, box-shadow 0.2s;
   font-family: var(--font-body, system-ui);
+  box-shadow: 0 0 24px rgba(79,142,255,0.3);
 }
 #start-btn:hover {
   opacity: 0.85;
-  transform: translateY(-1px);
+  transform: translateY(-2px);
+  box-shadow: 0 4px 32px rgba(79,142,255,0.5);
 }
 
 /* CHAPTER SCREEN */
@@ -336,6 +355,27 @@ main {
   opacity: 0.8;
   margin-bottom: 0;
 }
+
+/* SCROLL-IN ANIMATIONS */
+@keyframes fadeUp {
+  from {
+    opacity: 0;
+    transform: translateY(20px);
+  }
+  to {
+    opacity: 1;
+    transform: translateY(0);
+  }
+}
+
+.anim-fadein {
+  animation: fadeUp 0.5s ease forwards;
+}
+.anim-fadein:nth-child(2) { animation-delay: 0.05s; }
+.anim-fadein:nth-child(3) { animation-delay: 0.10s; }
+.anim-fadein:nth-child(4) { animation-delay: 0.15s; }
+.anim-fadein:nth-child(5) { animation-delay: 0.20s; }
+.anim-fadein:nth-child(6) { animation-delay: 0.25s; }
 
 /* RESPONSIVE */
 @media (max-width: 640px) {
