@@ -692,6 +692,7 @@ function markCourseModulePassed(moduleId) {
 
 // Per-session answer state
 const quizAnswers = {};
+const quizRegistry = {};
 
 function renderObjectives(moduleId, objectives) {
   if (!objectives || !objectives.length) return;
@@ -712,6 +713,7 @@ function renderObjectives(moduleId, objectives) {
 function renderQuiz(id, questions, isCourse) {
   if (!questions || !questions.length) return;
   quizAnswers[id] = {};
+  quizRegistry[id] = questions;
   const label     = t('quiz-label');
   const subheader = t('quiz-subheader');
   const submitTxt = t('quiz-submit');
@@ -736,7 +738,7 @@ function renderQuiz(id, questions, isCourse) {
       </div>
       <div class="quiz-questions">${questionsHtml}</div>
       <button class="quiz-submit" id="quiz-submit-${id}"
-              onclick="submitQuiz('${id}', ${JSON.stringify(questions).replace(/</g,'\\u003c')}, ${isCourse})"
+              onclick="submitQuiz('${id}', ${isCourse})"
               disabled>${submitTxt}</button>
       <div class="quiz-result" id="quiz-result-${id}"></div>
     </div>`;
@@ -757,7 +759,8 @@ function quizSelectAnswer(id, qIdx, optIdx, btn) {
   }
 }
 
-function submitQuiz(id, questions, isCourse) {
+function submitQuiz(id, isCourse) {
+  const questions = quizRegistry[id] || [];
   const answers = quizAnswers[id] || {};
   let score = 0;
 
@@ -789,7 +792,7 @@ function submitQuiz(id, questions, isCourse) {
       <div class="quiz-score-num" style="color:${passed ? '#22c55e' : '#f59e0b'}">${score}/${questions.length}</div>
       <div class="quiz-score-label">${score === questions.length ? 'Perfect score' : `${score} out of ${questions.length} correct`}</div>
       <p class="quiz-feedback ${feedbackClass}">${feedbackText}</p>
-      ${!passed ? `<button class="quiz-retry" onclick="retryQuiz('${id}', ${JSON.stringify(questions).replace(/</g,'\\u003c')}, ${isCourse})">${retryTxt}</button>` : ''}`;
+      ${!passed ? `<button class="quiz-retry" onclick="retryQuiz('${id}', ${isCourse})">${retryTxt}</button>` : ''}`;
     resultEl.style.display = 'block';
   }
 
@@ -802,7 +805,7 @@ function submitQuiz(id, questions, isCourse) {
   }
 }
 
-function retryQuiz(id, questions, isCourse) {
+function retryQuiz(id, isCourse) {
   quizAnswers[id] = {};
   const block = document.getElementById(`quiz-${id}`);
   if (!block) return;
