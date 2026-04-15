@@ -534,6 +534,26 @@ function prevChapter() {
   }
 }
 
+// ---- CHAPTER DOT CLICK HANDLERS ----
+function initChapterDots() {
+  document.querySelectorAll('.dot[data-chapter]').forEach((dot, i) => {
+    dot.addEventListener('click', () => {
+      if (i === 0) backToLanding();
+      else loadChapter(i);
+    });
+  });
+}
+
+const CHAPTER_DOTS_HTML = [
+  `<span class="dot" data-chapter="0" title="Home"></span>`,
+  `<span class="dot" data-chapter="1" title="Before the Web"></span>`,
+  `<span class="dot" data-chapter="2" title="The First Web"></span>`,
+  `<span class="dot" data-chapter="3" title="Browser Wars &amp; Forums"></span>`,
+  `<span class="dot" data-chapter="4" title="The Dynamic Web"></span>`,
+  `<span class="dot" data-chapter="5" title="Web 2.0"></span>`,
+  `<span class="dot" data-chapter="6" title="The Modern Web"></span>`,
+].join('');
+
 function backToLanding() {
   courseMode    = false;
   currentModule = 0;
@@ -550,6 +570,12 @@ function backToLanding() {
 
     setTheme('landing');
     currentChapter = 0;
+
+    // Restore chapter indicator dots (course mode replaces them with module dots)
+    const indicators = document.getElementById('chapter-indicators');
+    indicators.innerHTML = CHAPTER_DOTS_HTML;
+    initChapterDots();
+
     updateNav(0);
     progressBar.classList.remove('visible');
     progressBar.style.width = '0%';
@@ -569,12 +595,7 @@ document.addEventListener('DOMContentLoaded', () => {
     });
   });
 
-  document.querySelectorAll('.dot').forEach((dot, i) => {
-    dot.addEventListener('click', () => {
-      if (i === 0) backToLanding();
-      else loadChapter(i);
-    });
-  });
+  initChapterDots();
 
   // Keyboard navigation
   document.addEventListener('keydown', e => {
@@ -2044,11 +2065,21 @@ function renderCourseModule(moduleId) {
 }
 
 function updateCourseNav(moduleId) {
-  const total = getCourseModules().length;
-  const mod   = getCourseModules().find(m => m.id === moduleId);
+  const modules = getCourseModules();
+  const total   = modules.length;
+  const mod     = modules.find(m => m.id === moduleId);
 
   document.getElementById('nav-title').textContent =
     `${mod.eyebrow} — ${mod.title}`;
+
+  // Rebuild indicator dots to reflect course modules
+  const indicators = document.getElementById('chapter-indicators');
+  indicators.innerHTML = modules.map(m => {
+    let cls = 'dot';
+    if (m.id === moduleId) cls += ' active';
+    else if (m.id < moduleId) cls += ' visited';
+    return `<span class="${cls}" title="${m.title}" onclick="eraTransition(()=>renderCourseModule(${m.id}))"></span>`;
+  }).join('');
 
   document.getElementById('chapter-progress').textContent =
     `${mod.title}  ·  ${moduleId} / ${total}`;
