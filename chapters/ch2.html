@@ -1,47 +1,93 @@
 <p class="chapter-eyebrow">Chapter 02 &mdash; 1989 to 1995</p>
 <h1>The First Web</h1>
+
 <p class="chapter-intro">
-  In 1989, a physicist at CERN wrote a proposal called "Information Management: A Proposal."
-  His boss wrote "Vague but exciting" on the cover and returned it.
-  That physicist was Tim Berners-Lee. What he was proposing would eventually become
-  the most transformative communication medium in human history.
+  In 1993, two organizations each held a technology that could become
+  the internet's primary document system. One charged licensing fees.
+  One gave it away for free. Within eighteen months, one of them had won.
+  The other is a footnote nobody remembers.
 </p>
 
-<h2>The Problem at CERN</h2>
+<h2>The Decision That Changed Everything</h2>
 <p>
-  CERN employed thousands of scientists from different universities,
-  using different computers, constantly changing projects and roles.
-  Every time someone left, their knowledge left with them.
-  Documents existed but were scattered across incompatible systems.
+  April 30, 1993. CERN — the European physics lab in Geneva — releases a document
+  with a quiet title: "WorldWideWeb: Summary." It announces that the web is now
+  in the public domain. No patents. No licenses. No fees. Anyone, anywhere,
+  can build a web server, write a browser, publish a page. Free. Forever.
 </p>
 <p>
-  Tim Berners-Lee's insight: the internet already existed.
-  Computers were already networked. What was missing was a system that let documents
-  link to each other across different machines — so reading one document could lead you
-  naturally to related documents, wherever they lived.
+  At that exact moment, the competing system — Gopher, a clean and popular
+  menu-based document network — was being quietly strangled. The University of Minnesota,
+  which owned it, had just announced they would start charging licensing fees.
+  Nothing outrageous. Just... fees.
 </p>
 <p>
-  He called this <strong>hypertext</strong> — text that contains links to other text.
-  The concept existed (Ted Nelson theorized it in the 1960s), but Berners-Lee was the first
-  to implement it over a live network.
+  It was enough. Developers abandoned Gopher almost overnight.
+  By 1994 the web had ten times the traffic. By 1996, Gopher was dead.
+</p>
+<p>
+  One licensing decision. Two organizations. Two opposite choices.
+  The entire shape of the modern internet followed from that gap.
 </p>
 
-<h2>The Three Inventions</h2>
+<div class="fun-fact">
+  <span class="fun-fact-label">Forgotten rival</span>
+  <p>Gopher was actually better than the web in 1992. Faster, more organized,
+  easier to navigate. It had menus instead of links. More people used it.
+  It lost not because the web was superior — but because the web was free.</p>
+</div>
+
+<h2>The Man Who Started It</h2>
 <p>
-  To make the web work, Berners-Lee needed to solve three problems.
-  He invented three things:
+  Four years earlier, a 33-year-old British physicist at CERN named Tim Berners-Lee
+  had a problem. Not a physics problem — an organizational one.
+</p>
+<p>
+  CERN employed thousands of scientists from dozens of countries,
+  rotating in and out on different projects. Every time someone left,
+  their knowledge left with them. Documents existed but lived on incompatible systems.
+  There was no way to link one piece of information to another.
+</p>
+<p>
+  Berners-Lee's insight was deceptively simple: the internet already connected
+  these computers. What was missing was a layer on top — a system that let documents
+  link to each other across different machines. Not a database. Not a file system.
+  Something more like a web.
+</p>
+<p>
+  He wrote a proposal on March 12, 1989. His boss, Mike Sendall, read it and wrote
+  four words on the cover before handing it back.
+</p>
+
+<blockquote>
+  "Vague but exciting."<br>
+  <span style="font-size:0.85em; opacity:0.7">— Mike Sendall, CERN, 1989</span>
+</blockquote>
+
+<p>
+  That was the approval. No committee. No budget. No roadmap.
+  Berners-Lee spent the next eighteen months building it alone,
+  on a NeXT computer in a corner of CERN, largely in his spare time.
+</p>
+
+<h2>Three Problems. Three Inventions.</h2>
+<p>
+  To make the web work, Berners-Lee had to solve three distinct problems simultaneously.
+  The solutions he came up with are still the foundation of every website you visit today.
 </p>
 
 <div class="concept-box">
   <div class="concept-label">Invention 1</div>
   <h4>HTML — HyperText Markup Language</h4>
   <p>
-    A simple language for structuring documents. Tags describe what content <em>is</em>:
-    a heading, a paragraph, a link.
+    A language for describing documents. Not programming — no logic, no decisions,
+    no loops. Just structure. Tags tell the browser what content <em>is</em>:
+    a heading, a paragraph, an image, a link.
     <br><br>
-    The killer feature: the <code>&lt;a href="..."&gt;</code> tag. A hyperlink.
-    A way to point from one document to another, anywhere on the network.
-    That single mechanic — click a link, load a document — is what made the web a web.
+    The killer feature was a single tag: <code>&lt;a href="..."&gt;</code>.
+    A hyperlink. Click it and the browser fetches a different document —
+    from anywhere on the network. That mechanic, click-and-follow,
+    is what made the web a web and not just a file system.
   </p>
 </div>
 
@@ -49,12 +95,15 @@
   <div class="concept-label">Invention 2</div>
   <h4>URL — Uniform Resource Locator</h4>
   <p>
-    A standardized address format for anything on the internet.
-    <code>http://info.cern.ch/hypertext/WWW/TheProject.html</code> — the first URL ever.
+    For a link to work, it needs an address. URLs are that address system —
+    a standardized format for locating anything on the internet.
     <br><br>
-    Three parts: the <em>scheme</em> (<code>http://</code>) tells the browser what
-    protocol to use; the <em>host</em> (<code>info.cern.ch</code>) is resolved by DNS
-    to an IP address; the <em>path</em> locates the resource on that server.
+    <code>http://info.cern.ch/hypertext/WWW/TheProject.html</code> — the first URL ever written.
+    <br><br>
+    Three parts: the <em>scheme</em> (<code>http://</code>) says what protocol to use;
+    the <em>host</em> (<code>info.cern.ch</code>) gets resolved by DNS to an IP address;
+    the <em>path</em> locates the specific resource on that server.
+    Every URL you've ever typed follows the same structure.
   </p>
 </div>
 
@@ -62,45 +111,51 @@
   <div class="concept-label">Invention 3</div>
   <h4>HTTP — HyperText Transfer Protocol</h4>
   <p>
-    The protocol defining how browsers and servers talk. Simple request-response.
-    The first version, HTTP/0.9, was a single line:<br>
-    <code>GET /page.html</code><br>
-    The server responded with the HTML. No headers. No status codes. Done.
+    The protocol that governs how browsers and servers talk to each other.
+    Simple, stateless, request-response.
     <br><br>
-    Status codes came later: <code>200 OK</code>, <code>404 Not Found</code>,
-    <code>500 Internal Server Error</code> — every developer memorizes these.
+    The first version — HTTP/0.9 — was one line:<br>
+    <code>GET /page.html</code><br>
+    The server sent the HTML back. No headers, no status codes, nothing else.
+    Done.
+    <br><br>
+    Status codes came with HTTP/1.0: <code>200 OK</code> means success.
+    <code>404 Not Found</code> means the page doesn't exist.
+    <code>500 Internal Server Error</code> means the server broke.
+    Every developer eventually memorizes these.
   </p>
 </div>
 
-<h2>The First Website</h2>
+<h2>Christmas Day, 1990</h2>
 <p>
-  On August 6, 1991, Berners-Lee published the first website on the internet,
-  running on a NeXT computer at CERN. He taped a note to the machine:
-  "This machine is a server. DO NOT POWER IT DOWN!!"
+  On December 25, 1990, Berners-Lee ran the first successful HTTP communication
+  between a browser and a server over the internet.
+  A browser on one machine requested a page. A server on another machine sent it back.
+  It worked.
 </p>
 <p>
-  The site described the World Wide Web project itself — what it was, how it worked,
-  how to set up a web server. Meta from day one.
+  The web was born on Christmas Day, in an empty physics lab, with almost nobody watching.
 </p>
 <p>
-  The first browser, also built by Berners-Lee, was called WorldWideWeb (later Nexus).
-  It ran only on NeXT computers. It could display text and hyperlinks but not images.
-  Images would have to wait for Mosaic in 1993.
+  Eight months later, on August 6, 1991, Berners-Lee published the first website:
+  a page on info.cern.ch describing the World Wide Web project itself.
+  He posted a link in the alt.hypertext newsgroup. Almost nobody noticed.
+  He taped a note to the server machine: "This machine is a server. DO NOT POWER IT DOWN!!"
 </p>
 
 <div class="fun-fact">
-  <span class="fun-fact-label">Curious fact</span>
+  <span class="fun-fact-label">Still live</span>
   <p>The very first web server — info.cern.ch — still responds today.
-  The page at <strong>info.cern.ch/hypertext/WWW/TheProject.html</strong> has been preserved
-  and is accessible on the live internet. You can visit the first website in history
-  right now. It loads in a fraction of a second. In 1991, loading it was an act of magic.</p>
+  The original page has been preserved and is accessible on the live internet.
+  You can visit the first website in history right now.
+  It loads in a fraction of a second. In 1991, loading it felt like magic.</p>
 </div>
 
 <h2>What HTML Actually Is</h2>
 <p>
-  HTML is not a programming language. You can't write logic in it.
-  It doesn't make decisions or repeat operations.
-  It's a <em>markup language</em> — it describes structure and meaning.
+  HTML is not a programming language. You can't use it to make decisions,
+  run loops, or respond to user input. It's a <em>markup language</em> —
+  it describes structure and meaning, nothing more.
 </p>
 <pre><code>&lt;!DOCTYPE html&gt;
 &lt;html&gt;
@@ -114,52 +169,33 @@
   &lt;/body&gt;
 &lt;/html&gt;</code></pre>
 <p>
-  The browser reads this markup and decides how to display it.
-  In 1991, that meant whatever the browser thought looked right — no stylesheets existed.
-  Every browser rendered pages differently. That chaos persisted for years.
+  The browser reads this and decides how to display it.
+  In 1991, "decides" meant whatever each browser thought looked right —
+  no stylesheets existed. Every browser rendered pages differently.
+  That visual chaos would take a decade to resolve.
 </p>
-
-<h2>A Crucial Decision: Free to Everyone</h2>
-<p>
-  On April 30, 1993, CERN released the World Wide Web technology into the public domain.
-  No licenses. No fees. No restrictions. Anyone could build a web server or browser.
-</p>
-<p>
-  This single decision is why the web exploded and why it still exists as an open platform.
-  If CERN had patented it — as they could have — the web might have become a niche
-  academic tool owned by a European physics lab.
-</p>
-
-<div class="fun-fact">
-  <span class="fun-fact-label">Curious fact</span>
-  <p>Gopher — a menu-based internet document system that predated the web —
-  was actually more popular than the web in 1992. It was cleaner, faster, and easier to use.
-  It lost because the University of Minnesota (which owned it) announced they would
-  charge licensing fees in 1993. CERN made the web free at exactly the same moment.
-  One licensing decision changed the history of human communication.</p>
-</div>
 
 <div class="key-dates">
   <div class="key-dates-title">Key Dates</div>
   <div class="date-item">
     <span class="date-stamp">Mar 12, 1989</span>
-    <p class="date-event"><strong>Tim Berners-Lee submits his proposal</strong> "Information Management: A Proposal" to CERN management. His boss writes "Vague but exciting." on the cover.</p>
+    <p class="date-event"><strong>Berners-Lee submits his proposal.</strong> His boss writes "Vague but exciting." on the cover and returns it. Work begins.</p>
   </div>
   <div class="date-item">
     <span class="date-stamp">Dec 25, 1990</span>
-    <p class="date-event"><strong>First successful HTTP communication</strong> between a browser and a server via the internet. The web works for the first time. It's Christmas Day.</p>
+    <p class="date-event"><strong>First successful HTTP communication.</strong> A browser requests a page. A server responds. The web works for the first time. It's Christmas Day.</p>
   </div>
   <div class="date-item">
     <span class="date-stamp">Aug 6, 1991</span>
-    <p class="date-event"><strong>First website goes live</strong> at info.cern.ch. Tim Berners-Lee posts it to the alt.hypertext newsgroup. Almost nobody notices.</p>
+    <p class="date-event"><strong>First website goes live</strong> at info.cern.ch. Berners-Lee posts a link in a newsgroup. Almost nobody notices.</p>
   </div>
   <div class="date-item">
     <span class="date-stamp">Apr 30, 1993</span>
-    <p class="date-event"><strong>CERN releases the web royalty-free.</strong> The most consequential open-source decision in history. The web belongs to everyone.</p>
+    <p class="date-event"><strong>CERN releases the web royalty-free.</strong> The same month, the University of Minnesota starts charging for Gopher. One of them will be forgotten within two years.</p>
   </div>
   <div class="date-item">
     <span class="date-stamp">Jun 1993</span>
-    <p class="date-event"><strong>500 web servers exist</strong> in the world. By October 1994, there will be 10,000. By 1996, over 100,000. The growth is exponential from day one.</p>
+    <p class="date-event"><strong>500 web servers exist</strong> in the world. By October 1994, there will be 10,000. By 1996, over 100,000. The growth never stops.</p>
   </div>
 </div>
 
