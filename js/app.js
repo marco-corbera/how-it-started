@@ -1276,6 +1276,133 @@ const COURSE_MODULES = [
       { q: 'What does a CDN do for your site\'s performance?', opts: ['Reduces the size of your JavaScript files', 'Caches your static files on servers worldwide so users get them from a nearby location', 'Automatically optimizes your SQL queries', 'Compresses HTML responses before sending them'], correct: 1 },
     ],
   },
+  {
+    id: 9,
+    eyebrow: 'Module 09',
+    title: 'Security — What PMs Must Know',
+    intro: 'Security is not just a developer concern — it\'s a product concern. PMs make decisions that directly affect the attack surface of their product: what data gets collected, how authentication works, what third parties get access. Understanding the most common threats and how they work makes you a more effective partner to your engineering team — and protects your users.',
+    objectives: [
+      'What HTTPS/TLS actually protects (and what it doesn\'t)',
+      'The most common web attacks: XSS, CSRF, SQL injection — how they work and what prevents them',
+      'The difference between authentication and authorization',
+    ],
+    sections: [
+      {
+        type: 'text',
+        heading: 'HTTPS — The Lock Icon Explained',
+        body: `The padlock in your browser\'s address bar means the connection is encrypted using <strong>TLS (Transport Layer Security)</strong>. Specifically, it means two things:<br><br><strong>1. Encryption:</strong> data flowing between your browser and the server is encrypted. An attacker intercepting the network traffic sees gibberish, not your password or credit card number.<br><br><strong>2. Authentication:</strong> a trusted Certificate Authority (CA) has verified that the domain you\'re connecting to is actually controlled by the entity it claims to be. You\'re not talking to an impersonator.<br><br><strong>What HTTPS does NOT protect:</strong> it doesn\'t protect against vulnerabilities in the application itself — an attacker who compromises the server still has your data. Encryption is transport-layer security, not application-layer security. A site can have a green padlock and still be full of bugs.`,
+      },
+      {
+        type: 'concept',
+        label: 'Core Concept',
+        heading: 'Authentication vs Authorization',
+        body: `These two terms get conflated constantly, but they\'re distinct:<br><br><strong>Authentication</strong> — who are you? This is the login step. Proving identity via password, OAuth (Sign in with Google), magic link, or biometric.<br><br><strong>Authorization</strong> — what are you allowed to do? After logging in, are you a free user, a paid user, or an admin? Can you edit this document or only view it? Authorization is about permissions and roles.<br><br>A classic PM mistake: building a feature and forgetting authorization. "Any logged-in user can edit any profile" is an auth bug — authentication was correct (you knew who they were), but authorization was broken (they had permissions they shouldn\'t). These are separate systems and must be designed separately.`,
+      },
+      {
+        type: 'concept',
+        label: 'Attack: XSS',
+        heading: 'Cross-Site Scripting (XSS)',
+        body: `XSS happens when an attacker injects malicious JavaScript into a page that other users then load. The browser has no way to distinguish between the page\'s legitimate JavaScript and the injected code — both run with the same permissions.<br><br><strong>Example:</strong> a comment box that doesn\'t sanitize input. User submits: <code>&lt;script&gt;document.cookie&lt;/script&gt;</code>. That comment gets stored in the database and rendered for every user who views the page. The attacker\'s script now runs in every viewer\'s browser — stealing session cookies, redirecting to phishing pages, or logging keystrokes.<br><br><strong>Prevention:</strong> escape user-generated content before rendering it. Modern frameworks (React, Vue) do this automatically — they treat user content as text, not HTML, by default. This is one reason frameworks exist. Raw HTML string concatenation is dangerous.`,
+      },
+      {
+        type: 'concept',
+        label: 'Attack: SQL Injection',
+        heading: 'SQL Injection',
+        body: `When user input is inserted directly into a database query without sanitization, an attacker can inject SQL commands that change what the query does.<br><br><strong>Classic example:</strong><br><code>SELECT * FROM users WHERE email = \\'$input\\';</code><br><br>If the input is <code>admin\\'--</code>, the query becomes:<br><code>SELECT * FROM users WHERE email = \\'admin\\'--\\';</code><br><br>The <code>--</code> comments out the rest. The attacker logs in as admin with no password.<br><br><strong>Prevention:</strong> parameterized queries / prepared statements. The database treats user input as data, never as SQL commands. Every modern ORM (SQLAlchemy, Django ORM, Prisma) does this by default. Writing raw SQL with string interpolation is the red flag to watch for in a code review.`,
+      },
+      {
+        type: 'concept',
+        label: 'Attack: CSRF',
+        heading: 'Cross-Site Request Forgery (CSRF)',
+        body: `CSRF tricks an authenticated user\'s browser into making a request they didn\'t intend. Because the browser automatically sends cookies with requests, a malicious page can make authenticated requests to another site the user is logged into.<br><br><strong>Example:</strong> you\'re logged into your bank. You visit a malicious site that has a hidden form that submits a transfer request to your bank\'s endpoint. The bank receives the request with your valid session cookie and processes it.<br><br><strong>Prevention:</strong> CSRF tokens — a unique, unpredictable value embedded in every form that the server validates before processing. Also: <code>SameSite</code> cookie attribute, which prevents cookies from being sent in cross-site requests by default in modern browsers.<br><br>This is why most form-based frameworks include CSRF protection by default.`,
+      },
+      {
+        type: 'fun-fact',
+        label: 'Curious fact',
+        body: `The most infamous SQL injection attack in history was on Sony Pictures in 2011. Hackers stole 77 million PlayStation Network accounts — names, addresses, credit card data — by injecting SQL into a login form. Sony\'s response time was criticized as severely slow. The attack was relatively unsophisticated: an automated SQL injection scanner found the vulnerability. It wasn\'t a targeted zero-day; it was basic hygiene that wasn\'t applied.`,
+      },
+      {
+        type: 'lab',
+        label: 'Try It — DevTools Lab',
+        heading: 'Inspect the HTTPS Certificate',
+        steps: [
+          'Click the padlock icon in your browser\'s address bar on any HTTPS site',
+          'Click "Connection is secure" → "Certificate is valid"',
+          'See: who issued the certificate, what domain it\'s valid for, when it expires',
+          'In DevTools → Security tab: see certificate details, TLS version, and cipher suite used',
+        ],
+        explain: `Every HTTPS site has a certificate signed by a Certificate Authority. The browser checks: is this CA trusted? Is the certificate for the right domain? Is it expired? If any check fails, you get the "Not secure" warning. The Security tab also shows if any resources on the page were loaded over HTTP (mixed content) — a common bug that undermines the page\'s security.`,
+      },
+    ],
+    quiz: [
+      { q: 'What does HTTPS/TLS actually protect?', opts: ['The application code from having bugs', 'Data in the database from being accessed', 'Data in transit between browser and server from being intercepted or tampered with', 'The server from being hacked'], correct: 2 },
+      { q: 'A user can view any document on your platform but somehow can also edit other users\' documents. This is a failure of:', opts: ['Authentication — the user\'s identity wasn\'t verified properly', 'Authorization — the user was correctly identified but has permissions they shouldn\'t', 'Encryption — the data wasn\'t encrypted', 'DNS — the request went to the wrong server'], correct: 1 },
+      { q: 'What is the primary defense against SQL injection?', opts: ['Encrypting the database at rest', 'Using HTTPS for all database connections', 'Parameterized queries that treat user input as data, never as SQL', 'Requiring passwords of at least 8 characters'], correct: 2 },
+    ],
+  },
+  {
+    id: 10,
+    eyebrow: 'Module 10',
+    title: 'Performance & Monitoring',
+    intro: 'A feature that works but loads in 8 seconds is broken from a user\'s perspective. Performance is a product decision, not a purely technical one — and it\'s measurable. Google has standardized how to measure it, browser DevTools can benchmark it in seconds, and monitoring tools alert you when things degrade in production. This module gives you the vocabulary and tools to make performance a first-class product concern.',
+    objectives: [
+      'What Core Web Vitals are and why Google uses them for search ranking',
+      'How to read a Lighthouse report and what each metric means',
+      'What error monitoring and observability mean — and why you need both',
+    ],
+    sections: [
+      {
+        type: 'text',
+        heading: 'Why Performance Is a Product Problem',
+        body: `Every 100ms of additional load time costs real money. Amazon measured that every 100ms of latency costs 1% of sales. Google found that a 0.5-second slowdown in search caused a 20% drop in traffic. Akamai found that a 2-second delay in load time increases bounce rates by 87%.<br><br>For mobile users on slower networks, performance differences between a fast and slow app are enormous. In many markets — Latin America, Southeast Asia, India — the median user is on a 4G connection that performs significantly worse than a North American average. Building for the global median, not the Silicon Valley engineer with fiber and a MacBook Pro, is a product decision that requires intentional effort.`,
+      },
+      {
+        type: 'concept',
+        label: 'Core Concept',
+        heading: 'Core Web Vitals — Google\'s Performance Standard',
+        body: `Google defines three Core Web Vitals that measure real user experience, not just technical benchmarks:<br><br><strong>LCP (Largest Contentful Paint)</strong> — how long until the main content of the page is visible. Measures perceived load speed. Target: under 2.5 seconds.<br><br><strong>INP (Interaction to Next Paint)</strong> — how responsive the page is to user input. Replaced FID in 2024. Measures interaction delay. Target: under 200ms.<br><br><strong>CLS (Cumulative Layout Shift)</strong> — how much the page jumps around as it loads. A layout shift of 0.1 means something moved 10% of the viewport. Target: under 0.1.<br><br>These metrics affect Google search ranking directly — poor Core Web Vitals mean lower organic search rankings. This makes performance a business metric, not just a technical one.`,
+      },
+      {
+        type: 'lab',
+        label: 'Try It — DevTools Lab',
+        heading: 'Run a Lighthouse Audit',
+        steps: [
+          'Open DevTools and click the <strong>Lighthouse</strong> tab (or "Performance insights")',
+          'Select "Mobile" mode, check "Performance" category, click "Analyze page load"',
+          'Wait 30-60 seconds while Lighthouse simulates a mobile load',
+          'Read the score (0-100) and expand each failing diagnostic for specifics',
+        ],
+        explain: `Lighthouse is Google\'s automated tool for measuring Core Web Vitals and other performance, accessibility, and SEO metrics. The score is a weighted average. The "Opportunities" section shows specific fixes with estimated time savings. The "Diagnostics" section shows issues that don\'t directly affect the score but are worth addressing. When a dev tells you "Lighthouse score is 38," this is what they mean.`,
+      },
+      {
+        type: 'concept',
+        label: 'Core Concept',
+        heading: 'The Network Tab — Where Performance Lives',
+        body: `The Network tab in DevTools is where you see every resource the page loads. For performance analysis, the key metrics:<br><br><strong>Waterfall</strong> — a visual timeline of when each resource starts and finishes loading. Long bars are slow resources. Bars that start late (because they were discovered late in the HTML) are candidates for preloading.<br><br><strong>DOMContentLoaded (blue line)</strong> — when the HTML is fully parsed. Everything before this blocks the initial render.<br><br><strong>Load (red line)</strong> — when all resources have loaded including images. This is when the browser fires the <code>load</code> event.<br><br><strong>Size vs Transfer</strong> — "Size" is the actual file size. "Transfer" is compressed size over the wire. If a 500KB JS file transfers as 150KB, it\'s using gzip compression.`,
+      },
+      {
+        type: 'text',
+        heading: 'Error Monitoring — Knowing When Things Break in Production',
+        body: `No matter how well tested your code is, errors happen in production. Users run unusual browsers, have network timeouts, hit edge cases you didn\'t anticipate. Without error monitoring, you find out about bugs from customer support tickets — which means the bug has been silently failing for hours or days.<br><br><strong>Sentry</strong> is the most widely used error monitoring tool. It captures JavaScript exceptions, backend errors, and crashes, including the full stack trace, the browser/device that caused the error, the URL, and the number of users affected. You get an alert the moment something breaks.<br><br>The PM\'s job with error monitoring: set up alerting thresholds and make sure errors are triaged into the backlog with the right priority. A bug hitting 1000 users/hour is a different conversation than a bug hitting 3 power users.`,
+      },
+      {
+        type: 'concept',
+        label: 'Core Concept',
+        heading: 'Observability — Logs, Metrics, Traces',
+        body: `Observability is the ability to understand what your system is doing from its outputs. Three pillars:<br><br><strong>Logs</strong> — timestamped records of events. "User 4821 checked out at 14:32:01." "Payment webhook failed with 500." Logs answer "what happened?"<br><br><strong>Metrics</strong> — numerical measurements over time. "API response time: 340ms average, 1200ms 99th percentile." "Error rate: 0.3%." Metrics answer "how is it performing right now?"<br><br><strong>Traces</strong> — the path a single request took through the system. In a microservices architecture, one user action might touch 12 services. A trace shows how long each step took and where it failed. Traces answer "why is this request slow?"<br><br><strong>Tools:</strong> Datadog, Grafana, New Relic for full-stack observability. Vercel Analytics and Netlify Analytics for frontend metrics without instrumentation.`,
+      },
+      {
+        type: 'fun-fact',
+        label: 'Curious fact',
+        body: `The term "five nines" (99.999% uptime) means your system is allowed to be down for just 5.26 minutes per year. One nine (90%) allows 36.5 days of downtime. This is why SLA tiers matter: the infrastructure and engineering investment to go from 99% to 99.99% uptime is enormous. Most consumer products aim for 99.9% (about 8.7 hours/year of downtime). The products that need five nines — air traffic control, hospital systems, payment rails — are the ones where downtime directly costs lives or large sums of money.`,
+      },
+    ],
+    quiz: [
+      { q: 'What does LCP (Largest Contentful Paint) measure?', opts: ['How long until all JavaScript has executed', 'How long until the main content of the page is visually complete', 'How long until the first byte arrives from the server', 'How many layout shifts occur as the page loads'], correct: 1 },
+      { q: 'Why do Core Web Vitals matter beyond just user experience?', opts: ['They are required by GDPR regulations', 'They directly affect Google search rankings', 'They determine whether a site can use HTTPS', 'They control how much a CDN caches your content'], correct: 1 },
+      { q: 'What is the difference between error monitoring (Sentry) and observability (Datadog)?', opts: ['They are the same thing with different names', 'Error monitoring captures specific crashes and exceptions; observability measures system-wide performance patterns through logs, metrics, and traces', 'Observability is for frontend; error monitoring is for backend', 'Error monitoring is free; observability always costs money'], correct: 1 },
+    ],
+  },
 ];
 
 // ---- COURSE DATA (SPANISH) ----
@@ -1689,6 +1816,133 @@ const COURSE_MODULES_ES = [
       { q: '¿Para qué se usa un registro DNS CNAME?', opts: ['Mapear un dominio a una dirección IP', 'Dirigir el email a un servidor de correo', 'Mapear un subdominio a otro nombre de dominio', 'Verificar la propiedad del dominio para servicios de terceros'], correct: 2 },
       { q: '¿Cuándo deberías elegir Vercel o Netlify sobre AWS?', opts: ['Cuando necesitas cumplimiento HIPAA', 'Para sitios estáticos y aplicaciones frontend — son más simples, más rápidos de configurar y a menudo gratuitos', 'Cuando tu app maneja más de 1 millón de usuarios', 'Cuando necesitas una base de datos relacional gestionada'], correct: 1 },
       { q: '¿Qué hace una CDN por el rendimiento de tu sitio?', opts: ['Reduce el tamaño de tus archivos JavaScript', 'Almacena en caché tus archivos estáticos en servidores de todo el mundo para que los usuarios los obtengan desde una ubicación cercana', 'Optimiza automáticamente tus consultas SQL', 'Comprime las respuestas HTML antes de enviarlas'], correct: 1 },
+    ],
+  },
+  {
+    id: 9,
+    eyebrow: 'Módulo 09',
+    title: 'Seguridad — Lo Que Todo PM Debe Saber',
+    intro: 'La seguridad no es solo una preocupación de los desarrolladores — es una preocupación de producto. Los PMs toman decisiones que afectan directamente la superficie de ataque de su producto: qué datos se recopilan, cómo funciona la autenticación, qué acceso tienen los terceros. Entender las amenazas más comunes y cómo funcionan te convierte en un socio más efectivo para tu equipo de ingeniería — y protege a tus usuarios.',
+    objectives: [
+      'Qué protege realmente HTTPS/TLS (y qué no)',
+      'Los ataques web más comunes: XSS, CSRF, inyección SQL — cómo funcionan y qué los previene',
+      'La diferencia entre autenticación y autorización',
+    ],
+    sections: [
+      {
+        type: 'text',
+        heading: 'HTTPS — El Ícono del Candado Explicado',
+        body: `El candado en la barra de direcciones de tu navegador significa que la conexión está cifrada usando <strong>TLS (Seguridad de la Capa de Transporte)</strong>. Específicamente, significa dos cosas:<br><br><strong>1. Cifrado:</strong> los datos que fluyen entre tu navegador y el servidor están cifrados. Un atacante que intercepte el tráfico de red ve texto incomprensible, no tu contraseña ni tu número de tarjeta de crédito.<br><br><strong>2. Autenticación:</strong> una Autoridad de Certificación (CA) de confianza ha verificado que el dominio al que te conectas está realmente controlado por la entidad que dice ser. No estás hablando con un impostor.<br><br><strong>Lo que HTTPS NO protege:</strong> no protege contra vulnerabilidades en la propia aplicación — un atacante que compromete el servidor aún tiene tus datos. El cifrado es seguridad en la capa de transporte, no en la capa de aplicación. Un sitio puede tener el candado verde y aun así estar lleno de errores.`,
+      },
+      {
+        type: 'concept',
+        label: 'Concepto clave',
+        heading: 'Autenticación vs Autorización',
+        body: `Estos dos términos se confunden constantemente, pero son distintos:<br><br><strong>Autenticación</strong> — ¿quién eres? Este es el paso de inicio de sesión. Probar identidad mediante contraseña, OAuth (Iniciar sesión con Google), enlace mágico o biometría.<br><br><strong>Autorización</strong> — ¿qué se te permite hacer? Después de iniciar sesión, ¿eres un usuario gratuito, de pago o administrador? ¿Puedes editar este documento o solo verlo? La autorización trata sobre permisos y roles.<br><br>Un error clásico de PM: construir una función y olvidar la autorización. "Cualquier usuario autenticado puede editar cualquier perfil" es un error de auth — la autenticación fue correcta (sabías quién era), pero la autorización estaba rota (tenían permisos que no deberían). Son sistemas separados y deben diseñarse por separado.`,
+      },
+      {
+        type: 'concept',
+        label: 'Ataque: XSS',
+        heading: 'Cross-Site Scripting (XSS)',
+        body: `XSS ocurre cuando un atacante inyecta JavaScript malicioso en una página que otros usuarios luego cargan. El navegador no tiene forma de distinguir entre el JavaScript legítimo de la página y el código inyectado — ambos se ejecutan con los mismos permisos.<br><br><strong>Ejemplo:</strong> una caja de comentarios que no sanitiza la entrada. El usuario envía: <code>&lt;script&gt;document.cookie&lt;/script&gt;</code>. Ese comentario se almacena en la base de datos y se renderiza para cada usuario que vea la página. El script del atacante ahora se ejecuta en el navegador de cada espectador — robando cookies de sesión, redirigiendo a páginas de phishing o registrando pulsaciones de teclas.<br><br><strong>Prevención:</strong> escapar el contenido generado por usuarios antes de renderizarlo. Los frameworks modernos (React, Vue) hacen esto automáticamente — tratan el contenido del usuario como texto, no como HTML, por defecto. Esta es una de las razones por las que existen los frameworks. La concatenación de cadenas HTML sin procesar es peligrosa.`,
+      },
+      {
+        type: 'concept',
+        label: 'Ataque: Inyección SQL',
+        heading: 'Inyección SQL',
+        body: `Cuando la entrada del usuario se inserta directamente en una consulta de base de datos sin sanitización, un atacante puede inyectar comandos SQL que cambian lo que hace la consulta.<br><br><strong>Ejemplo clásico:</strong><br><code>SELECT * FROM usuarios WHERE email = \\'$entrada\\';</code><br><br>Si la entrada es <code>admin\\'--</code>, la consulta se convierte en:<br><code>SELECT * FROM usuarios WHERE email = \\'admin\\'--\\';</code><br><br>El <code>--</code> comenta el resto. El atacante inicia sesión como administrador sin contraseña.<br><br><strong>Prevención:</strong> consultas parametrizadas / declaraciones preparadas. La base de datos trata la entrada del usuario como datos, nunca como comandos SQL. Cada ORM moderno (SQLAlchemy, Django ORM, Prisma) hace esto por defecto. Escribir SQL crudo con interpolación de cadenas es la señal de alerta a vigilar en una revisión de código.`,
+      },
+      {
+        type: 'concept',
+        label: 'Ataque: CSRF',
+        heading: 'Cross-Site Request Forgery (CSRF)',
+        body: `CSRF engaña al navegador de un usuario autenticado para que haga una solicitud que no pretendía hacer. Dado que el navegador envía automáticamente cookies con las solicitudes, una página maliciosa puede hacer solicitudes autenticadas a otro sitio en el que el usuario haya iniciado sesión.<br><br><strong>Ejemplo:</strong> estás conectado a tu banco. Visitas un sitio malicioso que tiene un formulario oculto que envía una solicitud de transferencia al endpoint de tu banco. El banco recibe la solicitud con tu cookie de sesión válida y la procesa.<br><br><strong>Prevención:</strong> tokens CSRF — un valor único e impredecible integrado en cada formulario que el servidor valida antes de procesar. También: el atributo de cookie <code>SameSite</code>, que evita que las cookies se envíen en solicitudes entre sitios por defecto en los navegadores modernos.<br><br>Por eso la mayoría de los frameworks basados en formularios incluyen protección CSRF por defecto.`,
+      },
+      {
+        type: 'fun-fact',
+        label: 'Dato curioso',
+        body: `El ataque de inyección SQL más infame de la historia fue contra Sony Pictures en 2011. Los hackers robaron 77 millones de cuentas de PlayStation Network — nombres, direcciones, datos de tarjetas de crédito — inyectando SQL en un formulario de inicio de sesión. El tiempo de respuesta de Sony fue criticado como gravemente lento. El ataque fue relativamente poco sofisticado: un escáner automatizado de inyección SQL encontró la vulnerabilidad. No era un zero-day dirigido; era higiene básica que no se aplicó.`,
+      },
+      {
+        type: 'lab',
+        label: 'Pruébalo — Lab DevTools',
+        heading: 'Inspecciona el Certificado HTTPS',
+        steps: [
+          'Haz clic en el ícono del candado en la barra de direcciones de tu navegador en cualquier sitio HTTPS',
+          'Haz clic en "La conexión es segura" → "El certificado es válido"',
+          'Ve: quién emitió el certificado, para qué dominio es válido, cuándo vence',
+          'En DevTools → pestaña Security: ve los detalles del certificado, versión TLS y conjunto de cifrado usado',
+        ],
+        explain: `Cada sitio HTTPS tiene un certificado firmado por una Autoridad de Certificación. El navegador verifica: ¿es confiable esta CA? ¿Es el certificado para el dominio correcto? ¿Ha expirado? Si alguna verificación falla, aparece la advertencia "No es seguro". La pestaña Security también muestra si algún recurso en la página se cargó a través de HTTP (contenido mixto) — un error común que socava la seguridad de la página.`,
+      },
+    ],
+    quiz: [
+      { q: '¿Qué protege realmente HTTPS/TLS?', opts: ['El código de la aplicación de tener errores', 'Los datos en la base de datos de ser accedidos', 'Los datos en tránsito entre el navegador y el servidor de ser interceptados o manipulados', 'El servidor de ser hackeado'], correct: 2 },
+      { q: 'Un usuario puede ver cualquier documento en tu plataforma pero de alguna manera también puede editar los documentos de otros usuarios. Esto es un fallo de:', opts: ['Autenticación — la identidad del usuario no se verificó correctamente', 'Autorización — el usuario fue correctamente identificado pero tiene permisos que no debería', 'Cifrado — los datos no estaban cifrados', 'DNS — la solicitud fue al servidor equivocado'], correct: 1 },
+      { q: '¿Cuál es la defensa principal contra la inyección SQL?', opts: ['Cifrar la base de datos en reposo', 'Usar HTTPS para todas las conexiones de base de datos', 'Consultas parametrizadas que tratan la entrada del usuario como datos, nunca como SQL', 'Requerir contraseñas de al menos 8 caracteres'], correct: 2 },
+    ],
+  },
+  {
+    id: 10,
+    eyebrow: 'Módulo 10',
+    title: 'Rendimiento y Monitoreo',
+    intro: 'Una función que funciona pero carga en 8 segundos está rota desde la perspectiva del usuario. El rendimiento es una decisión de producto, no puramente técnica — y es medible. Google ha estandarizado cómo medirlo, las DevTools del navegador pueden evaluarlo en segundos, y las herramientas de monitoreo te alertan cuando las cosas se degradan en producción. Este módulo te da el vocabulario y las herramientas para hacer del rendimiento una preocupación de producto de primera clase.',
+    objectives: [
+      'Qué son los Core Web Vitals y por qué Google los usa para el ranking de búsqueda',
+      'Cómo leer un informe de Lighthouse y qué significa cada métrica',
+      'Qué significan el monitoreo de errores y la observabilidad — y por qué necesitas ambos',
+    ],
+    sections: [
+      {
+        type: 'text',
+        heading: 'Por Qué el Rendimiento Es un Problema de Producto',
+        body: `Cada 100ms de tiempo de carga adicional tiene un costo real. Amazon midió que cada 100ms de latencia cuesta 1% de ventas. Google descubrió que una desaceleración de 0.5 segundos en la búsqueda causó una caída del 20% en el tráfico. Akamai encontró que un retraso de 2 segundos en la carga aumenta las tasas de rebote en un 87%.<br><br>Para los usuarios móviles con redes más lentas, las diferencias de rendimiento entre una aplicación rápida y una lenta son enormes. En muchos mercados — América Latina, Sudeste Asiático, India — el usuario mediano está en una conexión 4G que funciona significativamente peor que el promedio norteamericano. Construir para la mediana global, no para el ingeniero de Silicon Valley con fibra y MacBook Pro, es una decisión de producto que requiere un esfuerzo intencional.`,
+      },
+      {
+        type: 'concept',
+        label: 'Concepto clave',
+        heading: 'Core Web Vitals — El Estándar de Rendimiento de Google',
+        body: `Google define tres Core Web Vitals que miden la experiencia real del usuario, no solo benchmarks técnicos:<br><br><strong>LCP (Largest Contentful Paint)</strong> — cuánto tiempo hasta que el contenido principal de la página es visible. Mide la velocidad de carga percibida. Objetivo: menos de 2.5 segundos.<br><br><strong>INP (Interaction to Next Paint)</strong> — qué tan receptiva es la página a la entrada del usuario. Reemplazó al FID en 2024. Mide el retraso de interacción. Objetivo: menos de 200ms.<br><br><strong>CLS (Cumulative Layout Shift)</strong> — cuánto salta la página mientras carga. Un cambio de diseño de 0.1 significa que algo se movió el 10% del viewport. Objetivo: menos de 0.1.<br><br>Estas métricas afectan el ranking de búsqueda de Google directamente — los malos Core Web Vitals significan rankings de búsqueda orgánica más bajos. Esto convierte el rendimiento en una métrica de negocio, no solo técnica.`,
+      },
+      {
+        type: 'lab',
+        label: 'Pruébalo — Lab DevTools',
+        heading: 'Ejecuta una Auditoría de Lighthouse',
+        steps: [
+          'Abre DevTools y haz clic en la pestaña <strong>Lighthouse</strong>',
+          'Selecciona el modo "Móvil", marca "Rendimiento", haz clic en "Analizar carga de página"',
+          'Espera 30-60 segundos mientras Lighthouse simula una carga móvil',
+          'Lee la puntuación (0-100) y expande cada diagnóstico fallido para ver los detalles',
+        ],
+        explain: `Lighthouse es la herramienta automatizada de Google para medir los Core Web Vitals y otras métricas de rendimiento, accesibilidad y SEO. La puntuación es un promedio ponderado. La sección "Oportunidades" muestra correcciones específicas con ahorros de tiempo estimados. La sección "Diagnósticos" muestra problemas que no afectan directamente la puntuación pero vale la pena abordar. Cuando un dev te dice "la puntuación de Lighthouse es 38", esto es lo que significa.`,
+      },
+      {
+        type: 'concept',
+        label: 'Concepto clave',
+        heading: 'La Pestaña Network — Donde Vive el Rendimiento',
+        body: `La pestaña Network en DevTools es donde ves cada recurso que carga la página. Para el análisis de rendimiento, las métricas clave:<br><br><strong>Cascada (Waterfall)</strong> — una línea de tiempo visual de cuándo comienza y termina de cargar cada recurso. Las barras largas son recursos lentos. Las barras que comienzan tarde (porque se descubrieron tarde en el HTML) son candidatos para precarga.<br><br><strong>DOMContentLoaded (línea azul)</strong> — cuándo el HTML está completamente analizado. Todo lo que está antes de esto bloquea el renderizado inicial.<br><br><strong>Load (línea roja)</strong> — cuándo todos los recursos han cargado incluyendo imágenes. Esto es cuando el navegador dispara el evento <code>load</code>.<br><br><strong>Tamaño vs Transferencia</strong> — "Tamaño" es el tamaño real del archivo. "Transferencia" es el tamaño comprimido por la red. Si un archivo JS de 500KB se transfiere como 150KB, está usando compresión gzip.`,
+      },
+      {
+        type: 'text',
+        heading: 'Monitoreo de Errores — Saber Cuándo Las Cosas Se Rompen en Producción',
+        body: `No importa cuán bien probado esté tu código, los errores ocurren en producción. Los usuarios usan navegadores inusuales, tienen tiempos de espera en la red, llegan a casos extremos que no anticipaste. Sin monitoreo de errores, te enteras de los bugs por tickets de soporte al cliente — lo que significa que el bug ha estado fallando silenciosamente durante horas o días.<br><br><strong>Sentry</strong> es la herramienta de monitoreo de errores más ampliamente usada. Captura excepciones de JavaScript, errores de backend y bloqueos, incluyendo el stack trace completo, el navegador/dispositivo que causó el error, la URL y el número de usuarios afectados. Recibes una alerta en el momento en que algo se rompe.<br><br>El trabajo del PM con el monitoreo de errores: configurar umbrales de alerta y asegurarse de que los errores sean clasificados en el backlog con la prioridad correcta. Un bug que afecta a 1000 usuarios/hora es una conversación diferente a un bug que afecta a 3 usuarios avanzados.`,
+      },
+      {
+        type: 'concept',
+        label: 'Concepto clave',
+        heading: 'Observabilidad — Logs, Métricas, Trazas',
+        body: `La observabilidad es la capacidad de entender lo que hace tu sistema a partir de sus salidas. Tres pilares:<br><br><strong>Logs</strong> — registros con marca de tiempo de eventos. "El usuario 4821 realizó el pago a las 14:32:01." "El webhook de pago falló con 500." Los logs responden "¿qué pasó?"<br><br><strong>Métricas</strong> — mediciones numéricas a lo largo del tiempo. "Tiempo de respuesta de API: promedio de 340ms, percentil 99 de 1200ms." "Tasa de error: 0.3%." Las métricas responden "¿cómo está funcionando ahora mismo?"<br><br><strong>Trazas</strong> — el camino que tomó una sola solicitud a través del sistema. En una arquitectura de microservicios, una acción del usuario puede tocar 12 servicios. Una traza muestra cuánto tiempo tardó cada paso y dónde falló. Las trazas responden "¿por qué esta solicitud es lenta?"<br><br><strong>Herramientas:</strong> Datadog, Grafana, New Relic para observabilidad de stack completo. Vercel Analytics y Netlify Analytics para métricas de frontend sin instrumentación.`,
+      },
+      {
+        type: 'fun-fact',
+        label: 'Dato curioso',
+        body: `El término "cinco nueves" (99.999% de disponibilidad) significa que tu sistema puede estar caído solo 5.26 minutos por año. Un nueve (90%) permite 36.5 días de tiempo de inactividad. Por eso importan los niveles de SLA: la inversión en infraestructura e ingeniería para pasar de 99% a 99.99% de disponibilidad es enorme. La mayoría de los productos de consumo apuntan al 99.9% (alrededor de 8.7 horas/año de tiempo de inactividad). Los productos que necesitan cinco nueves — control de tráfico aéreo, sistemas hospitalarios, redes de pago — son los que el tiempo de inactividad cuesta directamente vidas o grandes sumas de dinero.`,
+      },
+    ],
+    quiz: [
+      { q: '¿Qué mide el LCP (Largest Contentful Paint)?', opts: ['Cuánto tiempo hasta que todo el JavaScript se ha ejecutado', 'Cuánto tiempo hasta que el contenido principal de la página es visualmente completo', 'Cuánto tiempo hasta que llega el primer byte del servidor', 'Cuántos cambios de diseño ocurren mientras carga la página'], correct: 1 },
+      { q: '¿Por qué los Core Web Vitals importan más allá de la experiencia del usuario?', opts: ['Son requeridos por las regulaciones GDPR', 'Afectan directamente el ranking de búsqueda de Google', 'Determinan si un sitio puede usar HTTPS', 'Controlan cuánto almacena en caché tu contenido una CDN'], correct: 1 },
+      { q: '¿Cuál es la diferencia entre el monitoreo de errores (Sentry) y la observabilidad (Datadog)?', opts: ['Son lo mismo con nombres diferentes', 'El monitoreo de errores captura bloqueos y excepciones específicos; la observabilidad mide patrones de rendimiento de todo el sistema a través de logs, métricas y trazas', 'La observabilidad es para frontend; el monitoreo de errores es para backend', 'El monitoreo de errores es gratuito; la observabilidad siempre tiene costo'], correct: 1 },
     ],
   },
 ];
