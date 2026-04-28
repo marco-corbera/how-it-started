@@ -126,3 +126,81 @@ StackBlitz WebContainers provides a realistic, browser-based development environ
 - Upgrade to paid tier if embed limits hit
 - Add hint system
 - Expand to more chapters
+
+## Key Decisions & Roadmap
+
+### Key Decisions
+
+1. **StackBlitz Project Source Management** — Store source files in repo (`/exercises/ch1-*/`), use StackBlitz CLI to auto-create projects. Version control for exercises, easier updates, scalable for future chapters.
+
+2. **Success Validator Implementation** — DOM validation + visual feedback. Checks for expected HTML/CSS output, shows visual feedback in iframe. Most intuitive for learners, no console-reading required, feels rewarding.
+
+3. **Exercise Count (Pilot)** — 1 exercise per chapter (2 total for Ch1-2). Stays within 2-week appetite, higher quality, easier to iterate based on feedback.
+
+4. **Unsupported Browser Fallback** — Static link only ("Your browser doesn't support this. [Open in StackBlitz →]"). Simplest to implement, acceptable for <5% of users.
+
+5. **Embedding UX Pattern** — Slim embed (editor + preview only, hide console/file explorer initially). Balances realism and clarity; learners can open DevTools themselves.
+
+### Milestones
+
+#### Milestone 1: StackBlitz Integration & Ch1 Exercise
+**Goal:** Set up exercise infrastructure and deliver the first working exercise.
+
+**Tasks:**
+1. Create exercise directory structure (`/exercises/ch1-*`) and document StackBlitz setup (Naive: 0.5h)
+2. Design broken code example for Ch1 topic and create StackBlitz project (Naive: 1h)
+3. Build validator system (DOM state checking, loose output matching) (Naive: 1h)
+4. Embed exercise in ch1.html using StackBlitz embed API (Naive: 1h)
+5. End-to-end test: load, break code, fix, verify validator works (Naive: 0.5h)
+
+Naive Estimate: 4h | Real Estimate: 5h
+
+#### Milestone 2: UX Feedback & Browser Fallback
+**Goal:** Add visual feedback and browser compatibility layer.
+
+**Tasks:**
+1. Implement loading spinner and embed state management (Naive: 1h)
+2. Add success animation (green border, celebratory message) (Naive: 0.5h)
+3. Implement browser detection (WebContainers support check) and fallback link UI (Naive: 0.5h)
+4. Polish styling and spacing in chapter layout (Naive: 0.5h)
+
+Naive Estimate: 2.5h | Real Estimate: 3h
+
+#### Milestone 3: Ch2 Exercise
+**Goal:** Create second exercise, validating the pattern.
+
+**Tasks:**
+1. Design broken code example for Ch2 topic and create StackBlitz project (Naive: 1h)
+2. Create validator logic for Ch2 (Naive: 0.5h)
+3. Embed in ch2.html, test, verify consistency with Ch1 (Naive: 0.5h)
+
+Naive Estimate: 2h | Real Estimate: 2h
+
+#### Milestone 4: Cross-Browser Testing & Performance
+**Goal:** Ensure exercises work reliably across modern browsers.
+
+**Tasks:**
+1. Test both exercises in Chrome, Firefox, Safari (manual QA) (Naive: 1h)
+2. Debug and fix compatibility issues (WebContainers fallback paths) (Naive: 1h)
+3. Optimize StackBlitz embed loading (lazy-load, minimize initial payload) (Naive: 0.5h)
+
+Naive Estimate: 2.5h | Real Estimate: 3h
+
+#### Milestone 5: QA & Documentation
+**Goal:** Final quality pass and knowledge transfer for future exercises.
+
+**Tasks:**
+1. Comprehensive end-to-end QA (flow, error states, success paths) (Naive: 1h)
+2. Create exercise creation guide (template, validator patterns, embedding) (Naive: 0.5h)
+3. Deploy to production and monitor for issues (Naive: 0.5h)
+
+Naive Estimate: 2h | Real Estimate: 2h
+
+**Estimated QA issues to emerge: 1–2**
+
+### Summary
+
+**Total Effort:**
+- Naive: 13h
+- Real: ~15h
+- Well within 2-week appetite for a small team
